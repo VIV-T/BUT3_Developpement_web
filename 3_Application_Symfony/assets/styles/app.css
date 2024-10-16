@@ -1,0 +1,113 @@
+/*index - main*/
+nav {
+    background-color: #171d25;
+}
+
+#img_navbar_steam {
+    margin-left: -7%;
+    margin-right: 7%;
+}
+
+#pages_name_pagetop {
+    margin-left: 250px;
+}
+
+#site_information_icon_pagetop {
+    width: 30px;
+    height: auto;
+    margin-left: 7%;
+    margin-right: -7%;
+}
+
+body {
+    padding-top: 100px;
+    background-color: #1A2A3F;
+    color: #c5c3c0;
+    font-family: Verdana, sans-serif;
+}
+
+hr {
+    width: 80%;
+    margin-inline: auto;
+    margin-top: 75px;
+    margin-bottom: 75px;
+}
+
+.footer_link_text {
+    color: #c5c3c0;
+}
+
+.home_problematic_icons_text_container {
+    display: flex;
+    justify-content: center;
+}
+
+.home_problematic_icons_text_element {
+    text-align: center;
+    margin: 20px;
+}
+
+.home_problematic_text {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+.btn {
+    width: 130px;
+    border-radius: 70px;
+    background-color: #147aff;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+
+
+/*analysis*/
+/* The sidebar menu */
+.sidebar {
+    height: 100%;
+    width: 17%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #171d25;
+    padding-top: 20px;
+}
+
+.title_block {
+    display: flex;
+    height: 20%;
+    width: 83%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: #1A2A3F;
+    margin-top: 5%;
+    padding-top: 30px;
+    padding-left: 20px;
+    z-index: 1;
+}
+
+
+.analysis-main-container {
+    margin-top: 10%;
+    margin-left: 17%;
+}
+
+.searchBar {
+    border-radius: 50px;
+    padding-left: 10px;
+    width: 30%;
+    height: 22%;
+    font-size: 80%;
+    position: absolute;
+    right: 0;
+    margin-right: 5%;
+    margin-top: 1%;
+}

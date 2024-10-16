@@ -1,0 +1,243 @@
+---
+title: "ProjetSteam_exploration"
+output: html_document
+date: "2024-10-08"
+---
+
+
+```{r}
+data_Steam = read.csv2(".\\data_view\\games.csv", encoding = "UTF-8")
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+
+```{r}
+data_Steam$revenue = as.numeric(data_Steam$revenue)
+data_Steam$avgPlaytime = as.numeric(data_Steam$avgPlaytime)
+data_Steam$price = as.numeric(data_Steam$price)
+```
+
+
+```{r}
+hist(data_Steam$releaseYear)
+table(data_Steam$releaseMonth)
+barplot(height = table(data_Steam$releaseMonth))
+```
+
+
+```{r}
+summary(data_Steam)
+#summary(subset(data_Steam, subset=data_Steam$copiesSold >= 567 & data_Steam$revenue > 680 & data_Steam$price > 10))
+```
+
+Expliuer choix de filtrage (en genral il s'agit d'un quartile des variables concernées)
+```{r}
+data_test1 <- subset(data_Steam, subset = data_Steam$copiesSold > 567 & data_Steam$revenue > 9816)
+summary(data_test1)
+```
+
+Expliquer nouveau choix de filtrages => analyse macro VS recommandation micro
+```{r}
+data_test2 <- subset(data_test1, subset = data_test1$reviewScore >= 80 & data_test1$price >= 10 & data_test1$releaseYear >= 2023)
+
+summary(data_test2)
+
+
+#data_test3 <- subset(data_test2, subset = data_test2$revenue >= 18023)
+
+#summary(data_test3)
+```
+
+
+data_test2 = recommandation -> campagne marketing 
+data_test1 -> analyse macro economique
+
+
+
+###################### Travail a partir de data_test1 #################################
+
+
+## essais des graphes imaginés lors des reunions
+lecture des tables de données additionnelles
+```{r}
+data_link_games_genres = read.csv2(".\\data_view\\link_games_genres.csv", encoding="UTF-8")
+data_genres = read.csv2(".\\data_view\\genres.csv", encoding = "UTF-8")
+```
+
+# Creation de la table de données complète games + genres
+```{r}
+data_temp01 = inner_join(data_link_games_genres, data_test1,by="AppID")
+data_temp02 = inner_join(data_temp01, data_genres, by="GenresId")
+```
+
+## Analyse descriptive
+
+```{r}
+hist(x = data_temp01$releaseYear)
+```
+
+```{r}
+# creation de la colonne year 
+table(data_temp02$releaseYear)
+```
+
+
+# Essais Graphes
+```{r}
+test_graph01 = ggplot(data = data_temp02, aes(x = data_temp02$releaseYear, y=data_temp02$copiesSold, group = data_temp02$Genres))+
+  geom_point(aes(color = data_temp02$Genres))
+
+test_graph01
+```
+
+
+
+```{r}
+data_test_graph02 = subset(x = data_temp02, subset=data_temp02$Genres == "Action" & data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+```{r}
+data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+```{r}
+data_test_graph02 = subset(x = data_temp02, subset=data_temp02$Genres == "Action" & data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$notes, y=data_test_graph02$recommandations))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+```{r}
+data_test_graph03 = subset(x = data_temp02, subset=data_temp02$Genres == "Action"& data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$recommandations))+
+  geom_point(aes(color = data_test_graph03$publisherClass))
+
+test_graph03
+```
+
+
+
+```{r}
+data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$copiesSold, y=data_test_graph02$revenue))+
+  geom_point(aes(color = data_test_graph02$reviewScore, shape = data_test_graph02$Genres))
+
+test_graph02
+```
+
+```{r}
+data_test_graph02 = data_temp02
+
+test_graph02 = ggplot(data_genres, aes(x = data_genres$numberOfGames, y=data_genres$totalRevenue))+
+  geom_point(aes(size = data_genres$averagePlayTime))
+
+test_graph02
+```
+
+
+
+
+
+```{r}
+data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$PEGI, y=data_test_graph02$copiesSold, group = data_test_graph02$Genres))+
+  geom_line(aes(color = data_test_graph02$Genres))
+
+test_graph02
+```
+
+```{r}
+data_test_graph02 = data_temp02
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$PEGI, y=data_test_graph02$revenue))+
+  geom_point(aes(color = data_test_graph02$Genres))
+
+test_graph02
+```
+
+
+```{r}
+summary(data_test1)
+```
+
+
+
+# import des view créées sur MySQL
+
+```{r}
+view_genres_5_dim = read.csv(".\\data_view\\view_genres_5_dim.csv", encoding="UTF-8")
+view_revenue_pegi_genres = read.csv(".\\data_view\\view_revenue_pegi_genres.csv", encoding = "UTF-8")
+view_year_month_genres = read.csv(".\\data_view\\view_year_month_genres.csv", encoding = "UTF-8")
+view_month_genres = read.csv(".\\data_view\\view_month_genres.csv", encoding = "UTF-8")
+view_year_genres = read.csv(".\\data_view\\view_year_genres.csv", encoding = "UTF-8")
+```
+
+
+# Création des graphiques
+
+## graph_genres_5_dim
+```{r}
+require(ggrepel)
+graph_genres_5_dim = ggplot(data=view_genres_5_dim, aes(x=sommeRevenue, y=sommeCopiesSold, label=Label))+
+  geom_point(data=view_genres_5_dim, aes(color=averageReviewScore, size=nbGames))+
+  geom_text_repel()
+
+graph_genres_5_dim
+```
+
+## graph_year_genres
+
+```{r}
+graph_year_genres = ggplot(data = view_year_genres, aes(x=releaseYear, y=sommeCopiesSold))+
+  geom_line(data=view_year_genres, aes(color=Label))
+
+graph_year_genres
+```
+
+## graph_month_genres
+
+```{r}
+df_month = data.frame(month=c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+                      month_number = c(1,2,3,4,5,6,7,8,9,10,11,12))
+
+
+new_view_month_genres = inner_join(view_month_genres, df_month,by=join_by(releaseMonth==month))
+```
+
+
+```{r}
+graph_month_genres = ggplot(data = new_view_month_genres, aes(x=month_number, y=sommeCopiesSold))+
+  geom_line(data=new_view_month_genres, aes(color=Label))
+
+graph_month_genres
+```
+
+## graph_genres_5_dim
+
+```{r}
+graph_revenue_pegi_genres = ggplot(data = view_revenue_pegi_genres, aes(x=PEGI, y=sommeRevenue))+
+  geom_bar(stat = "identity", data = view_revenue_pegi_genres, aes(fill=Label))
+
+graph_revenue_pegi_genres
+```
+

@@ -1,0 +1,1001 @@
+Label,releaseYear,releaseMonth,sommeCopiesSold
+Action,1997,Jun,12147
+Action,1997,Nov,2113401
+Action,1997,NULL,2125548
+Action,1998,Nov,4732278
+Action,1998,NULL,4732278
+Action,1999,Nov,724320
+Action,1999,NULL,724320
+Action,2000,Nov,7286560
+Action,2000,NULL,7286560
+Action,2001,Jun,140265
+Action,2001,Mar,732696
+Action,2001,NULL,872961
+Action,2002,Aug,341560
+Action,2002,NULL,341560
+Action,2003,May,227698
+Action,2003,Nov,16807
+Action,2003,NULL,244505
+Action,2004,Nov,20838504
+Action,2004,NULL,20838504
+Action,2005,Nov,248691
+Action,2005,Oct,3696493
+Action,2005,NULL,3945184
+Action,2006,Jul,109779
+Action,2006,Jun,953220
+Action,2006,Mar,100600
+Action,2006,May,386313
+Action,2006,Nov,527297
+Action,2006,Oct,1303338
+Action,2006,Sep,788180
+Action,2006,NULL,4168727
+Action,2007,Aug,7242564
+Action,2007,Dec,367746
+Action,2007,Feb,155672
+Action,2007,Jan,86890
+Action,2007,Jul,313738
+Action,2007,Jun,559087
+Action,2007,Mar,5901404
+Action,2007,May,33504
+Action,2007,Nov,1875622
+Action,2007,Oct,13206058
+Action,2007,Sep,44166
+Action,2007,NULL,29786451
+Action,2008,Apr,3350985
+Action,2008,Aug,34144
+Action,2008,Dec,5600095
+Action,2008,Feb,160592
+Action,2008,Jan,448092
+Action,2008,Jul,435461
+Action,2008,Jun,89609
+Action,2008,Mar,217680
+Action,2008,May,186486
+Action,2008,Nov,4826747
+Action,2008,Oct,4924107
+Action,2008,Sep,6035022
+Action,2008,NULL,26309020
+Action,2009,Apr,412876
+Action,2009,Aug,805710
+Action,2009,Dec,1979670
+Action,2009,Feb,516684
+Action,2009,Jan,6007017
+Action,2009,Jul,7399919
+Action,2009,Jun,1919133
+Action,2009,Mar,830029
+Action,2009,May,4019630
+Action,2009,Nov,3312969
+Action,2009,Oct,441809
+Action,2009,Sep,5577226
+Action,2009,NULL,33222672
+Action,2010,Apr,3765397
+Action,2010,Aug,545219
+Action,2010,Dec,109463
+Action,2010,Feb,5448459
+Action,2010,Jan,294443
+Action,2010,Jul,8795096
+Action,2010,Jun,7095138
+Action,2010,Mar,16214211
+Action,2010,May,267498
+Action,2010,Nov,2823747
+Action,2010,Oct,9258672
+Action,2010,Sep,4008196
+Action,2010,NULL,58625539
+Action,2011,Apr,21400678
+Action,2011,Aug,6339271
+Action,2011,Dec,5191069
+Action,2011,Feb,43286
+Action,2011,Jan,5133847
+Action,2011,Jul,1031792
+Action,2011,Jun,6438987
+Action,2011,Mar,8318176
+Action,2011,May,31666610
+Action,2011,Nov,12339341
+Action,2011,Oct,6003063
+Action,2011,Sep,9021493
+Action,2011,NULL,112927613
+Action,2012,Apr,836961
+Action,2012,Aug,4867839
+Action,2012,Dec,801140
+Action,2012,Feb,7452319
+Action,2012,Jan,1157494
+Action,2012,Jul,1059200
+Action,2012,Jun,3772779
+Action,2012,Mar,585531
+Action,2012,May,4562561
+Action,2012,Nov,15239586
+Action,2012,Oct,17612617
+Action,2012,Sep,26416255
+Action,2012,NULL,84364282
+Action,2013,Apr,1395824
+Action,2013,Aug,27697531
+Action,2013,Dec,1439037
+Action,2013,Feb,3819958
+Action,2013,Jan,1440676
+Action,2013,Jul,950678
+Action,2013,Jun,5368127
+Action,2013,Mar,4320553
+Action,2013,May,6884550
+Action,2013,Nov,3817499
+Action,2013,Oct,18813228
+Action,2013,Sep,11141969
+Action,2013,NULL,87089630
+Action,2014,Apr,3191416
+Action,2014,Aug,15389410
+Action,2014,Dec,14616868
+Action,2014,Feb,7456788
+Action,2014,Jan,13634168
+Action,2014,Jul,15760192
+Action,2014,Jun,10220017
+Action,2014,Mar,6776305
+Action,2014,May,18701392
+Action,2014,Nov,11229364
+Action,2014,Oct,22810138
+Action,2014,Sep,5825327
+Action,2014,NULL,145611385
+Action,2015,Apr,16158980
+Action,2015,Aug,6491926
+Action,2015,Dec,9741769
+Action,2015,Feb,6682846
+Action,2015,Jan,11821390
+Action,2015,Jul,13530049
+Action,2015,Jun,14985621
+Action,2015,Mar,9297979
+Action,2015,May,5067672
+Action,2015,Nov,9803388
+Action,2015,Oct,5509639
+Action,2015,Sep,17618830
+Action,2015,NULL,126710089
+Action,2016,Apr,39993494
+Action,2016,Aug,12021756
+Action,2016,Dec,7379551
+Action,2016,Feb,17667672
+Action,2016,Jan,16989139
+Action,2016,Jul,6466371
+Action,2016,Jun,17340065
+Action,2016,Mar,11744572
+Action,2016,May,15090028
+Action,2016,Nov,23265825
+Action,2016,Oct,7731610
+Action,2016,Sep,12326935
+Action,2016,NULL,188017018
+Action,2017,Apr,14058431
+Action,2017,Aug,26160242
+Action,2017,Dec,20111547
+Action,2017,Feb,21982420
+Action,2017,Jan,3530821
+Action,2017,Jul,44167677
+Action,2017,Jun,9008143
+Action,2017,Mar,23589022
+Action,2017,May,21743399
+Action,2017,Nov,24750489
+Action,2017,Oct,46124827
+Action,2017,Sep,19144977
+Action,2017,NULL,274371995
+Action,2018,Apr,6128000
+Action,2018,Aug,21768061
+Action,2018,Dec,8249339
+Action,2018,Feb,24508088
+Action,2018,Jan,11341034
+Action,2018,Jul,3968061
+Action,2018,Jun,21869027
+Action,2018,Mar,12187079
+Action,2018,May,30845504
+Action,2018,Nov,6686710
+Action,2018,Oct,7825600
+Action,2018,Sep,9691773
+Action,2018,NULL,165068276
+Action,2019,Apr,16513590
+Action,2019,Aug,9894278
+Action,2019,Dec,8336857
+Action,2019,Feb,8041262
+Action,2019,Jan,8052446
+Action,2019,Jul,10180168
+Action,2019,Jun,19735244
+Action,2019,Mar,8699014
+Action,2019,May,23838318
+Action,2019,Nov,10879158
+Action,2019,Oct,4310734
+Action,2019,Sep,14750913
+Action,2019,NULL,143231982
+Action,2020,Apr,8265528
+Action,2020,Aug,20158709
+Action,2020,Dec,5140047
+Action,2020,Feb,9305248
+Action,2020,Jan,6139783
+Action,2020,Jul,8482731
+Action,2020,Jun,35412479
+Action,2020,Mar,32877798
+Action,2020,May,12966776
+Action,2020,Nov,5695352
+Action,2020,Oct,20956531
+Action,2020,Sep,21812813
+Action,2020,NULL,187213795
+Action,2021,Apr,10006490
+Action,2021,Aug,10768747
+Action,2021,Dec,7448294
+Action,2021,Feb,6269973
+Action,2021,Jan,5087410
+Action,2021,Jul,12794427
+Action,2021,Jun,16116590
+Action,2021,Mar,11957428
+Action,2021,May,9974901
+Action,2021,Nov,22716954
+Action,2021,Oct,43565618
+Action,2021,Sep,16073610
+Action,2021,NULL,172780442
+Action,2022,Apr,5496368
+Action,2022,Aug,16954412
+Action,2022,Dec,18636846
+Action,2022,Feb,10492460
+Action,2022,Jan,11891206
+Action,2022,Jul,11142257
+Action,2022,Jun,6667346
+Action,2022,Mar,8928138
+Action,2022,May,7898189
+Action,2022,Nov,12458736
+Action,2022,Oct,20606001
+Action,2022,Sep,14484680
+Action,2022,NULL,145656639
+Action,2023,Apr,10691599
+Action,2023,Aug,20559967
+Action,2023,Dec,6879825
+Action,2023,Feb,10232779
+Action,2023,Jan,11838579
+Action,2023,Jul,6053112
+Action,2023,Jun,31525829
+Action,2023,Mar,14382905
+Action,2023,May,12180344
+Action,2023,Nov,9283862
+Action,2023,Oct,18805693
+Action,2023,Sep,13848155
+Action,2023,NULL,166282649
+Action,2024,Apr,12418625
+Action,2024,Aug,3767429
+Action,2024,Feb,9358233
+Action,2024,Jan,4951686
+Action,2024,Jul,15865061
+Action,2024,Jun,11936626
+Action,2024,Mar,12919497
+Action,2024,May,16640745
+Action,2024,Sep,3824971
+Action,2024,NULL,91682873
+Action,NULL,NULL,2284232497
+Adventure,2002,Aug,341560
+Adventure,2002,NULL,341560
+Adventure,2007,Aug,46251
+Adventure,2007,Jan,25315
+Adventure,2007,Jul,17794
+Adventure,2007,Jun,559087
+Adventure,2007,Mar,431748
+Adventure,2007,May,33504
+Adventure,2007,NULL,1113699
+Adventure,2008,Apr,1501398
+Adventure,2008,Aug,166746
+Adventure,2008,Dec,3921330
+Adventure,2008,Jan,20230
+Adventure,2008,Jul,44989
+Adventure,2008,Jun,105271
+Adventure,2008,Mar,145956
+Adventure,2008,Nov,687577
+Adventure,2008,Oct,2969529
+Adventure,2008,Sep,214872
+Adventure,2008,NULL,9777898
+Adventure,2009,Apr,93852
+Adventure,2009,Aug,102534
+Adventure,2009,Dec,285229
+Adventure,2009,Feb,13064
+Adventure,2009,Jan,4652635
+Adventure,2009,Jul,2892069
+Adventure,2009,Jun,884014
+Adventure,2009,Mar,721426
+Adventure,2009,May,15444
+Adventure,2009,Nov,1421085
+Adventure,2009,Oct,923657
+Adventure,2009,Sep,4899541
+Adventure,2009,NULL,16904550
+Adventure,2010,Apr,94920
+Adventure,2010,Aug,11315
+Adventure,2010,Dec,77559
+Adventure,2010,Feb,90796
+Adventure,2010,Jan,29272
+Adventure,2010,Jul,1829329
+Adventure,2010,Jun,4055748
+Adventure,2010,Mar,11402269
+Adventure,2010,May,900
+Adventure,2010,Nov,31294
+Adventure,2010,Oct,479211
+Adventure,2010,Sep,3352695
+Adventure,2010,NULL,21455308
+Adventure,2011,Apr,20416859
+Adventure,2011,Aug,4093846
+Adventure,2011,Dec,662640
+Adventure,2011,Feb,81033
+Adventure,2011,Jan,1386032
+Adventure,2011,Jul,52114
+Adventure,2011,Jun,4733401
+Adventure,2011,Mar,3717171
+Adventure,2011,May,29890743
+Adventure,2011,Nov,5961968
+Adventure,2011,Oct,291217
+Adventure,2011,Sep,4480801
+Adventure,2011,NULL,75767825
+Adventure,2012,Apr,3758814
+Adventure,2012,Aug,2468988
+Adventure,2012,Dec,842891
+Adventure,2012,Feb,6401800
+Adventure,2012,Jan,274795
+Adventure,2012,Jul,674497
+Adventure,2012,Jun,3357465
+Adventure,2012,Mar,863183
+Adventure,2012,May,1454882
+Adventure,2012,Nov,2577903
+Adventure,2012,Oct,5854440
+Adventure,2012,Sep,17125416
+Adventure,2012,NULL,45655074
+Adventure,2013,Apr,7621933
+Adventure,2013,Aug,12016816
+Adventure,2013,Dec,2780367
+Adventure,2013,Feb,3665040
+Adventure,2013,Jan,3558648
+Adventure,2013,Jul,1411914
+Adventure,2013,Jun,4573336
+Adventure,2013,Mar,2698770
+Adventure,2013,May,4450649
+Adventure,2013,Nov,2208336
+Adventure,2013,Oct,11418163
+Adventure,2013,Sep,10440736
+Adventure,2013,NULL,66844708
+Adventure,2014,Apr,1907516
+Adventure,2014,Aug,4346598
+Adventure,2014,Dec,3334207
+Adventure,2014,Feb,6238502
+Adventure,2014,Jan,4327208
+Adventure,2014,Jul,5244394
+Adventure,2014,Jun,10731276
+Adventure,2014,Mar,4134287
+Adventure,2014,May,9530793
+Adventure,2014,Nov,9563200
+Adventure,2014,Oct,7026540
+Adventure,2014,Sep,4917189
+Adventure,2014,NULL,71301710
+Adventure,2015,Apr,5739353
+Adventure,2015,Aug,4208222
+Adventure,2015,Dec,4283975
+Adventure,2015,Feb,4888179
+Adventure,2015,Jan,10332246
+Adventure,2015,Jul,11770135
+Adventure,2015,Jun,5814638
+Adventure,2015,Mar,2413832
+Adventure,2015,May,10768643
+Adventure,2015,Nov,11652865
+Adventure,2015,Oct,8016490
+Adventure,2015,Sep,17306225
+Adventure,2015,NULL,97194803
+Adventure,2016,Apr,24403301
+Adventure,2016,Aug,9276253
+Adventure,2016,Dec,5787143
+Adventure,2016,Feb,21628796
+Adventure,2016,Jan,10154585
+Adventure,2016,Jul,21135966
+Adventure,2016,Jun,5327959
+Adventure,2016,Mar,7898989
+Adventure,2016,May,1956090
+Adventure,2016,Nov,14663305
+Adventure,2016,Oct,8420130
+Adventure,2016,Sep,4481795
+Adventure,2016,NULL,135134312
+Adventure,2017,Apr,8326265
+Adventure,2017,Aug,15699794
+Adventure,2017,Dec,7300616
+Adventure,2017,Feb,42758044
+Adventure,2017,Jan,1987367
+Adventure,2017,Jul,48749439
+Adventure,2017,Jun,2507430
+Adventure,2017,Mar,8922343
+Adventure,2017,May,14729415
+Adventure,2017,Nov,2537515
+Adventure,2017,Oct,12165796
+Adventure,2017,Sep,5832700
+Adventure,2017,NULL,171516724
+Adventure,2018,Apr,7431541
+Adventure,2018,Aug,16163828
+Adventure,2018,Dec,6120979
+Adventure,2018,Feb,21172489
+Adventure,2018,Jan,12351560
+Adventure,2018,Jul,2587124
+Adventure,2018,Jun,4341280
+Adventure,2018,Mar,12073065
+Adventure,2018,May,27667822
+Adventure,2018,Nov,6463478
+Adventure,2018,Oct,7252937
+Adventure,2018,Sep,13639740
+Adventure,2018,NULL,137265843
+Adventure,2019,Apr,6467242
+Adventure,2019,Aug,3997154
+Adventure,2019,Dec,7412937
+Adventure,2019,Feb,10327034
+Adventure,2019,Jan,5975255
+Adventure,2019,Jul,5371796
+Adventure,2019,Jun,4847107
+Adventure,2019,Mar,4316599
+Adventure,2019,May,9392267
+Adventure,2019,Nov,6960930
+Adventure,2019,Oct,9968957
+Adventure,2019,Sep,12701568
+Adventure,2019,NULL,87738846
+Adventure,2020,Apr,5113785
+Adventure,2020,Aug,13684035
+Adventure,2020,Dec,5791904
+Adventure,2020,Feb,5661683
+Adventure,2020,Jan,3971434
+Adventure,2020,Jul,6663398
+Adventure,2020,Jun,45934777
+Adventure,2020,Mar,11504948
+Adventure,2020,May,12435130
+Adventure,2020,Nov,5173436
+Adventure,2020,Oct,10317318
+Adventure,2020,Sep,8848522
+Adventure,2020,NULL,135100370
+Adventure,2021,Apr,5787751
+Adventure,2021,Aug,8819529
+Adventure,2021,Dec,6757482
+Adventure,2021,Feb,7176685
+Adventure,2021,Jan,3855779
+Adventure,2021,Jul,7531724
+Adventure,2021,Jun,13275456
+Adventure,2021,Mar,12144961
+Adventure,2021,May,7693517
+Adventure,2021,Nov,17910242
+Adventure,2021,Oct,15681889
+Adventure,2021,Sep,18001363
+Adventure,2021,NULL,124636378
+Adventure,2022,Apr,5115883
+Adventure,2022,Aug,16241435
+Adventure,2022,Dec,9833708
+Adventure,2022,Feb,6634620
+Adventure,2022,Jan,14171957
+Adventure,2022,Jul,5793807
+Adventure,2022,Jun,7597221
+Adventure,2022,Mar,7407277
+Adventure,2022,May,4283212
+Adventure,2022,Nov,9832079
+Adventure,2022,Oct,7915204
+Adventure,2022,Sep,11033528
+Adventure,2022,NULL,105859931
+Adventure,2023,Apr,8961830
+Adventure,2023,Aug,6849493
+Adventure,2023,Dec,5108397
+Adventure,2023,Feb,5743101
+Adventure,2023,Jan,8741111
+Adventure,2023,Jul,4457276
+Adventure,2023,Jun,30640540
+Adventure,2023,Mar,12715279
+Adventure,2023,May,7787899
+Adventure,2023,Nov,8796112
+Adventure,2023,Oct,20662727
+Adventure,2023,Sep,9672419
+Adventure,2023,NULL,130136184
+Adventure,2024,Apr,50191427
+Adventure,2024,Aug,5283107
+Adventure,2024,Feb,9526353
+Adventure,2024,Jan,6976289
+Adventure,2024,Jul,14796477
+Adventure,2024,Jun,13850857
+Adventure,2024,Mar,4985960
+Adventure,2024,May,15282380
+Adventure,2024,Sep,8357471
+Adventure,2024,NULL,129250321
+Adventure,NULL,NULL,1562996044
+Casual,2003,Nov,16807
+Casual,2003,NULL,16807
+Casual,2006,Aug,883301
+Casual,2006,Dec,31933
+Casual,2006,Nov,27714812
+Casual,2006,Oct,504
+Casual,2006,NULL,28630550
+Casual,2007,Aug,46251
+Casual,2007,Dec,13360
+Casual,2007,Jun,75523
+Casual,2007,Oct,2706
+Casual,2007,Sep,284251
+Casual,2007,NULL,422091
+Casual,2008,Aug,14535
+Casual,2008,Dec,3830776
+Casual,2008,Jan,16376
+Casual,2008,Jul,81955
+Casual,2008,Jun,31548
+Casual,2008,Mar,8401
+Casual,2008,May,55350
+Casual,2008,Nov,20271
+Casual,2008,Oct,1362786
+Casual,2008,Sep,2728
+Casual,2008,NULL,5424726
+Casual,2009,Apr,42810
+Casual,2009,Aug,58663
+Casual,2009,Dec,589104
+Casual,2009,Feb,47937
+Casual,2009,Jan,2223
+Casual,2009,Jul,61959
+Casual,2009,Mar,431127
+Casual,2009,May,25546
+Casual,2009,Nov,19513
+Casual,2009,Oct,44759
+Casual,2009,Sep,156640
+Casual,2009,NULL,1480281
+Casual,2010,Apr,576359
+Casual,2010,Aug,5805
+Casual,2010,Dec,134299
+Casual,2010,Feb,105386
+Casual,2010,Jan,154785
+Casual,2010,Jul,107568
+Casual,2010,Jun,3378387
+Casual,2010,May,53040
+Casual,2010,Nov,215947
+Casual,2010,Oct,91432
+Casual,2010,Sep,258421
+Casual,2010,NULL,5081429
+Casual,2011,Apr,506776
+Casual,2011,Aug,276701
+Casual,2011,Feb,139084
+Casual,2011,Jan,31618
+Casual,2011,Jul,478395
+Casual,2011,Jun,3667835
+Casual,2011,Mar,68320
+Casual,2011,May,371217
+Casual,2011,Nov,5828
+Casual,2011,Oct,69434
+Casual,2011,Sep,11034
+Casual,2011,NULL,5626242
+Casual,2012,Apr,265503
+Casual,2012,Aug,1624509
+Casual,2012,Dec,337299
+Casual,2012,Feb,209560
+Casual,2012,Jan,29455
+Casual,2012,Jul,19565
+Casual,2012,Jun,280799
+Casual,2012,Mar,79744
+Casual,2012,May,453073
+Casual,2012,Nov,1150235
+Casual,2012,Oct,60556
+Casual,2012,Sep,7700075
+Casual,2012,NULL,12210373
+Casual,2013,Apr,450786
+Casual,2013,Aug,2677609
+Casual,2013,Dec,757463
+Casual,2013,Feb,802081
+Casual,2013,Jan,197657
+Casual,2013,Jul,57200
+Casual,2013,Jun,138970
+Casual,2013,Mar,194553
+Casual,2013,May,246063
+Casual,2013,Nov,1096116
+Casual,2013,Oct,2370664
+Casual,2013,Sep,647273
+Casual,2013,NULL,9636435
+Casual,2014,Apr,4314859
+Casual,2014,Aug,2090233
+Casual,2014,Dec,3176664
+Casual,2014,Feb,531694
+Casual,2014,Jan,478570
+Casual,2014,Jul,3788576
+Casual,2014,Jun,2307728
+Casual,2014,Mar,1618058
+Casual,2014,May,8987821
+Casual,2014,Nov,4880982
+Casual,2014,Oct,5275473
+Casual,2014,Sep,3044130
+Casual,2014,NULL,40494788
+Casual,2015,Apr,2846812
+Casual,2015,Aug,2371806
+Casual,2015,Dec,3026652
+Casual,2015,Feb,1470353
+Casual,2015,Jan,1986266
+Casual,2015,Jul,13158886
+Casual,2015,Jun,7156874
+Casual,2015,Mar,1969932
+Casual,2015,May,7617148
+Casual,2015,Nov,3096194
+Casual,2015,Oct,3942757
+Casual,2015,Sep,11198391
+Casual,2015,NULL,59842071
+Casual,2016,Apr,6591187
+Casual,2016,Aug,6173932
+Casual,2016,Dec,3538134
+Casual,2016,Feb,11106433
+Casual,2016,Jan,5712416
+Casual,2016,Jul,16599616
+Casual,2016,Jun,2615789
+Casual,2016,Mar,5567981
+Casual,2016,May,4602454
+Casual,2016,Nov,7952388
+Casual,2016,Oct,5062723
+Casual,2016,Sep,2744853
+Casual,2016,NULL,78267906
+Casual,2017,Apr,1523185
+Casual,2017,Aug,3466853
+Casual,2017,Dec,6529515
+Casual,2017,Feb,20183295
+Casual,2017,Jan,4810631
+Casual,2017,Jul,41752225
+Casual,2017,Jun,1758561
+Casual,2017,Mar,2521314
+Casual,2017,May,4253417
+Casual,2017,Nov,4637337
+Casual,2017,Oct,8028350
+Casual,2017,Sep,9943281
+Casual,2017,NULL,109407964
+Casual,2018,Apr,2281333
+Casual,2018,Aug,8742008
+Casual,2018,Dec,2175489
+Casual,2018,Feb,3125615
+Casual,2018,Jan,4703253
+Casual,2018,Jul,1480128
+Casual,2018,Jun,1227136
+Casual,2018,Mar,2260532
+Casual,2018,May,3113604
+Casual,2018,Nov,24773420
+Casual,2018,Oct,1915058
+Casual,2018,Sep,8645950
+Casual,2018,NULL,64443526
+Casual,2019,Apr,5248722
+Casual,2019,Aug,2469672
+Casual,2019,Dec,4793049
+Casual,2019,Feb,4984827
+Casual,2019,Jan,3664072
+Casual,2019,Jul,6202959
+Casual,2019,Jun,15149884
+Casual,2019,Mar,2347016
+Casual,2019,May,3008258
+Casual,2019,Nov,5398923
+Casual,2019,Oct,4444548
+Casual,2019,Sep,4813070
+Casual,2019,NULL,62525000
+Casual,2020,Apr,5115074
+Casual,2020,Aug,9861494
+Casual,2020,Dec,4500961
+Casual,2020,Feb,11717274
+Casual,2020,Jan,2392473
+Casual,2020,Jul,4726308
+Casual,2020,Jun,26862916
+Casual,2020,Mar,3504888
+Casual,2020,May,8696488
+Casual,2020,Nov,3712111
+Casual,2020,Oct,5498801
+Casual,2020,Sep,4477623
+Casual,2020,NULL,91066411
+Casual,2021,Apr,5811938
+Casual,2021,Aug,7174333
+Casual,2021,Dec,5672367
+Casual,2021,Feb,2303760
+Casual,2021,Jan,2348562
+Casual,2021,Jul,5914921
+Casual,2021,Jun,3810763
+Casual,2021,Mar,7443338
+Casual,2021,May,2977252
+Casual,2021,Nov,20392918
+Casual,2021,Oct,40552143
+Casual,2021,Sep,9860515
+Casual,2021,NULL,114262810
+Casual,2022,Apr,4780726
+Casual,2022,Aug,14309704
+Casual,2022,Dec,2353876
+Casual,2022,Feb,3046897
+Casual,2022,Jan,3217692
+Casual,2022,Jul,4932476
+Casual,2022,Jun,2315636
+Casual,2022,Mar,7875056
+Casual,2022,May,8546802
+Casual,2022,Nov,5313157
+Casual,2022,Oct,11733507
+Casual,2022,Sep,5964788
+Casual,2022,NULL,74390317
+Casual,2023,Apr,3847604
+Casual,2023,Aug,10990221
+Casual,2023,Dec,4464322
+Casual,2023,Feb,6103961
+Casual,2023,Jan,4809504
+Casual,2023,Jul,4271493
+Casual,2023,Jun,31955150
+Casual,2023,Mar,6425223
+Casual,2023,May,2346477
+Casual,2023,Nov,6603427
+Casual,2023,Oct,2177867
+Casual,2023,Sep,6327866
+Casual,2023,NULL,90323115
+Casual,2024,Apr,41512784
+Casual,2024,Aug,7623629
+Casual,2024,Feb,8402750
+Casual,2024,Jan,3680132
+Casual,2024,Jul,4586498
+Casual,2024,Jun,7705252
+Casual,2024,Mar,3515434
+Casual,2024,May,5203735
+Casual,2024,Sep,456854
+Casual,2024,NULL,82687068
+Casual,NULL,NULL,936239910
+"Free to Play",2007,Sep,284251
+"Free to Play",2007,NULL,284251
+"Free to Play",2008,Jul,44659
+"Free to Play",2008,Oct,1062576
+"Free to Play",2008,NULL,1107235
+"Free to Play",2009,Dec,484973
+"Free to Play",2009,Feb,140554
+"Free to Play",2009,NULL,625527
+"Free to Play",2010,Feb,750043
+"Free to Play",2010,NULL,750043
+"Free to Play",2011,Aug,180751
+"Free to Play",2011,Dec,4731109
+"Free to Play",2011,Jun,3413805
+"Free to Play",2011,Mar,1625357
+"Free to Play",2011,May,1317998
+"Free to Play",2011,Nov,1590408
+"Free to Play",2011,Oct,253851
+"Free to Play",2011,NULL,13113279
+"Free to Play",2012,Aug,3963439
+"Free to Play",2012,Dec,587339
+"Free to Play",2012,Feb,11526542
+"Free to Play",2012,Jan,1564565
+"Free to Play",2012,Jun,2920321
+"Free to Play",2012,Nov,7602739
+"Free to Play",2012,NULL,28164945
+"Free to Play",2013,Aug,3862572
+"Free to Play",2013,Dec,249992
+"Free to Play",2013,Feb,2214326
+"Free to Play",2013,Nov,344944
+"Free to Play",2013,Oct,7301116
+"Free to Play",2013,Sep,244346
+"Free to Play",2013,NULL,14217296
+"Free to Play",2014,Apr,513142
+"Free to Play",2014,Aug,5154364
+"Free to Play",2014,Dec,3008528
+"Free to Play",2014,Feb,2215235
+"Free to Play",2014,Jul,14464493
+"Free to Play",2014,Jun,5601412
+"Free to Play",2014,May,3383253
+"Free to Play",2014,Nov,3561380
+"Free to Play",2014,Oct,6270717
+"Free to Play",2014,Sep,2535747
+"Free to Play",2014,NULL,46708271
+"Free to Play",2015,Apr,5176088
+"Free to Play",2015,Aug,3342628
+"Free to Play",2015,Dec,3362919
+"Free to Play",2015,Feb,1398698
+"Free to Play",2015,Jan,6411676
+"Free to Play",2015,Jul,13019170
+"Free to Play",2015,Jun,7180993
+"Free to Play",2015,Mar,481459
+"Free to Play",2015,May,6211937
+"Free to Play",2015,Nov,2078658
+"Free to Play",2015,Oct,366718
+"Free to Play",2015,Sep,9903709
+"Free to Play",2015,NULL,58934653
+"Free to Play",2016,Apr,7731003
+"Free to Play",2016,Aug,3773248
+"Free to Play",2016,Dec,3933912
+"Free to Play",2016,Feb,6098316
+"Free to Play",2016,Jan,6324578
+"Free to Play",2016,Jul,2684685
+"Free to Play",2016,Jun,2060498
+"Free to Play",2016,Mar,2556733
+"Free to Play",2016,May,3564782
+"Free to Play",2016,Nov,11646764
+"Free to Play",2016,Oct,6015036
+"Free to Play",2016,Sep,1659023
+"Free to Play",2016,NULL,58048578
+"Free to Play",2017,Apr,6306421
+"Free to Play",2017,Aug,18283854
+"Free to Play",2017,Dec,15926378
+"Free to Play",2017,Feb,22403804
+"Free to Play",2017,Jan,2504052
+"Free to Play",2017,Jul,49053010
+"Free to Play",2017,Jun,7023380
+"Free to Play",2017,Mar,20596088
+"Free to Play",2017,May,5933841
+"Free to Play",2017,Nov,22759925
+"Free to Play",2017,Oct,40492984
+"Free to Play",2017,Sep,3129117
+"Free to Play",2017,NULL,214412854
+"Free to Play",2018,Apr,6576056
+"Free to Play",2018,Aug,1743257
+"Free to Play",2018,Dec,1214421
+"Free to Play",2018,Feb,18139138
+"Free to Play",2018,Jan,5886517
+"Free to Play",2018,Jul,718013
+"Free to Play",2018,Jun,19763390
+"Free to Play",2018,Mar,5548650
+"Free to Play",2018,May,21638611
+"Free to Play",2018,Nov,2288142
+"Free to Play",2018,Oct,1442225
+"Free to Play",2018,Sep,5050223
+"Free to Play",2018,NULL,90008643
+"Free to Play",2019,Apr,8157767
+"Free to Play",2019,Aug,2405923
+"Free to Play",2019,Dec,3744928
+"Free to Play",2019,Feb,2758572
+"Free to Play",2019,Jan,1098670
+"Free to Play",2019,Jul,5259659
+"Free to Play",2019,Jun,21415522
+"Free to Play",2019,Mar,1480147
+"Free to Play",2019,May,16790937
+"Free to Play",2019,Nov,5992429
+"Free to Play",2019,Oct,4469360
+"Free to Play",2019,Sep,1274891
+"Free to Play",2019,NULL,74848805
+"Free to Play",2020,Apr,5443042
+"Free to Play",2020,Aug,6672768
+"Free to Play",2020,Dec,2972304
+"Free to Play",2020,Feb,8900817
+"Free to Play",2020,Jan,4270758
+"Free to Play",2020,Jul,6948112
+"Free to Play",2020,Jun,28221552
+"Free to Play",2020,Mar,7033217
+"Free to Play",2020,May,12208771
+"Free to Play",2020,Nov,2100571
+"Free to Play",2020,Oct,8632063
+"Free to Play",2020,Sep,3419158
+"Free to Play",2020,NULL,96823133
+"Free to Play",2021,Apr,7639722
+"Free to Play",2021,Aug,8058251
+"Free to Play",2021,Dec,8392964
+"Free to Play",2021,Feb,3215895
+"Free to Play",2021,Jan,2443136
+"Free to Play",2021,Jul,5937541
+"Free to Play",2021,Jun,13301673
+"Free to Play",2021,Mar,5064578
+"Free to Play",2021,May,8553161
+"Free to Play",2021,Nov,20351280
+"Free to Play",2021,Oct,37785798
+"Free to Play",2021,Sep,17809682
+"Free to Play",2021,NULL,138553681
+"Free to Play",2022,Apr,1457992
+"Free to Play",2022,Aug,20530972
+"Free to Play",2022,Dec,8732985
+"Free to Play",2022,Feb,2506002
+"Free to Play",2022,Jan,1727985
+"Free to Play",2022,Jul,10985979
+"Free to Play",2022,Jun,1567707
+"Free to Play",2022,Mar,6698816
+"Free to Play",2022,May,4075425
+"Free to Play",2022,Nov,7417497
+"Free to Play",2022,Oct,5616019
+"Free to Play",2022,Sep,6255207
+"Free to Play",2022,NULL,77572586
+"Free to Play",2023,Apr,3654750
+"Free to Play",2023,Aug,17927333
+"Free to Play",2023,Dec,4707144
+"Free to Play",2023,Feb,5787731
+"Free to Play",2023,Jan,4003241
+"Free to Play",2023,Jul,6379597
+"Free to Play",2023,Jun,21805926
+"Free to Play",2023,Mar,2845617
+"Free to Play",2023,May,5478418
+"Free to Play",2023,Nov,2850546
+"Free to Play",2023,Oct,693225
+"Free to Play",2023,Sep,6701220
+"Free to Play",2023,NULL,82834748
+"Free to Play",2024,Apr,41026099
+"Free to Play",2024,Aug,5022163
+"Free to Play",2024,Feb,1719024
+"Free to Play",2024,Jan,3758314
+"Free to Play",2024,Jul,6346464
+"Free to Play",2024,Jun,9844263
+"Free to Play",2024,Mar,2524497
+"Free to Play",2024,May,4213747
+"Free to Play",2024,Sep,1084120
+"Free to Play",2024,NULL,75538691
+"Free to Play",NULL,NULL,1072547219
+Racing,1997,Jun,12147
+Racing,1997,NULL,12147
+Racing,2006,Aug,23285
+Racing,2006,Dec,1152993
+Racing,2006,Nov,3619
+Racing,2006,NULL,1179897
+Racing,2007,Feb,155672
+Racing,2007,Jun,168
+Racing,2007,Sep,12880
+Racing,2007,NULL,168720
+Racing,2008,Apr,4087605
+Racing,2008,Aug,529791
+Racing,2008,Jan,30635
+Racing,2008,Jul,5117
+Racing,2008,May,70697
+Racing,2008,Nov,325
+Racing,2008,Oct,24048
+Racing,2008,NULL,4748218
+Racing,2009,Aug,92742
+Racing,2009,Feb,75077
+Racing,2009,Jan,4278
+Racing,2009,Jul,94241
+Racing,2009,May,5425
+Racing,2009,Oct,267689
+Racing,2009,NULL,539452
+Racing,2010,Dec,1607341
+Racing,2010,Feb,8800
+Racing,2010,Jan,54088
+Racing,2010,Mar,111866
+Racing,2010,Nov,289117
+Racing,2010,Oct,13454
+Racing,2010,NULL,2084666
+Racing,2011,Mar,407975
+Racing,2011,Nov,80211
+Racing,2011,Oct,25232
+Racing,2011,Sep,507414
+Racing,2011,NULL,1020832
+Racing,2012,Apr,11022
+Racing,2012,Aug,86701
+Racing,2012,Dec,30281
+Racing,2012,Feb,17505
+Racing,2012,Jan,17106
+Racing,2012,Jun,32879
+Racing,2012,Mar,119447
+Racing,2012,Oct,219607
+Racing,2012,Sep,6815
+Racing,2012,NULL,541363
+Racing,2013,Apr,21229
+Racing,2013,Feb,184495
+Racing,2013,Jan,859956
+Racing,2013,Jun,636199
+Racing,2013,Mar,306751
+Racing,2013,May,40651
+Racing,2013,Nov,5165
+Racing,2013,Oct,597469
+Racing,2013,Sep,180900
+Racing,2013,NULL,2832815
+Racing,2014,Apr,462915
+Racing,2014,Aug,110474
+Racing,2014,Dec,6440424
+Racing,2014,Feb,86015
+Racing,2014,Jan,3748
+Racing,2014,Jul,1010194
+Racing,2014,Jun,82573
+Racing,2014,Mar,238269
+Racing,2014,May,24316
+Racing,2014,Nov,398202
+Racing,2014,Oct,3613977
+Racing,2014,Sep,16940
+Racing,2014,NULL,12488047
+Racing,2015,Apr,1762406
+Racing,2015,Aug,5650
+Racing,2015,Dec,219940
+Racing,2015,Feb,217210
+Racing,2015,Jan,225758
+Racing,2015,Jul,113975
+Racing,2015,Jun,29029
+Racing,2015,Mar,484780
+Racing,2015,May,232861
+Racing,2015,Nov,256957
+Racing,2015,Oct,388152
+Racing,2015,Sep,42499
+Racing,2015,NULL,3979217
+Racing,2016,Apr,2846223
+Racing,2016,Aug,316419
+Racing,2016,Dec,115472
+Racing,2016,Feb,652701
+Racing,2016,Jan,112676
+Racing,2016,Jul,184525
+Racing,2016,Jun,120861
+Racing,2016,Mar,192038
+Racing,2016,May,152330
+Racing,2016,Nov,650495
+Racing,2016,Oct,3310057
+Racing,2016,Sep,314915
+Racing,2016,NULL,8968712
+Racing,2017,Apr,153146
+Racing,2017,Aug,332000
+Racing,2017,Dec,78992
+Racing,2017,Feb,504087
+Racing,2017,Jan,62912
+Racing,2017,Jul,8422714
+Racing,2017,Jun,284101
+Racing,2017,Mar,54648
+Racing,2017,May,124295
+Racing,2017,Nov,2903573
+Racing,2017,Oct,740630
+Racing,2017,Sep,565869
+Racing,2017,NULL,14226967
+Racing,2018,Apr,76540
+Racing,2018,Aug,28126
+Racing,2018,Dec,320547
+Racing,2018,Feb,253214
+Racing,2018,Jan,34751
+Racing,2018,Jul,610539

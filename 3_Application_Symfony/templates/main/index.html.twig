@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<!-- Section - Presentation -->
+    <section id="presentation">
+        <div class="container px-3">
+            <div class="row gx-4 justify-content-center">
+                <div id="presentation_text" class="col-lg-12">
+                    <h2>Steam 2024 Promotion Campaign</h2>
+                    <p class="lead">Biblios est la plateforme officielle de consultation du catalogue de la médiathèque de Trifouillis-les-Oies. Explorez notre collection avec une recherche efficace, vérifiez la disponibilité des ouvrages en temps réel, et effectuez des réservations en toute simplicité. Biblios s'engage pour faciliter l'accès à la culture et promouvoir la richesse de notre patrimoine littéraire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+<!-- Section - Problematic -->
+    <section id="problematic">
+        <div class="container px-2">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-12">
+                    <h2>Problematic</h2>
+                    <p class="lead">Biblios est la plateforme officielle de consultation du catalogue de la médiathèque de Trifouillis-les-Oies. Explorez notre collection avec une recherche efficace, vérifiez la disponibilité des ouvrages en temps réel, et effectuez des réservations en toute simplicité. Biblios s'engage pour faciliter l'accès à la culture et promouvoir la richesse de notre patrimoine littéraire.</p>
+                </div>
+                <div class="col-lg-12 home_problematic_icons_text_container">
+                    <div class="home_problematic_icons_text_element">
+                        <img src="{{asset("icons/video_game_icon.png")}}"></img>
+                        <p class="lead home_problematic_text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                    </div>
+                    <div class="home_problematic_icons_text_element">
+                        <img src="{{asset("icons/statistics_icon.png")}}"></img>
+                        <p class="lead home_problematic_text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                    </div>
+                    <div class="home_problematic_icons_text_element">
+                        <img src="{{asset("icons/promotion_sales_icon.png")}}"></img>
+                        <p class="lead home_problematic_text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                    </div>
+                </div>
+                <a type="button" class="btn btn-primary ms-auto" href ="{{ path('app_analysis') }}">Start Now 🞂</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

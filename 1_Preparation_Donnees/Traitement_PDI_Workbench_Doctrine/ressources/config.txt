@@ -1,0 +1,4 @@
+HOST=devbdd.iutmetz.univ-lorraine.fr
+DATABASE=e1735u_Projet_Steam_Doctrine
+USER=e1735u_appli
+PASSWORD=32313706

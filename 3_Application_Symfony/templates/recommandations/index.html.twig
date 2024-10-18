@@ -16,8 +16,49 @@
         <input class="searchBar" type="text" placeholder="Search a game">
     </div>
 
-<!--Main-container-->
+    <!--Main-container-->
     <div class="analysis-main-container">
+        <section class="games-block-container">
+        {% for game in games %}
+            <div class="game-block">
+                <div class="game-img">
+                    <h3>Nom du jeu : {{game.GameName}}</h3>
+                    <p>{{game.AppId}}</p>
+                </div>
+                <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal_{{game.AppId}}"></img>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="gamesInfoModal_{{game.AppId}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered infoModal">
+                <div class="modal-content">
+                <div class="modal-body">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Informations</h1>
+                    <br>
+                    <p>This web application has been realized in a university context.</p>
+                    <p>Analysis and web development were made by students based on Steam open data</p>
+                    <p>
+                        You can find us here : <br>
+                        <a href="https://www.linkedin.com/in/mathis-carvalho-453b97292/">Mathis Carvalho</a> 
+                        <br><a href="https://www.linkedin.com/in/remy-courte-289775205/">Rémy Courte</a> 
+                        <br><a href="https://www.linkedin.com/in/thibault-vivier-3149a9314/">Thibault Vivier</a>
+                    </p>
+                    <br>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
+            {% else %}
+            <li>Aucuun enregistrement dans la BD</li>
+        {% endfor %}
+        </section>
+
+    
+
+
+
+
         <section id="presentation">
             <div class="container px-3">
                 <div class="row gx-4 justify-content-center">

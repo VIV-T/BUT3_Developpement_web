@@ -58,6 +58,14 @@ hr {
     background-color: #147aff;
 }
 
+.btn-secondary {
+    width: 130px;
+    border-radius: 70px;
+    background-color: white;
+    color: #171d25;
+    border-color: white;
+}
+
 footer {
     position: relative;
     bottom: 0;
@@ -65,7 +73,28 @@ footer {
     z-index: 2;
 }
 
+.modal-content {
+    border-radius: 50px;
+    margin: auto;
+}
 
+.infoModal {
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+.modal-title {
+    margin-top: 20px;
+    color: black;
+}
+
+.modal-body {
+    color: black;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}
 
 /*analysis*/
 /* The sidebar menu */

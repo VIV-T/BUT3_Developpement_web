@@ -26,14 +26,39 @@
                         <li class="nav-item"><a class="nav-link" href="{{ path('app_recommandations') }}">Recommandations</a></li>
                     </ul>
                 </div>
-                <img id="site_information_icon_pagetop" class="navbar-nav ms-auto" href="#page-top" src="{{asset("icons/site_informations_icon.png")}}" type="button"></img>
+                <img id="site_information_icon_pagetop" class="navbar-nav ms-auto" href="#page-top" src="{{asset("icons/site_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#infoModal"></img>
             </div>
         </nav>
 
+        <!-- Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered infoModal">
+            <div class="modal-content">
+            <div class="modal-body">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Informations</h1>
+                <br>
+                <p>This web application has been realized in a university context.</p>
+                <p>Analysis and web development were made by students based on Steam open data</p>
+                <p>
+                    You can find us here : <br>
+                    <a href="https://www.linkedin.com/in/mathis-carvalho-453b97292/">Mathis Carvalho</a> 
+                    <br><a href="https://www.linkedin.com/in/remy-courte-289775205/">Rémy Courte</a> 
+                    <br><a href="https://www.linkedin.com/in/thibault-vivier-3149a9314/">Thibault Vivier</a>
+                </p>
+                <br>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
         {% block body %}{% endblock %}
+        <!-- Footer-->
+        <footer class="py-5 bg-dark mt-5">    
+            <div class="container px-4 footer-container"><p class="m-0 text-center text-white"><a class="footer_link_text" href="{{ path('app_sources') }}">Sources</a> - <a class="footer_link_text" href="https://store.steampowered.com/?l=french"> Steam&copy; </a></p></div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark mt-5">    
-        <div class="container px-4 footer-container"><p class="m-0 text-center text-white"><a class="footer_link_text" href="{{ path('app_sources') }}">Sources</a> - <a class="footer_link_text" href="https://store.steampowered.com/?l=french"> Steam&copy; </a></p></div>
-    </footer>
+    
 </html>

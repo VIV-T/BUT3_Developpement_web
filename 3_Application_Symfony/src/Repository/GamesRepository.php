@@ -16,6 +16,36 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
+
+    public function findDataGraphFiveDim()
+    {
+        $query = "SELECT 
+                        label, 
+                        COUNT(*) AS nbGames,
+                        SUM(revenue) AS sommeRevenue, 
+                        SUM(copies_sold) AS sommeCopiesSold, 
+                        AVG(review_score) AS avgReviewScore
+                    FROM games
+                        JOIN link_games_genres USING (app_id)
+	                    JOIN genres USING(genres_id)
+                    GROUP BY label";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function DataGraphFiveDim_label ()
+    {
+        $data = $this->findDataGraphFiveDim();
+
+        $result = array();
+
+        foreach ($data as $key) {
+            array_push($result, $key["label"]);
+        };
+    
+        return $result;
+    }
+
     //    /**
     //     * @return Games[] Returns an array of Games objects
     //     */

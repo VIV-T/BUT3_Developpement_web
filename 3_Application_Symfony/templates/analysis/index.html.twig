@@ -9,4 +9,15 @@
 </style>
 
 <h1>Analysis</h1>
+{% for dataLine in dataGraphFiveDim %}
+            <div>
+                <div>
+                    <h3>Nom du genre : {{dataLine.label}}</h3>
+                    <p>Nombre de jeux : {{dataLine.nbGames}}</p>
+                </div>
+            </div>
+{% endfor %} 
+<div class="test-graph">
+    <canva>{{render_chart(chart)}}</canva>
+</div>      
 {% endblock %}

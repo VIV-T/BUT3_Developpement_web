@@ -33,14 +33,33 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
-    public function DataGraphFiveDim_label ()
+    public function constructArray_DataGraphFiveDim ()
     {
         $data = $this->findDataGraphFiveDim();
-
+        $red = 50;
+        $green = 85;
+        $blue = 160;
+        
+        
         $result = array();
 
         foreach ($data as $key) {
-            array_push($result, $key["label"]);
+            $color_ratio = intval($key["avgReviewScore"]/5);
+            //dd($color_ratio);
+
+            array_push($result, 
+                [
+                    'label'=>$key["label"],
+                    'data'=>[
+                        [
+                        'x'=>(int) $key["sommeRevenue"],
+                        'y'=>(int) $key["sommeCopiesSold"],
+                        'r'=>intval($key["nbGames"]/1500),
+                        ],
+                    ],
+                    'backgroundColor'=> "rgb(".$red+$color_ratio.",".$green+$color_ratio.",".$blue+$color_ratio.")"
+                ]
+            );
         };
     
         return $result;

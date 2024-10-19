@@ -19,85 +19,75 @@ class AnalysisController extends AbstractController
     public function index(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Response
     {
         $dataGraphFiveDim = $repository->findDataGraphFiveDim();
-        $dataLabel = $repository->DataGraphFiveDim_label();
+        $data_formated = $repository->constructArray_DataGraphFiveDim();
         
-        // Pour comprendre ce qu'il y  a dans cet objet $dataLabel
-        //dd(json_encode($dataLabel));
+        // Pour comprendre ce qu'il y  a dans cet objet $data_formated
+        //dd(json_encode($data_formated));
+        //dd($data_formated);
+        //dd($dataGraphFiveDim[0]['sommeCopiesSold']);
+        //dd($dataGraphFiveDim[0]['label']);
+        //dd($dataGraphFiveDim[0]['nbGames']);
 
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BUBBLE);
 
-        //$chart->setData([
-            //'labels' => "['January', 'February', 'March', 'April', 'May', 'June', 'July']",
-            //'labels' => $dataLabel,
-            //'datasets' => [
-                //[
-                //   'label' => 'Cookies eaten 🍪',
-                //    'backgroundColor' => 'rgb(255, 99, 132, .4)',
-                //    'borderColor' => 'rgb(255, 99, 132)',
-                //    'data' => [2, 10, 5, 18, 20, 30, 45],
-                //    'tension' => 0.4,
-                //],
-                //[
-                //    'label' => 'Km walked 🏃‍♀️',
-                //    'backgroundColor' => 'rgba(45, 220, 126, .4)',
-                //    'borderColor' => 'rgba(45, 220, 126)',
-                //    'data' => [10, 15, 4, 3, 25, 41, 25],
-                //    'tension' => 0.4,
-                //],
-            //],
-        //]);
 
+
+        // Code qui fonctionne pour le Bubble chart test
         // $chart->setData([
-        // 'label' => ['test1', 'test2'],
         // 'datasets'=>[
         //     [
-        //         'x' => 0.2,
-        //         'y' => 0.3,
-        //         'r' => 15
+        //         'label' => 'Dataset 1',
+        //         'data' => [
+        //             [
+        //                 'x' => 20,
+        //                 'y' => 30,
+        //                 'r' => 15
+        //             ],
+        //         ],
+        //         'backgroundColor' => 'rgb(255, 99, 132)'
         //     ],
         //     [
-        //         'x' => 0.4,
-        //         'y' => 0.1,
-        //         'r' => 10
-        //     ]
+        //         'label' => 'Dataset 2',
+        //         'data' => [
+        //             [
+        //                 'x' => 40,
+        //                 'y' => 10,
+        //                 'r' => 10
+        //             ],
+        //         ],
+        //         'backgroundColor' => 'rgb(99, 255, 132)'
+        //     ],
         //     ],
         //     ]);
 
-        $chart->setData([
-        'datasets'=>[
-            [
-                'label' => 'Dataset 1',
-                'data' => [
-                    [
-                        'x' => 20,
-                        'y' => 30,
-                        'r' => 15
-                    ],
-                ],
-                'backgroundColor' => 'rgb(255, 99, 132)'
-            ],
-            [
-                'label' => 'Dataset 2',
-                'data' => [
-                    [
-                        'x' => 40,
-                        'y' => 10,
-                        'r' => 10
-                    ],
-                ],
-                'backgroundColor' => 'rgb(99, 255, 132)'
-            ],
-            ],
-            ]);
 
-        //$chart->setOptions([
-        //    'maintainAspectRatio' => false,
-        //]);
-        $chart->setOptions([
-            'backgroundColor' => 'rgb(255, 99, 132)',
-            'borderColor' => 'rgb(255, 99, 132)'
+        // $chart->setData([
+        //     'datasets'=>[
+        //      [
+        //         'label' => $dataGraphFiveDim[0]['label'],
+        //          'data' => [
+        //              [
+        //                 'x' => (int) $dataGraphFiveDim[0]['sommeRevenue'],
+        //                 'y' => (int) $dataGraphFiveDim[0]['sommeCopiesSold'],
+        //                 //'r' => $dataGraphFiveDim[0]['nbGames'],
+        //                 'r' => intval($dataGraphFiveDim[0]['nbGames']/3000),
+        //                 ],
+        //          ],
+        //          'backgroundColor' => 'rgb(255, 99, 132)',
+        //      ],
+        //     ],
+        // ]);
+
+
+        $chart->setData([
+            'datasets'=>$data_formated,
         ]);
+        
+        // $chart->setOptions([
+        //     'backgroundColor' => 'rgb(255, 99, 132)',
+        //     'borderColor' => 'rgb(255, 99, 132)'
+        // ]);
 
         return $this->render('analysis/index.html.twig', [
             'controller_name' => 'AnalysisController',

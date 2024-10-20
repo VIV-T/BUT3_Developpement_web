@@ -125,7 +125,7 @@ class AnalysisController extends AbstractController
         $chartYearGenre = $chartBuilder->createChart(Chart::TYPE_LINE);
 
         // $chartYearGenre -> setData([
-        //     'labels' => $dataGraphYearGenre,
+        //     'labels' => $dataGraphYearGenre['label'],
         //     'datasets' => [
         //         [
         //             'label' => 'My First dataset',
@@ -136,9 +136,14 @@ class AnalysisController extends AbstractController
         //     ],
         // ]);
 
-        $chartYearGenre -> setData($dataGraphYearGenre);
+        $chartYearGenre -> setData([
+            'labels' => $dataGraphYearGenre['label'],
+            'datasets' => $dataGraphYearGenre['datasets']
+        ]);
 
-        //dd($queryGraphYearGenre);
+        // $chartYearGenre -> setData($dataGraphYearGenre);
+
+        //dd($dataGraphYearGenre);
 
         return array($queryGraphYearGenre, $chartYearGenre);
     }

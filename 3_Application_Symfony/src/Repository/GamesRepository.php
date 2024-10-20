@@ -96,14 +96,26 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
-    public function findDataGraphYearGenre()
+    public function findDataGraphYearGenre($period)
     {
-        $query = "SELECT Label, release_year, SUM(copies_sold) AS sommeCopiesSold
+        if ($period === 'year'){
+            $query = "SELECT Label, release_year, SUM(copies_sold) AS sommeCopiesSold
                     FROM games 
                         JOIN link_games_genres USING (app_id)
                         JOIN genres USING(genres_id)
                     GROUP BY genres_id, release_year
                     ORDER BY release_year, Label";
+            
+            }elseif($period === 'month'){
+                $query = "SELECT Label, release_month, SUM(copies_sold) AS sommeCopiesSold
+                    FROM games 
+                        JOIN link_games_genres USING (app_id)
+                        JOIN genres USING(genres_id)
+                    GROUP BY genres_id, release_month
+                    ORDER BY release_month, Label";
+                
+                }
+        
             
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
         return $result->fetchAll();
@@ -112,9 +124,12 @@ class GamesRepository extends ServiceEntityRepository
 
     public function constructArray_DataGraphYearGenre ()
     {
-        $data_period = $this->findData_Period('year');
+        $period = "year";
+        //$period = "month";
+
+        $data_period = $this->findData_Period($period);
         $data_genres = $this->findData_Genre();
-        $data_copiesSold = $this->findDataGraphYearGenre();
+        $data_copiesSold = $this->findDataGraphYearGenre($period);
         //dd($data_period);
         //dd($data_genres);
      
@@ -124,18 +139,32 @@ class GamesRepository extends ServiceEntityRepository
 
         // creation des données de l'axes x du LINE CHART
         foreach ($data_period as $year_month) {
-            array_push($labels, $year_month['release_year']);
+            array_push($labels, $year_month['release_'.$period]);
         };
 
-        foreach ($data_genres as $label) {
+        foreach ($data_genres as $genre) {
             $datasets_data = array();
             foreach ($data_copiesSold as $line) {
-                    if ($line['Label']===$label["label"]){
+                    if ($line['Label']===$genre["label"]){
                         array_push($datasets_data, $line["sommeCopiesSold"]);
                     };
                 }
+            
+            //vérification de la longueur du tableau de données pour chaque genre
+            // Si le tableau n'est pas complet, on rajoute des 0 au debut 
+            //(les données eco sont connues pour tous les genres dans les dernière années mais pas forcement 
+            //dans les années 90-2000)
+            if (count($datasets_data)<count($labels)){
+                $add_zero_limit = count($labels)-count($datasets_data);
+                //dd($add_zero_limit);
+                for ($i = 0; $i < $add_zero_limit; $i++) {
+                    array_splice($datasets_data, 0,0,0);
+                }
+                //dd($datasets_data);
+            };
+            
             array_push($datasets, [
-                'label'=> $label["label"],
+                'label'=> $genre["label"],
                 'data'=> $datasets_data,
             
             ]);

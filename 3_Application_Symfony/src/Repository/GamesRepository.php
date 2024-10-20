@@ -36,15 +36,18 @@ class GamesRepository extends ServiceEntityRepository
     public function constructArray_DataGraphFiveDim ()
     {
         $data = $this->findDataGraphFiveDim();
-        $red = 50;
-        $green = 85;
-        $blue = 160;
+        $background_red = 50;
+        $background_green = 60;
+        $background_blue = 100;
+        $border_red = 80;
+        $border_green = 10;
+        $border_blue = 120;
         
         
         $result = array();
 
         foreach ($data as $key) {
-            $color_ratio = intval($key["avgReviewScore"]/5);
+            $color_ratio = intval($key["avgReviewScore"]);
             //dd($color_ratio);
 
             array_push($result, 
@@ -57,7 +60,8 @@ class GamesRepository extends ServiceEntityRepository
                         'r'=>intval($key["nbGames"]/1500),
                         ],
                     ],
-                    'backgroundColor'=> "rgb(".$red+$color_ratio.",".$green+$color_ratio.",".$blue+$color_ratio.")"
+                    'backgroundColor'=> "rgb(".$background_red+$color_ratio.",".$background_green+$color_ratio.",".$background_blue+$color_ratio.")",
+                    'borderColor' => "rgb(".$border_red+$color_ratio.",".$border_green+$color_ratio.",".$border_blue+$color_ratio.")",
                 ]
             );
         };

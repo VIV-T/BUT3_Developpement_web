@@ -13,7 +13,7 @@ class RecommandationsController extends AbstractController
     public function index(GamesRepository $repository): Response
     {
         $games = $repository->findBy(
-            ['review_score' => 90]
+            ['review_score' => 90, 'price' => 50]
         );
         
         return $this->render('recommandations/index.html.twig', [

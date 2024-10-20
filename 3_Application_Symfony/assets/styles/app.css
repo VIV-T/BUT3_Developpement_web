@@ -24,6 +24,8 @@ body {
     background-color: #1A2A3F;
     color: #c5c3c0;
     font-family: Verdana, sans-serif;
+    width: 80%;
+    margin: auto;
 }
 
 hr {
@@ -69,8 +71,11 @@ hr {
 footer {
     position: relative;
     bottom: 0;
-    width: 100%;
     z-index: 2;
+    /*Pour compenser le width du Body, on augmente la taille du footer + 
+    deplacer le body sur la gauche pour qu'il occupe toute la largeur de la page*/
+    width: 132.5%;
+    margin-left: -20%;
 }
 
 .modal-content {
@@ -124,9 +129,11 @@ footer {
 }
 
 
-.analysis-main-container {
+.recommandations-main-container {
     margin-top: 10%;
-    margin-left: 17%;
+    /*17-5% pour compenser le body width à 80% + les 17% lié à la taille de la colonne de filtes*/
+    margin-left: 12%;
+    margin-right: -7%;
 }
 
 .searchBar {
@@ -153,12 +160,15 @@ footer {
 }
 
 .game-block {
-    width: 40%;
+    width: 45%;
     display: flex;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
 }
 
 .game-img {
-    width: 90%;
+    width: 100%;
+    border-radius: 50px;
 }
 
 #games_information_icon_recommandations {
@@ -167,8 +177,46 @@ footer {
     aspect-ratio: 1;
 }
 
+/* Button to Dashboard */
+#recommandations-to-dashboard-btn-container {
+    text-align: right;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    padding-right: 5%;
+    padding-bottom: 7%;
+}
+
+#recommandations-to-dashboard-btn {
+    border-color: #1A2A3F;
+}
+
+#index-continue-btn {
+    /*design*/
+    width: 30px;
+    height: 30px;
+    background-color: #171d25;
+    border-color: white;
+    border-radius: 50px;
+    /*placement*/
+    margin-left: -15%;
+    margin-top: -20%;
+
+    padding-left: 10px;
+    padding-top: 2px;
+}
 
 
-.test-graph {
-    background-color: white;
+/*Analysis page*/
+.main-container-analysis-page {
+    margin: 20%;
+    width: 80%;
+
+}
+
+/*graphic containers*/
+.graphFiveDim-container {
+    width: 50%;
+    height: auto;
 }

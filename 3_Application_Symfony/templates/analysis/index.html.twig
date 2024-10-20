@@ -3,21 +3,19 @@
 {% block title %}Hello AnalysisController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<h1>Analysis</h1>
-{% for dataLine in dataGraphFiveDim %}
-            <div>
+<div "main-container-analysis-page">
+    <h1>Analysis</h1>
+    {% for viewLine in viewGraphFiveDim %}
                 <div>
-                    <h3>Nom du genre : {{dataLine.label}}</h3>
-                    <p>Nombre de jeux : {{dataLine.nbGames}}</p>
+                    <div>
+                        <h3>Nom du genre : {{viewLine.label}}</h3>
+                        <p>Nombre de jeux : {{viewLine.nbGames}}</p>
+                        <p>Note moyenne : {{viewLine.avgReviewScore}}</p>
+                    </div>
                 </div>
-            </div>
-{% endfor %} 
-<div class="test-graph">
-    <canva>{{render_chart(chart)}}</canva>
-</div>      
+    {% endfor %} 
+    <div class="graphFiveDim-container">
+        <canva>{{render_chart(chart)}}</canva>
+    </div>      
+</div>
 {% endblock %}

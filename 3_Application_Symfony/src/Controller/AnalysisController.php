@@ -18,20 +18,26 @@ class AnalysisController extends AbstractController
     #[Route('/analysis', name: 'app_analysis')]
     public function index(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Response
     {
-        $dataGraphFiveDim = $repository->findDataGraphFiveDim();
-        $data_formated = $repository->constructArray_DataGraphFiveDim();
+        return $this->render('analysis/index.html.twig', [
+            'controller_name' => 'AnalysisController',
+        ]);
+    }
+
+    #[Route('/analysis', name: 'app_analysis')]
+    public function construcgraphFiveDim(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Response
+    {
+        $queryGraphFiveDim = $repository->findDataGraphFiveDim();
+        $dataGraphFiveDim = $repository->constructArray_DataGraphFiveDim();
         
-        // Pour comprendre ce qu'il y  a dans cet objet $data_formated
-        //dd(json_encode($data_formated));
-        //dd($data_formated);
-        //dd($dataGraphFiveDim[0]['sommeCopiesSold']);
-        //dd($dataGraphFiveDim[0]['label']);
-        //dd($dataGraphFiveDim[0]['nbGames']);
+        // Pour comprendre ce qu'il y  a dans cet objet $dataGraphFiveDim
+        //dd(json_encode($dataGraphFiveDim));
+        //dd($dataGraphFiveDim);
+        //dd($queryGraphFiveDim[0]['sommeCopiesSold']);
+        //dd($queryGraphFiveDim[0]['label']);
+        //dd($queryGraphFiveDim[0]['nbGames']);
 
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BUBBLE);
-
-
 
         // Code qui fonctionne pour le Bubble chart test
         // $chart->setData([
@@ -81,17 +87,12 @@ class AnalysisController extends AbstractController
 
 
         $chart->setData([
-            'datasets'=>$data_formated,
+            'datasets'=>$dataGraphFiveDim,
         ]);
         
-        // $chart->setOptions([
-        //     'backgroundColor' => 'rgb(255, 99, 132)',
-        //     'borderColor' => 'rgb(255, 99, 132)'
-        // ]);
 
         return $this->render('analysis/index.html.twig', [
-            'controller_name' => 'AnalysisController',
-            'dataGraphFiveDim' => $dataGraphFiveDim,
+            'viewGraphFiveDim' => $queryGraphFiveDim,
             'chart' => $chart
         ]);
     }

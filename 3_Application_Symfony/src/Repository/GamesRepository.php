@@ -48,7 +48,6 @@ class GamesRepository extends ServiceEntityRepository
 
         foreach ($data as $key) {
             $color_ratio = intval($key["avgReviewScore"]);
-            //dd($color_ratio);
 
             array_push($result, 
                 [
@@ -68,6 +67,85 @@ class GamesRepository extends ServiceEntityRepository
     
         return $result;
     }
+
+    // Stade expérimental :
+    public function findData_Period($period)
+    {
+        if ($period === 'year'){
+            $query = "SELECT DISTINCT release_year
+                        FROM games
+                        ORDER BY release_year";
+            
+            }elseif($period === 'month'){
+                $query = "SELECT DISTINCT release_month
+                        FROM games
+                        ORDER BY release_month";
+                
+                }
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findData_Genre()
+    {
+        $query = "SELECT DISTINCT label
+                    FROM genres
+                    ORDER BY label";
+            
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findDataGraphYearGenre()
+    {
+        $query = "SELECT Label, release_year, SUM(copies_sold) AS sommeCopiesSold
+                    FROM games 
+                        JOIN link_games_genres USING (app_id)
+                        JOIN genres USING(genres_id)
+                    GROUP BY genres_id, release_year
+                    ORDER BY release_year, Label";
+            
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
+    public function constructArray_DataGraphYearGenre ()
+    {
+        $data_period = $this->findData_Period('year');
+        $data_genres = $this->findData_Genre();
+        $data_copiesSold = $this->findDataGraphYearGenre();
+        //dd($data_period);
+        //dd($data_genres);
+     
+        $labels = array();
+        $datasets = array();
+        
+
+        // creation des données de l'axes x du LINE CHART
+        foreach ($data_period as $year_month) {
+            array_push($labels, $year_month['release_year']);
+        };
+
+        foreach ($data_genres as $label) {
+            $datasets_data = array();
+            foreach ($data_copiesSold as $line) {
+                    if ($line['Label']===$label["label"]){
+                        array_push($datasets_data, $line["sommeCopiesSold"]);
+                    };
+                }
+            array_push($datasets, [
+                'label'=> $label["label"],
+                'data'=> $datasets_data,
+            
+            ]);
+        };
+
+        $result = ["label" => $labels, "datasets" =>$datasets];
+        //dd($result);
+        return $result;
+    }
+
 
     //    /**
     //     * @return Games[] Returns an array of Games objects

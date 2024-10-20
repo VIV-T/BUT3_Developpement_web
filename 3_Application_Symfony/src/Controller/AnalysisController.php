@@ -18,13 +18,32 @@ class AnalysisController extends AbstractController
     #[Route('/analysis', name: 'app_analysis')]
     public function index(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Response
     {
+        // Appel de la fonction de création du 1er graphique - GraphFiveDim
+        $arrayGraphFiveDim = $this->construcGraphFiveDim($repository, $chartBuilder);
+        //dd($arrayGraphFiveDim);
+        
+        $queryGraphFiveDim = $arrayGraphFiveDim[0];
+        $chartFiveDim = $arrayGraphFiveDim[1];
+        
+        // Appel de la fonction de création du 2nd graphique - GraphYearGenre
+        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder);
+        //dd($arrayGraphYearGenre);
+        
+        $queryGraphYearGenre = $arrayGraphYearGenre[0];
+        $chartYearGenre = $arrayGraphYearGenre[1];
+
+
         return $this->render('analysis/index.html.twig', [
             'controller_name' => 'AnalysisController',
+            'viewGraphFiveDim' => $queryGraphFiveDim,
+            'chartFiveDim' => $chartFiveDim,
+            'viewGraphYearGenre' => $queryGraphYearGenre,
+            'chartYearGenres' => $chartYearGenre,
         ]);
     }
 
-    #[Route('/analysis', name: 'app_analysis')]
-    public function construcgraphFiveDim(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Response
+    
+    public function construcGraphFiveDim(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Array
     {
         $queryGraphFiveDim = $repository->findDataGraphFiveDim();
         $dataGraphFiveDim = $repository->constructArray_DataGraphFiveDim();
@@ -37,7 +56,7 @@ class AnalysisController extends AbstractController
         //dd($queryGraphFiveDim[0]['nbGames']);
 
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_BUBBLE);
+        $chartFiveDim = $chartBuilder->createChart(Chart::TYPE_BUBBLE);
 
         // Code qui fonctionne pour le Bubble chart test
         // $chart->setData([
@@ -86,14 +105,41 @@ class AnalysisController extends AbstractController
         // ]);
 
 
-        $chart->setData([
+        $chartFiveDim->setData([
             'datasets'=>$dataGraphFiveDim,
         ]);
-        
+        //dd($queryGraphFiveDim);
 
-        return $this->render('analysis/index.html.twig', [
-            'viewGraphFiveDim' => $queryGraphFiveDim,
-            'chart' => $chart
-        ]);
+        return array($queryGraphFiveDim, $chartFiveDim);
+    }
+    
+    // Stade expérimental :
+    public function construcGraphYearGenre(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Array
+    {
+        $queryGraphYearGenre= $repository->findData_Period("year");
+        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre();
+        //dd($dataGraphYearGenre);
+        //$queryGraphYearGenre = 0;
+        //dd($queryGraphYearGenre);
+
+        $chartYearGenre = $chartBuilder->createChart(Chart::TYPE_LINE);
+
+        // $chartYearGenre -> setData([
+        //     'labels' => $dataGraphYearGenre,
+        //     'datasets' => [
+        //         [
+        //             'label' => 'My First dataset',
+        //             'backgroundColor' => 'rgb(255, 99, 132)',
+        //             'borderColor' => 'rgb(255, 99, 132)',
+        //             'data' => [0, 10, 5, 2, 20, 30, 45],
+        //         ],
+        //     ],
+        // ]);
+
+        $chartYearGenre -> setData($dataGraphYearGenre);
+
+        //dd($queryGraphYearGenre);
+
+        return array($queryGraphYearGenre, $chartYearGenre);
     }
 }

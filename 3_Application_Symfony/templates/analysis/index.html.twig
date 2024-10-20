@@ -15,7 +15,10 @@
                 </div>
     {% endfor %} 
     <div class="graphFiveDim-container">
-        <canva>{{render_chart(chart)}}</canva>
-    </div>      
+        <canva>{{render_chart(chartFiveDim)}}</canva>
+    </div>    
+    <div class="graphFiveDim-container">
+        <canva>{{render_chart(chartYearGenres)}}</canva>
+    </div>   
 </div>
 {% endblock %}

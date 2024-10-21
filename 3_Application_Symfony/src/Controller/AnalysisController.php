@@ -13,6 +13,11 @@ use App\Repository\GamesRepository;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
+//Formulaires - utile ici pour le radio button par exemple
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+
 class AnalysisController extends AbstractController
 {
     #[Route('/analysis', name: 'app_analysis')]
@@ -25,20 +30,31 @@ class AnalysisController extends AbstractController
         $queryGraphFiveDim = $arrayGraphFiveDim[0];
         $chartFiveDim = $arrayGraphFiveDim[1];
         
+
+        //
+        // Second graphique
+        //
+
+        // creation du fromulaire et recupération de sa valeur pour la contruction du graph
+        $form = $this->createFormPeriod();
+        $period = $form['testForm']->getData();
+        //dd($form['testForm']->getData());  
+
         // Appel de la fonction de création du 2nd graphique - GraphYearGenre
-        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder);
+        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
         //dd($arrayGraphYearGenre);
         
         $queryGraphYearGenre = $arrayGraphYearGenre[0];
         $chartYearGenre = $arrayGraphYearGenre[1];
 
-
+        
         return $this->render('analysis/index.html.twig', [
             'controller_name' => 'AnalysisController',
             'viewGraphFiveDim' => $queryGraphFiveDim,
             'chartFiveDim' => $chartFiveDim,
             'viewGraphYearGenre' => $queryGraphYearGenre,
             'chartYearGenres' => $chartYearGenre,
+            'form' => $form,
         ]);
     }
 
@@ -114,10 +130,10 @@ class AnalysisController extends AbstractController
     }
     
     // Stade expérimental :
-    public function construcGraphYearGenre(GamesRepository $repository, ChartBuilderInterface $chartBuilder): Array
+    public function construcGraphYearGenre(GamesRepository $repository, ChartBuilderInterface $chartBuilder, $period): Array
     {
-        $queryGraphYearGenre= $repository->findData_Period("year");
-        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre();
+        $queryGraphYearGenre= $repository->findData_Period($period);
+        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);
         //dd($dataGraphYearGenre);
         //$queryGraphYearGenre = 0;
         //dd($queryGraphYearGenre);
@@ -141,10 +157,21 @@ class AnalysisController extends AbstractController
             'datasets' => $dataGraphYearGenre['datasets']
         ]);
 
-        // $chartYearGenre -> setData($dataGraphYearGenre);
-
-        //dd($dataGraphYearGenre);
-
         return array($queryGraphYearGenre, $chartYearGenre);
     }
+
+    //création du formulaire pour le choix des perido - radio button
+    public function createFormPeriod(){
+        $form = $this->createFormBuilder()->add('testForm', ChoiceType::class, [
+            'choices' => [
+                'Year' => 'year',
+                'Month' => 'month',
+            ],
+            'data' => 'year',
+            'expanded' => true, // Pour afficher les radio buttons
+        ])->getForm();
+        return $form;
+    }
+
+
 }

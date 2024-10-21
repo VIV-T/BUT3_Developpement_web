@@ -16,6 +16,11 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
+    // Page Analysis
+
+    //
+    // Premier graphique
+    //
 
     public function findDataGraphFiveDim()
     {
@@ -68,7 +73,11 @@ class GamesRepository extends ServiceEntityRepository
         return $result;
     }
 
-    // Stade expérimental :
+    
+    //
+    // Second graphique
+    //
+
     public function findData_Period($period)
     {
         if ($period === 'year'){
@@ -122,9 +131,9 @@ class GamesRepository extends ServiceEntityRepository
     }
 
 
-    public function constructArray_DataGraphYearGenre ()
+    public function constructArray_DataGraphYearGenre ($period)
     {
-        $period = "year";
+        //$period = "year";
         //$period = "month";
 
         $data_period = $this->findData_Period($period);

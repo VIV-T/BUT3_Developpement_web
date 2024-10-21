@@ -220,3 +220,24 @@ footer {
     width: 50%;
     height: auto;
 }
+
+.graphPeriodGenre-container {
+    height: auto;
+    display: flex;
+    gap: 10%;
+}
+
+#graphPeriodGenre {
+    width: 150%;
+}
+
+/*modify the checkbox style*/
+.form-check-input:checked {
+    background-color: #147aff;
+    border-color: #147aff;
+}
+
+/* Suppression du point blacn au milieu du radio input */
+.form-check-input:checked[type=radio] {
+    --bs-form-check-bg-image: none;
+}

@@ -17,8 +17,24 @@
     <div class="graphFiveDim-container">
         <canva>{{render_chart(chartFiveDim)}}</canva>
     </div>    
-    <div class="graphFiveDim-container">
-        <canva>{{render_chart(chartYearGenres)}}</canva>
-    </div>   
+    <section class="graphPeriodGenre-container">
+        <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
+    </section>   
+    <div id="radio-button-period-container">
+            {# <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioBtnPeriodChoose" id="year" checked>
+                <label class="form-check-label" for="year">
+                    Year
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioBtnPeriodChoose" id="month">
+                <label class="form-check-label" for="month">
+                    Month
+                </label>
+            </div> #}
+            
+        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period'}}) }}
+        </div>
 </div>
 {% endblock %}

@@ -16,12 +16,16 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
-    // Page Analysis
 
-    //
-    // Premier graphique
-    //
+    /////
+    ///// Page Analysis
+    /////
 
+    /// Premier graphique
+    ///
+
+    // Requête SQL
+    //
     public function findDataGraphFiveDim()
     {
         $query = "SELECT 
@@ -38,9 +42,14 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
+    // Mise en forme des données pour chart js
+    //
     public function constructArray_DataGraphFiveDim ()
     {
+        // Appel de la requête SQL - obtention des données
         $data = $this->findDataGraphFiveDim();
+
+        // création des variable pour la partie visuelle (couleurs)
         $background_red = 50;
         $background_green = 60;
         $background_blue = 100;
@@ -48,9 +57,11 @@ class GamesRepository extends ServiceEntityRepository
         $border_green = 10;
         $border_blue = 120;
         
-        
+        // création du tableau qui sera renvoyé
         $result = array();
 
+        // remplissage du tableau avec les données de la reqête
+        // a modifier notamment tout ce qui concerne les couleurs -  modifier ici.
         foreach ($data as $key) {
             $color_ratio = intval($key["avgReviewScore"]);
 
@@ -64,6 +75,7 @@ class GamesRepository extends ServiceEntityRepository
                         'r'=>intval($key["nbGames"]/1500),
                         ],
                     ],
+                    // modifier ici.
                     'backgroundColor'=> "rgb(".$background_red+$color_ratio.",".$background_green+$color_ratio.",".$background_blue+$color_ratio.")",
                     'borderColor' => "rgb(".$border_red+$color_ratio.",".$border_green+$color_ratio.",".$border_blue+$color_ratio.")",
                 ]
@@ -74,10 +86,13 @@ class GamesRepository extends ServiceEntityRepository
     }
 
     
-    //
-    // Second graphique
-    //
+    /// Second graphique
+    ///
 
+    // Requêtes SQL
+    //
+    
+    // Pour obtenir un array de mois/années - condition sur la periode
     public function findData_Period($period)
     {
         if ($period === 'year'){
@@ -95,6 +110,8 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
+    
+    // Pour obtenir un array des genres
     public function findData_Genre()
     {
         $query = "SELECT DISTINCT label
@@ -105,6 +122,9 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
+    
+    // Reqête principale - condition sur la periode
+    // Utilisation du code de création des vues sur la BD test
     public function findDataGraphYearGenre($period)
     {
         if ($period === 'year'){
@@ -130,27 +150,30 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
-
+    
+    // Mise en forme des données pour chart js
+    //
     public function constructArray_DataGraphYearGenre ($period)
     {
         //$period = "year";
         //$period = "month";
 
+        // Appel des requêtes SQL précédentes
         $data_period = $this->findData_Period($period);
         $data_genres = $this->findData_Genre();
         $data_copiesSold = $this->findDataGraphYearGenre($period);
-        //dd($data_period);
-        //dd($data_genres);
      
+        // Création d'objets vides - présents dans le resultats
         $labels = array();
         $datasets = array();
         
-
+        // Nt :  voir documentation chart js - structure des données d'un chart LINETYPE
         // creation des données de l'axes x du LINE CHART
         foreach ($data_period as $year_month) {
             array_push($labels, $year_month['release_'.$period]);
         };
 
+        // creation des données du graphes - a partir des données des requêtes
         foreach ($data_genres as $genre) {
             $datasets_data = array();
             foreach ($data_copiesSold as $line) {
@@ -172,6 +195,7 @@ class GamesRepository extends ServiceEntityRepository
                 //dd($datasets_data);
             };
             
+            // intégration des données dans les objets de résultats $labels et $datasets
             array_push($datasets, [
                 'label'=> $genre["label"],
                 'data'=> $datasets_data,
@@ -180,33 +204,6 @@ class GamesRepository extends ServiceEntityRepository
         };
 
         $result = ["label" => $labels, "datasets" =>$datasets];
-        //dd($result);
         return $result;
     }
-
-
-    //    /**
-    //     * @return Games[] Returns an array of Games objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Games
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

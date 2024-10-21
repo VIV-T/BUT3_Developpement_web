@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecommandationsController!{% endblock %}
+{% block title %}Recommandations{% endblock %}
+
+
 
 {% block body %}
 <!--Sidebar-->
@@ -23,32 +25,54 @@
             <div class="game-block">
                 <div class="game-img-container">
                     <img class="game-img" src={{game.headerImg}}></img>
-                    <!--
-                    <h3>Nom du jeu : game.GameName</h3>
-                    <p>game.AppId</p>
-                    -->
                 </div>
-                <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal_{{game.AppId}}"></img>
-            </div>
+                {#<img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal"></img>
+            #}</div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="gamesInfoModal_{{game.AppId}}" tabindex="-1" aria-hidden="true">
+            
+            {% else %}
+            <li>Aucuun enregistrement dans la BD</li>
+        {% endfor %}
+        <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal"></img>
+        <!-- Modal -->
+            <div class="modal fade" id="gamesInfoModalkkk" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered infoModal">
                 <div class="modal-content">
                 <div class="modal-body">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Games nformations</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Games informations</h1>
                     <br>
                     <p>Modal de test pour chacun des jeux</p>
-                    <p>Nom du jeu : {{game.GameName}}</p>
+                    <p>Nom du jeu : XXXXXXX</p>
                     <br>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
                 </div>
             </div>
             </div>
-            {% else %}
-            <li>Aucuun enregistrement dans la BD</li>
-        {% endfor %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="gamesInfoModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered infoModal">
+            <div class="modal-content">
+            <div class="modal-body">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Informations</h1>
+                <br>
+                <p>This web application has been realized in a university context.</p>
+                <p>Analysis and web development were made by students based on Steam open data</p>
+                <p>
+                    You can find us here : <br>
+                    <a href="https://www.linkedin.com/in/mathis-carvalho-453b97292/">Mathis Carvalho</a> 
+                    <br><a href="https://www.linkedin.com/in/remy-courte-289775205/">Rémy Courte</a> 
+                    <br><a href="https://www.linkedin.com/in/thibault-vivier-3149a9314/">Thibault Vivier</a>
+                </p>
+                <br>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
         </section>
         <!--Modifier le href vers une nouvelle page -> nouveau controller -->
         <div id="recommandations-to-dashboard-btn-container">

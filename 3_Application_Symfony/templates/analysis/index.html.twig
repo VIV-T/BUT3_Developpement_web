@@ -19,22 +19,15 @@
     </div>    
     <section class="graphPeriodGenre-container">
         <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
-    </section>   
-    <div id="radio-button-period-container">
-            {# <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioBtnPeriodChoose" id="year" checked>
-                <label class="form-check-label" for="year">
-                    Year
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioBtnPeriodChoose" id="month">
-                <label class="form-check-label" for="month">
-                    Month
-                </label>
-            </div> #}
-            
+        <div id="radio-button-period-container">
+        {{form_start(form)}}            
         {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period'}}) }}
+        {{ form_rest(form) }}
+        <button type="submit">Enregistrer</button>
+        {{form_end(form)}} 
         </div>
+    </section>  
+    <a type="button">test</a> 
+    
 </div>
 {% endblock %}

@@ -54,36 +54,35 @@ class AnalysisController extends AbstractController
             
         $queryGraphYearGenre = $arrayGraphYearGenre[0];
         $chartYearGenre = $arrayGraphYearGenre[1];
-
-        // // gestion du cas d'interaction de l'utilisateur - click sur le radio button
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()){
-        //     $period = $form['testForm']->getData(); 
+    
+        /// /!\ ne marche pas
+        // gestion du cas d'interaction de l'utilisateur - click sur le radio button
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $period = $form['testForm']->getData(); 
                 
-        //     $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
+            $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
             
-        //     $queryGraphYearGenre = $arrayGraphYearGenre[0];
-        //     $chartYearGenre = $arrayGraphYearGenre[1];
+            $queryGraphYearGenre = $arrayGraphYearGenre[0];
+            $chartYearGenre = $arrayGraphYearGenre[1];
             
-        //     return $this->render('analysis/index.html.twig', [
-        //         'controller_name' => 'AnalysisController',
-        //         'viewGraphFiveDim' => $queryGraphFiveDim,
-        //         'chartFiveDim' => $chartFiveDim,
-        //         'viewGraphYearGenre' => $queryGraphYearGenre,
-        //         'chartYearGenres' => $chartYearGenre,
-        //         'form' => $form,
-        //     ]);
-        // }else{
-        //     $period = $form['testForm']->getData();    
+            return $this->render('analysis/index.html.twig', [
+                'controller_name' => 'AnalysisController',
+                'viewGraphFiveDim' => $queryGraphFiveDim,
+                'chartFiveDim' => $chartFiveDim,
+                'viewGraphYearGenre' => $queryGraphYearGenre,
+                'chartYearGenres' => $chartYearGenre,
+                'form' => $form,
+            ]);
+        }else{
+            $period = $form['testForm']->getData();    
 
-        //     // Fonction de création du graphique + des données associées
-        //     $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
+            // Fonction de création du graphique + des données associées
+            $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
             
-        //     $queryGraphYearGenre = $arrayGraphYearGenre[0];
-        //     $chartYearGenre = $arrayGraphYearGenre[1];
-        // }
-
-
+            $queryGraphYearGenre = $arrayGraphYearGenre[0];
+            $chartYearGenre = $arrayGraphYearGenre[1];
+        }
 
         
         ///// Renvoie tous les objets dans le template twig associé.

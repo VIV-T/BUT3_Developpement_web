@@ -224,9 +224,13 @@ footer {
 .graphPeriodGenre-container {
     height: auto;
     display: flex;
-    gap: 10%;
+    gap: 5%;
 }
 
 #graphPeriodGenre {
     width: 100%;
+}
+
+.radio-btn-period-container {
+    width: 120%;
 }

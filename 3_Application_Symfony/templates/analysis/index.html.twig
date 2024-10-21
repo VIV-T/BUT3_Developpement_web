@@ -21,7 +21,7 @@
         <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
-        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period'}}) }}
+        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container'}}) }}
         {{ form_rest(form) }}
         <button type="submit">Enregistrer</button>
         {{form_end(form)}} 

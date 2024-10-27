@@ -20,16 +20,16 @@
 
 
     <script>
-        function afficherGraphPeriodGenre(randomNumber) {
-            
+        function afficherGraphPeriodGenre(testForm) {
+            const containerRadioButton = document.querySelector('input[type="radio"][name="form[testForm]"]:checked');
+            console.log(containerRadioButton.value);
 			$(document).ready(function() {
 				$.ajax({
 					url: "{{ path('app_analysis_ajax_graph_period') }}",
 					type: "POST",
 					dataType: "json",
 					data: {
-                        action : 'test',
-						number : randomNumber
+						form : testForm
 					},
 					success: function (response) {
 						console.log(response);
@@ -47,7 +47,7 @@
         <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
-        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container'}}) }}
+        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container', 'onclick' : "afficherGraphPeriodGenre('"~ form.testForm.vars.value ~ "')"}}) }}
         {# {{ form_rest(form) }}
         <button type="submit">Enregistrer</button> #}
         {{form_end(form)}} 
@@ -56,8 +56,9 @@
 
     
 
-
-    <a type="button" onclick="afficherGraphPeriodGenre(Math.round(Math.random()*10))">test</a> 
+    <a type="button" onclick="afficherGraphPeriodGenre('{{form.testForm.vars.value}}')">test</a> 
+    <p>{{form.testForm.vars.value}}</p>
+    
     
 </div>
 {% endblock %}

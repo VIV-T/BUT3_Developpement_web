@@ -25,7 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class AnalysisController extends AbstractController
 {
     ///// Fonctionnement : seule la méthode préfixée par "#[Route('/analysis', name: 'app_analysis')]"
-    //                      sera appelée lors du lancement de la page. Le reste des méthode de classe 
+    //                      sera appelée lors du lancement de la page. Le reste des méthode de classe
     //                      doivent être appelée à l'intérieur de cette méthode principale.
 
     #[Route('/analysis', name: 'app_analysis')]
@@ -37,35 +37,35 @@ class AnalysisController extends AbstractController
         /////
         // Fonction de création du graphique + des données associées
         $arrayGraphFiveDim = $this->construcGraphFiveDim($repository, $chartBuilder);
-        
+
         $queryGraphFiveDim = $arrayGraphFiveDim[0];
         $chartFiveDim = $arrayGraphFiveDim[1];
-        
+
 
         ///// Second graphique - GraphYearGenre
         /////
         // creation du fromulaire et recupération de sa valeur pour la contruction du graph
         $form = $this->createFormPeriod();
-        $period = $form['testForm']->getData();    
-        
+        $period = $form['testForm']->getData();
+
 
         // Fonction de création du graphique + des données associées
         $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-            
+
         $queryGraphYearGenre = $arrayGraphYearGenre[0];
         $chartYearGenre = $arrayGraphYearGenre[1];
-    
+
         /// /!\ ne marche pas
         // gestion du cas d'interaction de l'utilisateur - click sur le radio button
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            $period = $form['testForm']->getData(); 
-                
+            $period = $form['testForm']->getData();
+
             $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-            
+
             $queryGraphYearGenre = $arrayGraphYearGenre[0];
             $chartYearGenre = $arrayGraphYearGenre[1];
-            
+
             return $this->render('analysis/index.html.twig', [
                 'controller_name' => 'AnalysisController',
                 'viewGraphFiveDim' => $queryGraphFiveDim,
@@ -75,16 +75,16 @@ class AnalysisController extends AbstractController
                 'form' => $form,
             ]);
         }else{
-            $period = $form['testForm']->getData();    
+            $period = $form['testForm']->getData();
 
             // Fonction de création du graphique + des données associées
             $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-            
+
             $queryGraphYearGenre = $arrayGraphYearGenre[0];
             $chartYearGenre = $arrayGraphYearGenre[1];
         }
 
-        
+
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [
             'controller_name' => 'AnalysisController',
@@ -103,7 +103,7 @@ class AnalysisController extends AbstractController
     {
         $queryGraphFiveDim = $repository->findDataGraphFiveDim();
         $dataGraphFiveDim = $repository->constructArray_DataGraphFiveDim();
-        
+
         // Pour comprendre ce qu'il y  a dans cet objet $dataGraphFiveDim
         //dd(json_encode($dataGraphFiveDim));
         //dd($dataGraphFiveDim);
@@ -119,7 +119,7 @@ class AnalysisController extends AbstractController
 
         return array($queryGraphFiveDim, $chartFiveDim);
     }
-    
+
 
     ///// Second graphique - GraphYearGenre
     /////
@@ -157,15 +157,18 @@ class AnalysisController extends AbstractController
 
 
     #[Route('/analysis/ajaxGraphPeriod', name: 'app_analysis_ajax_graph_period')]
-    public function ajaxRecettesProduit(Request $request) : Response
+    public function ajaxGraphPeriod(GamesRepository $repository, ChartBuilderInterface $chartBuilder, Request $request) : Response
     {
-        $test = $request->request->get('number');
-        
+        $test = $request->request->get('form');
+        //$don = $test["testForm"]->getData();
+        //dd($test);
+        //$test = 0;
         if (is_null($test)){
             $test = 1;
+            //dd($request);
         }
-        //echo($test);
         
+
         $response = new Response(json_encode($test));
         return $response;
     }

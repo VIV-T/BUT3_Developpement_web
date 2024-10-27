@@ -19,32 +19,12 @@
     </div>    
 
 
-    <script>
-        function afficherGraphPeriodGenre(testForm) {
-            const containerRadioButton = document.querySelector('input[type="radio"][name="form[testForm]"]:checked');
-            console.log(containerRadioButton.value);
-			$(document).ready(function() {
-				$.ajax({
-					url: "{{ path('app_analysis_ajax_graph_period') }}",
-					type: "POST",
-					dataType: "json",
-					data: {
-						form : testForm
-					},
-					success: function (response) {
-						console.log(response);
-					},
-                    error: function(jqXHR){         // Fonction à appeler si la requête échoue
-						console.log("erreur");
-					}
-				})
-			});
-		}
-    </script>
+    
 
 
     <section class="graphPeriodGenre-container">
-        <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
+    {#{{render_chart(chartYearGenres)}}#}
+        <canvas id="graphPeriodGenre"></canvas>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
         {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container', 'onclick' : "afficherGraphPeriodGenre('"~ form.testForm.vars.value ~ "')"}}) }}
@@ -56,9 +36,42 @@
 
     
 
-    <a type="button" onclick="afficherGraphPeriodGenre('{{form.testForm.vars.value}}')">test</a> 
-    <p>{{form.testForm.vars.value}}</p>
+
+    <script>
+        function afficherGraphPeriodGenre(testForm) {
+            const period = document.querySelector('input[type="radio"][name="form[testForm]"]:checked').value;
+
+			$(document).ready(function() {
+				$.ajax({
+					url: "{{ path('app_analysis_ajax_graph_period') }}",
+					type: "POST",
+					dataType: "json",
+					data: {
+						period : period
+					},
+					success: function (response) {
+                        var ctx = $("#graphPeriodGenre");
+                        var myChart = new Chart(ctx, { type: 'line', data: { labels: response.label, datasets: response.datasets} });
+
+                        myChart.update();
+					},
+                    error: function(jqXHR){         // Fonction à appeler si la requête échoue
+						console.log("erreur");
+					}
+				})
+			});
+		}
+    </script>
+
+
+    
     
     
 </div>
+{% endblock %}
+{% block lastScripts %}
+    <script>
+        document.querySelector('input[type="radio"][name="form[testForm]"]:checked').click();
+    </script>
+    
 {% endblock %}

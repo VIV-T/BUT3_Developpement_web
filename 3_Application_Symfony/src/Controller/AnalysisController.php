@@ -159,17 +159,22 @@ class AnalysisController extends AbstractController
     #[Route('/analysis/ajaxGraphPeriod', name: 'app_analysis_ajax_graph_period')]
     public function ajaxGraphPeriod(GamesRepository $repository, ChartBuilderInterface $chartBuilder, Request $request) : Response
     {
-        $test = $request->request->get('form');
-        //$don = $test["testForm"]->getData();
-        //dd($test);
-        //$test = 0;
-        if (is_null($test)){
-            $test = 1;
-            //dd($request);
+        $period = $request->request->get('period');
+        
+        if (is_null($period)){
+            $period = 1;
         }
         
 
-        $response = new Response(json_encode($test));
+        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
+
+        $queryGraphYearGenre = $arrayGraphYearGenre[0];
+        $chartYearGenre = $arrayGraphYearGenre[1];
+
+
+        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);
+
+        $response = new Response(json_encode($dataGraphYearGenre));
         return $response;
     }
 

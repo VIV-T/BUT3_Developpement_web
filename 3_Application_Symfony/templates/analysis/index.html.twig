@@ -17,17 +17,47 @@
     <div class="graphFiveDim-container">
         <canva>{{render_chart(chartFiveDim)}}</canva>
     </div>    
+
+
+    <script>
+        function afficherGraphPeriodGenre(randomNumber) {
+            
+			$(document).ready(function() {
+				$.ajax({
+					url: "{{ path('app_analysis_ajax_graph_period') }}",
+					type: "POST",
+					dataType: "json",
+					data: {
+                        action : 'test',
+						number : randomNumber
+					},
+					success: function (response) {
+						console.log(response);
+					},
+                    error: function(jqXHR){         // Fonction à appeler si la requête échoue
+						console.log("erreur");
+					}
+				})
+			});
+		}
+    </script>
+
+
     <section class="graphPeriodGenre-container">
         <canva id="graphPeriodGenre">{{render_chart(chartYearGenres)}}</canva>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
         {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container'}}) }}
-        {{ form_rest(form) }}
-        <button type="submit">Enregistrer</button>
+        {# {{ form_rest(form) }}
+        <button type="submit">Enregistrer</button> #}
         {{form_end(form)}} 
         </div>
     </section>  
-    <a type="button">test</a> 
+
+    
+
+
+    <a type="button" onclick="afficherGraphPeriodGenre(Math.round(Math.random()*10))">test</a> 
     
 </div>
 {% endblock %}

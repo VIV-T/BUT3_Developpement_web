@@ -154,4 +154,20 @@ class AnalysisController extends AbstractController
         return $form;
     }
 
+
+
+    #[Route('/analysis/ajaxGraphPeriod', name: 'app_analysis_ajax_graph_period')]
+    public function ajaxRecettesProduit(Request $request) : Response
+    {
+        $test = $request->request->get('number');
+        
+        if (is_null($test)){
+            $test = 1;
+        }
+        //echo($test);
+        
+        $response = new Response(json_encode($test));
+        return $response;
+    }
+
 }

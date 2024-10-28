@@ -58,31 +58,15 @@ class AnalysisController extends AbstractController
         /// /!\ ne marche pas
         // gestion du cas d'interaction de l'utilisateur - click sur le radio button
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-            $period = $form['testForm']->getData();
 
-            $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
+        $period = $form['testForm']->getData();
 
-            $queryGraphYearGenre = $arrayGraphYearGenre[0];
-            $chartYearGenre = $arrayGraphYearGenre[1];
+        // Fonction de création du graphique + des données associées
+        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
 
-            return $this->render('analysis/index.html.twig', [
-                'controller_name' => 'AnalysisController',
-                'viewGraphFiveDim' => $queryGraphFiveDim,
-                'chartFiveDim' => $chartFiveDim,
-                'viewGraphYearGenre' => $queryGraphYearGenre,
-                'chartYearGenres' => $chartYearGenre,
-                'form' => $form,
-            ]);
-        }else{
-            $period = $form['testForm']->getData();
-
-            // Fonction de création du graphique + des données associées
-            $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-
-            $queryGraphYearGenre = $arrayGraphYearGenre[0];
-            $chartYearGenre = $arrayGraphYearGenre[1];
-        }
+        $queryGraphYearGenre = $arrayGraphYearGenre[0];
+        $chartYearGenre = $arrayGraphYearGenre[1];
+        
 
 
         ///// Renvoie tous les objets dans le template twig associé.
@@ -159,17 +143,12 @@ class AnalysisController extends AbstractController
     #[Route('/analysis/ajaxGraphPeriod', name: 'app_analysis_ajax_graph_period')]
     public function ajaxGraphPeriod(GamesRepository $repository, ChartBuilderInterface $chartBuilder, Request $request) : Response
     {
+        // Récupération AJAX des données nécéssaires à la construction du graphique.
         $period = $request->request->get('period');
         
         if (is_null($period)){
             $period = 1;
         }
-        
-
-        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-
-        $queryGraphYearGenre = $arrayGraphYearGenre[0];
-        $chartYearGenre = $arrayGraphYearGenre[1];
 
 
         $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);

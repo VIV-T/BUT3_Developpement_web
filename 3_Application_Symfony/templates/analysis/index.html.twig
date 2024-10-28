@@ -27,7 +27,7 @@
         <canvas id="graphPeriodGenre"></canvas>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
-        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container', 'onclick' : "afficherGraphPeriodGenre('"~ form.testForm.vars.value ~ "')"}}) }}
+        {{ form_widget(form.testForm, {'attr': {'class': 'radio-btn-period-container', 'onclick' : "afficherGraphPeriodGenre()"}}) }}
         {# {{ form_rest(form) }}
         <button type="submit">Enregistrer</button> #}
         {{form_end(form)}} 
@@ -38,9 +38,13 @@
 
 
     <script>
-        function afficherGraphPeriodGenre(testForm) {
+        function afficherGraphPeriodGenre() {
+            // Récupération de la valeur sélectionnée dans les radioButton.
             const period = document.querySelector('input[type="radio"][name="form[testForm]"]:checked').value;
 
+            // Requête Ajax qui envoie la valeur de la constante précédente dans le controller avant
+            // d'utiliser la valeur renvoyée par le controller pour construire un grahe et 
+            // mettre à jour le canvas.
 			$(document).ready(function() {
 				$.ajax({
 					url: "{{ path('app_analysis_ajax_graph_period') }}",

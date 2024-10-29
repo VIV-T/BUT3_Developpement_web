@@ -27,7 +27,7 @@
         {% for game in games %}
             <div class="game-block">
                 <div class="game-img-container">
-                    <div class='game-img-overlay'>
+                    <div class='game-img-overlay'  onclick="selectionDashboard('{{game.appID}}')">
                     {# Rajouter icones Figma + 
                     adapter font-size pour éviter d'avoir des surprises lorsque la taille d'écran change #}
                     <div class="overlay-content" id="overlay-left">
@@ -51,6 +51,7 @@
                         </div>
                     </div>
                     </div>
+                    
                     <img class="game-img" src={{game.headerImg}}></img>
                 </div>
                 <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.appID}}')"></img>
@@ -62,8 +63,9 @@
         {% endfor %}
         
 
-        <!-- Ajax-modal -->
+        <!-- Ajax -->
         <script>
+            // Modal
             function afficherInfoGame(var_appID) {
                 $(document).ready(function() {
                     $.ajax({
@@ -84,7 +86,28 @@
                             $('#gameInfoModal').modal('show');
                         },
                         error: function(jqXHR){         // Fonction à appeler si la requête échoue
-                            $("#mesRecettesContenu").html('<div class="text-danger">Erreur</div>');
+                            console.log("erreur");
+                        }
+                    })
+                });
+            }
+
+            // Selection dashboard
+            function selectionDashboard(var_appID) {
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "{{ path('app_recommandations_ajax_selection') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            appID: var_appID
+                        },
+                        async: true,
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                            console.log("erreur");
                         }
                     })
                 });

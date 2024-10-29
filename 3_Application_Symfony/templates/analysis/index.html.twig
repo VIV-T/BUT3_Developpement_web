@@ -40,7 +40,7 @@
     <script>
         function afficherGraphPeriodGenre() {
             // Récupération de la valeur sélectionnée dans les radioButton.
-            const period = document.querySelector('input[type="radio"][name="form[testForm]"]:checked').value;
+            const var_period = document.querySelector('input[type="radio"][name="form[testForm]"]:checked').value;
 
             // Requête Ajax qui envoie la valeur de la constante précédente dans le controller avant
             // d'utiliser la valeur renvoyée par le controller pour construire un grahe et 
@@ -51,7 +51,7 @@
 					type: "POST",
 					dataType: "json",
 					data: {
-						period : period
+						period : var_period
 					},
 					success: function (response) {
                         var ctx = $("#graphPeriodGenre");
@@ -77,5 +77,4 @@
     <script>
         document.querySelector('input[type="radio"][name="form[testForm]"]:checked').click();
     </script>
-    
 {% endblock %}

@@ -44,29 +44,11 @@ class AnalysisController extends AbstractController
 
         ///// Second graphique - GraphYearGenre
         /////
-        // creation du fromulaire et recupération de sa valeur pour la contruction du graph
+        // creation du fromulaire 
         $form = $this->createFormPeriod();
-        $period = $form['testForm']->getData();
-
-
-        // Fonction de création du graphique + des données associées
-        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-
-        $queryGraphYearGenre = $arrayGraphYearGenre[0];
-        $chartYearGenre = $arrayGraphYearGenre[1];
-
-        /// /!\ ne marche pas
-        // gestion du cas d'interaction de l'utilisateur - click sur le radio button
-        $form->handleRequest($request);
-
-        $period = $form['testForm']->getData();
-
-        // Fonction de création du graphique + des données associées
-        $arrayGraphYearGenre = $this->construcGraphYearGenre($repository, $chartBuilder, $period);
-
-        $queryGraphYearGenre = $arrayGraphYearGenre[0];
-        $chartYearGenre = $arrayGraphYearGenre[1];
         
+        // La recupération de la valeur du formulaire pour la contruction du graph
+        // et la construction en querstion se font dans la requête Ajax.        
 
 
         ///// Renvoie tous les objets dans le template twig associé.
@@ -74,8 +56,6 @@ class AnalysisController extends AbstractController
             'controller_name' => 'AnalysisController',
             'viewGraphFiveDim' => $queryGraphFiveDim,
             'chartFiveDim' => $chartFiveDim,
-            'viewGraphYearGenre' => $queryGraphYearGenre,
-            'chartYearGenres' => $chartYearGenre,
             'form' => $form,
         ]);
     }
@@ -156,5 +136,4 @@ class AnalysisController extends AbstractController
         $response = new Response(json_encode($dataGraphYearGenre));
         return $response;
     }
-
 }

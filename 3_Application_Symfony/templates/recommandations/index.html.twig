@@ -26,47 +26,53 @@
                 <div class="game-img-container">
                     <img class="game-img" src={{game.headerImg}}></img>
                 </div>
-                {#<img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal"></img>
-            #}</div>
+                <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.appID}}')"></img>
+            </div>
 
             
             {% else %}
             <li>Aucuun enregistrement dans la BD</li>
         {% endfor %}
-        <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" data-bs-toggle="modal" data-bs-target="#gameInfoModal"></img>
-        <!-- Modal -->
-            {# <div class="modal fade" id="gamesInfoModalkkk" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered infoModal">
-                <div class="modal-content">
-                <div class="modal-body">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Games informations</h1>
-                    <br>
-                    <p>Modal de test pour chacun des jeux</p>
-                    <p>Nom du jeu : XXXXXXX</p>
-                    <br>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-                </div>
-            </div>
-            </div> #}
+        
+
+        <!-- Ajax-modal -->
+        <script>
+            function afficherInfoGame(var_appID) {
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "{{ path('app_recommandations_ajax_modal') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            appID: var_appID
+                        },
+                        async: true,
+                        success: function (arrayDataGame) {
+                            // On ecrit ici le script HTML définissant le contenu de la modal.
+                            var chaineHtml = "<p>"+arrayDataGame[0].game_name+"</p><button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>";
+                            
+                            // intégration du contenu de la modal dans le squelette
+                            $('#gameInfoContent').html(chaineHtml);
+                            // affichage de la modal.
+                            $('#gameInfoModal').modal('show');
+                        },
+                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                            $("#mesRecettesContenu").html('<div class="text-danger">Erreur</div>');
+                        }
+                    })
+                });
+            }
+        </script>
 
         <!-- Modal -->
-        <div class="modal fade" id="gamesInfoModal" tabindex="-1" data-bs-backdrop="static">
+        {#
+        Ici, la modal est vide, on initialise uniquement le squelette qui est 
+        ensuite rempli dans une requête AJAX.
+        #}
+        <div class="modal fade" id="gameInfoModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered infoModal">
             <div class="modal-content">
-            <div class="modal-body">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Informations</h1>
-                <br>
-                <p>This web application has been realized in a university context.</p>
-                <p>Analysis and web development were made by students based on Steam open data</p>
-                <p>
-                    You can find us here : <br>
-                    <a href="https://www.linkedin.com/in/mathis-carvalho-453b97292/">Mathis Carvalho</a> 
-                    <br><a href="https://www.linkedin.com/in/remy-courte-289775205/">Rémy Courte</a> 
-                    <br><a href="https://www.linkedin.com/in/thibault-vivier-3149a9314/">Thibault Vivier</a>
-                </p>
-                <br>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body" id="gameInfoContent">
             </div>
             </div>
         </div>

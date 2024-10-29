@@ -206,4 +206,33 @@ class GamesRepository extends ServiceEntityRepository
         $result = ["label" => $labels, "datasets" =>$datasets];
         return $result;
     }
+
+
+
+    /////
+    ///// Page Recommancations
+    /////
+
+    /// Modal
+    ///
+
+    // Requête SQL
+    //
+    public function findDataGameModal($appID)
+    {
+        // utile pour les tests
+        if(is_null($appID)){
+            $appID = 10;
+        }
+
+        // on récupère toutes les données associées au jeu
+        $query = "SELECT *
+                    FROM games
+                        JOIN link_games_genres USING (app_id)
+	                    JOIN genres USING(genres_id)
+                    WHERE app_id = $appID";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
 }

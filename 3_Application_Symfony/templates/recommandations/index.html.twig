@@ -18,12 +18,39 @@
         <input class="searchBar" type="text" placeholder="Search a game">
     </div>
 
+    
+
+
     <!--Main-container-->
     <div class="recommandations-main-container">
         <section class="games-block-container">
         {% for game in games %}
             <div class="game-block">
                 <div class="game-img-container">
+                    <div class='game-img-overlay'>
+                    {# Rajouter icones Figma + 
+                    adapter font-size pour éviter d'avoir des surprises lorsque la taille d'écran change #}
+                    <div class="overlay-content" id="overlay-left">
+                        <div class="overlay-content-top">
+                        <p>top-left</p>
+                        <p>{{game.revenue}}</p>
+                        </div>
+                        <div class="overlay-content-bottom">
+                        <p>bottom-left</p>
+                        <p>{{game.AvgPlayTime}}</p>
+                        </div>
+                    </div>
+                    <div class="overlay-content" id="overlay-right">
+                        <div class="overlay-content-top">
+                        <p>top-right</p>
+                        <p>{{game.copiesSold}}</p>
+                        </div>
+                        <div class="overlay-content-bottom">
+                        <p>bottom-right</p>
+                        <p>{{game.recommandations}}</p>
+                        </div>
+                    </div>
+                    </div>
                     <img class="game-img" src={{game.headerImg}}></img>
                 </div>
                 <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.appID}}')"></img>

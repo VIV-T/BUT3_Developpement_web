@@ -125,7 +125,7 @@ footer {
     margin-top: 5%;
     padding-top: 30px;
     padding-left: 20px;
-    z-index: 1;
+    z-index: 2;
 }
 
 
@@ -166,10 +166,52 @@ footer {
     margin-bottom: 2.5%;
 }
 
+.game-img-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .game-img {
+    position: relative;
     width: 100%;
     border-radius: 50px;
 }
+
+.game-img-overlay {
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 0;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
+}
+
+.overlay-content {
+    margin: auto;
+    font-size: 100%;
+}
+
+.overlay-content-top {
+    border-bottom: solid;
+    padding-bottom: 0;
+}
+
+#overlay-left {
+    border-right: solid;
+}
+
+#overlay-right {
+    border-left: solid;
+}
+
+.game-img-container:hover .game-img-overlay {
+    z-index: 1;
+}
+
 
 #games_information_icon_recommandations {
     width: 35px;

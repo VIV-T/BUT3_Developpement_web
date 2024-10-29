@@ -17,6 +17,8 @@ class RecommandationsController extends AbstractController
         $games = $repository->findBy(
             ['review_score' => 90, 'price' => 50]
         );
+
+        //dd($games);
         
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',

@@ -92,7 +92,8 @@
                 });
             }
 
-
+            // Dynamic count of selected games
+            // No need to send data to the Controller, we just want to call the Ajax function of the Controller. 
             function countSelectedGame() {
                 $(document).ready(function() {
                     $.ajax({
@@ -100,7 +101,6 @@
                         type: "POST",
                         async: true,
                         success: function (accountSelectedGame) {
-                            //console.log(accountSelectedGame);
                             var chaineHtml = "\
                                 <p>"+accountSelectedGame+"</p>\
                                 ";
@@ -117,7 +117,7 @@
             }
 
 
-            // Select game for dashboard
+            // Select game for dashboard - call we we click on a game to select him.
             function selectGameDashboard(var_appID) {
                 $(document).ready(function() {
                     $.ajax({
@@ -151,7 +151,7 @@
 
 
 
-            // Remove a game from dashboard selection table
+            // Remove a game from dashboard selection table - call we we click on a game to unselect him.
             function unselectGameDashboard(var_appID) {
                 $(document).ready(function() {
                     $.ajax({
@@ -163,7 +163,8 @@
                         },
                         async: true,
                         success: function (arrayDataGame) {
-                            //console.log(arrayDataGame);
+                            // this var is about to change when we will change graphic aspect of the website.
+                            // We must add icons and change the css to make things good.
                             var chaineHtml = "\
                                 <div class='game-img-overlay'  onclick='selectGameDashboard("+var_appID+")'>\
                                     <div class='overlay-content' id='overlay-left'>\
@@ -190,7 +191,7 @@
                                     <img class='game-img' src="+arrayDataGame.header_img+"></img>\
                                 </div>\
                             ";
-                            //console.log(chaineHtml);
+                            
                             // intégration du contenu de la modal dans le squelette
                             $('#game_img_container_'+ var_appID).html(chaineHtml);
                             countSelectedGame();
@@ -220,7 +221,6 @@
 
 
         </section>
-        <!--Modifier le href vers une nouvelle page -> nouveau controller -->
         <div id="recommandations-to-dashboard-btn-container">
         <a type="button" id="recommandations-to-dashboard-btn" class="btn btn-primary" href ="{{ path('app_recommandations_dashobard') }}">Continue 🞂</a>
         <a type="button" id="index-continue-btn" class="btn btn-primary">0</a>

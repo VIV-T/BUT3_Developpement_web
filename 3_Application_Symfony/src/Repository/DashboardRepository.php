@@ -17,7 +17,7 @@ class DashboardRepository extends ServiceEntityRepository
     }
 
 
-
+    // Appel AJAX - Select
     public function findDataSelectedGames()
     {
         // on récupère toutes les données des jeux selectionnés pour le dashboard
@@ -29,7 +29,7 @@ class DashboardRepository extends ServiceEntityRepository
     }
 
 
-
+    // Appel AJAX - Select & Unselect
     public function findDataTableGames($appID)
     {
         // utile pour les tests
@@ -48,10 +48,9 @@ class DashboardRepository extends ServiceEntityRepository
     }
 
 
-
+    // Appel AJAX - Select
     public function insertIntoDashboardTable(Array $dataGameToInsert) : Bool
     {
-        //dd($dataGameToInsert);
         //insérer les données récupérées de la table games dans la table Dashboard.
         $query = "INSERT INTO dashboard (
                             app_id, 
@@ -101,12 +100,12 @@ class DashboardRepository extends ServiceEntityRepository
                                 )";
 
         
-        //$result = $this->getEntityManager()->getConnection()->executeQuery($query);
         $result = $this->getEntityManager()->getConnection()->prepare($query)->execute($dataGameToInsert);
         $result->fetchAll();
 
         return TRUE;
     }
+
 
 
     public function truncateDashboardTable()
@@ -121,6 +120,7 @@ class DashboardRepository extends ServiceEntityRepository
     }
 
 
+    // Appel AJAX - Unselect
     public function deleteGameFromDashboardTable($appID)
     {
         // on récupère toutes les données des jeux selectionnés pour le dashboard
@@ -134,7 +134,7 @@ class DashboardRepository extends ServiceEntityRepository
     }
 
 
-
+    // Appel AJAX - Count
     public function countSelectedGames()
     {
         // on récupère toutes les données des jeux selectionnés pour le dashboard

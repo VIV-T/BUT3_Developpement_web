@@ -19,9 +19,8 @@ class RecommandationsController extends AbstractController
             ['review_score' => 90, 'price' => 50]
         );
 
-        $test = $dashboard_repository->findDataSelectedGames();
+        $dashboard_repository->truncateDashboardTable();
 
-        //dd($test);
         
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
@@ -46,38 +45,80 @@ class RecommandationsController extends AbstractController
     }
 
 
-    #[Route('/recommandations/ajaxSelection', name: 'app_recommandations_ajax_selection')]
-    public function ajaxSelectionDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
+    #[Route('/recommandations/ajaxSelect', name: 'app_recommandations_ajax_select')]
+    public function ajaxSelectDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
     {
         $appID = $request->request->get('appID');
 
 
         // on verifie que l'ID du jeu selectionné n'est pas déjà dans la table Dashboard.
+        // on SELECT tous les jeux de la table dashboard
         $dataTableDashboard = $dashboard_repository->findDataSelectedGames();
         //dd($datatableGames["0"]["app_id"]);
 
-        $array_test = array();
+        // creation d'un observateur bool : si le jeux est présent dans la table => true
+        $observateur_presence_game_dashboardTable = false;
+
         for ($i = 0; $i <= count($dataTableDashboard)-1; $i++) {
             if ($appID === $dataTableDashboard[strval($i)]["app_id"]){
-                array_push($array_test, 0);
-                dd($array_test);
+                $observateur_presence_game_dashboardTable = true;
                 break;
-            }else{
-                array_push($array_test, 1);
             }
         }
-        //dd($array_test);
 
         // Récupération des données du jeu dans la table Games.
-        $dataGameInsert = $dashboard_repository->findDataTableGames($appID)["0"];
+        $dataGameToInsert = $dashboard_repository->findDataTableGames($appID)["0"];
 
         //Envoi de ces données dans le repository pour l'insertion.
-        $booleen_insertion=$dashboard_repository->insertIntoDashboardTable($dataGameInsert);
+        
+        $dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
+        //$booleen_insertion=$dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
         // le booleen est utile pour les test mais les cas d'erreur sont déjà gérés par symfony.
-        dd($booleen_insertion);
+        //dd($booleen_insertion);
+        $header_img = $dataGameToInsert["header_img"];
+        
 
-        $response = new Response(json_encode($appID));
+        $response = new Response(json_encode($header_img));
         return $response;
+    }
+
+
+
+    #[Route('/recommandations/ajaxUnselect', name: 'app_recommandations_ajax_unselect')]
+    public function ajaxUnselectDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
+    {
+        $appID = $request->request->get('appID');
+
+        //suppression des données du jeu dans la table dashboard
+        $dashboard_repository->deleteGameFromDashboardTable($appID);
+
+        // Récupération des données du jeu dans la table Games. => pour l'affichage
+        $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
+    
+        $response = new Response(json_encode($arrayDataGame));
+        return $response;
+    }
+
+
+    #[Route('/recommandations/ajaxCount', name: 'app_recommandations_ajax_count')]
+    public function ajaxCountSelectedGames(DashboardRepository $dashboard_repository, Request $request) : Response
+    {
+
+        // On compte le nombre de jeux dans la table dashboard
+        $account = $dashboard_repository->countSelectedGames()["0"]["account"];
+    
+        $response = new Response(json_encode($account));
+        return $response;
+    }
+
+
+    //Route : Dashboard
+    #[Route('/recommandations/dashboard', name: 'app_recommandations_dashobard')]
+    public function index_dashboard(DashboardRepository $dashboard_repository): Response
+    {
+        return $this->render('recommandations/dashboard.html.twig', [
+            'controller_name' => 'RecommandationsController',
+        ]);
     }
 
    

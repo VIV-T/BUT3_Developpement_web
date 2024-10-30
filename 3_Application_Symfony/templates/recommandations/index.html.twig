@@ -26,8 +26,8 @@
         <section class="games-block-container">
         {% for game in games %}
             <div class="game-block">
-                <div class="game-img-container">
-                    <div class='game-img-overlay'  onclick="selectionDashboard('{{game.appID}}')">
+                <div class="game-img-container" id="game_img_container_{{game.appID}}">
+                    <div class='game-img-overlay'  onclick="selectGameDashboard('{{game.appID}}')">
                     {# Rajouter icones Figma + 
                     adapter font-size pour éviter d'avoir des surprises lorsque la taille d'écran change #}
                     <div class="overlay-content" id="overlay-left">
@@ -86,28 +86,118 @@
                             $('#gameInfoModal').modal('show');
                         },
                         error: function(jqXHR){         // Fonction à appeler si la requête échoue
-                            console.log("erreur");
+                            console.log("erreur modal");
                         }
                     })
                 });
             }
 
-            // Selection dashboard
-            function selectionDashboard(var_appID) {
+
+            function countSelectedGame() {
                 $(document).ready(function() {
                     $.ajax({
-                        url: "{{ path('app_recommandations_ajax_selection') }}",
+                        url: "{{ path('app_recommandations_ajax_count') }}",
+                        type: "POST",
+                        async: true,
+                        success: function (accountSelectedGame) {
+                            //console.log(accountSelectedGame);
+                            var chaineHtml = "\
+                                <p>"+accountSelectedGame+"</p>\
+                                ";
+                            
+                            // intégration du contenu de la modal dans le squelette
+                            $('#index-continue-btn').html(chaineHtml);
+
+                        },
+                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                            console.log("erreur count");
+                        }
+                    })
+                });
+            }
+
+
+            // Select game for dashboard
+            function selectGameDashboard(var_appID) {
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "{{ path('app_recommandations_ajax_select') }}",
                         type: "POST",
                         dataType: "json",
                         data: {
                             appID: var_appID
                         },
                         async: true,
-                        success: function (response) {
-                            console.log(response);
+                        success: function (header_img) {
+                            //console.log(header_img);
+                            var chaineHtml = "\
+                                <div class='game-img-overlay-success' onclick='unselectGameDashboard("+var_appID+")'>\
+                                    <p>test</p>\
+                                </div>\
+                                <img class='game-img' src="+header_img+"></img>\
+                                ";
+                            
+                            // intégration du contenu Html dans le squelette
+                            $('#game_img_container_'+ var_appID).html(chaineHtml);
+                            countSelectedGame();
                         },
                         error: function(jqXHR){         // Fonction à appeler si la requête échoue
-                            console.log("erreur");
+                            console.log("erreur select");
+                            console.log(var_appID);
+                        }
+                    })
+                });
+            }
+
+
+
+            // Remove a game from dashboard selection table
+            function unselectGameDashboard(var_appID) {
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "{{ path('app_recommandations_ajax_unselect') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            appID: var_appID
+                        },
+                        async: true,
+                        success: function (arrayDataGame) {
+                            //console.log(arrayDataGame);
+                            var chaineHtml = "\
+                                <div class='game-img-overlay'  onclick='selectGameDashboard("+var_appID+")'>\
+                                    <div class='overlay-content' id='overlay-left'>\
+                                        <div class='overlay-content-top'>\
+                                        <p>top-left</p>\
+                                        <p>"+arrayDataGame.revenue+"</p>\
+                                        </div>\
+                                        <div class='overlay-content-bottom'>\
+                                        <p>bottom-left</p>\
+                                        <p>"+arrayDataGame.avg_play_time+"</p>\
+                                        </div>\
+                                    </div>\
+                                    <div class='overlay-content' id='overlay-right'>\
+                                        <div class='overlay-content-top'>\
+                                        <p>top-right</p>\
+                                        <p>"+arrayDataGame.copies_sold+"</p>\
+                                        </div>\
+                                        <div class='overlay-content-bottom'>\
+                                        <p>bottom-right</p>\
+                                        <p>"+arrayDataGame.recommandations+"</p>\
+                                        </div>\
+                                    </div>\
+                                    </div>\
+                                    <img class='game-img' src="+arrayDataGame.header_img+"></img>\
+                                </div>\
+                            ";
+                            //console.log(chaineHtml);
+                            // intégration du contenu de la modal dans le squelette
+                            $('#game_img_container_'+ var_appID).html(chaineHtml);
+                            countSelectedGame();
+                        },
+                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                            console.log("erreur unselect");
+                            console.log(var_appID);
                         }
                     })
                 });
@@ -132,8 +222,8 @@
         </section>
         <!--Modifier le href vers une nouvelle page -> nouveau controller -->
         <div id="recommandations-to-dashboard-btn-container">
-        <a type="button" id="recommandations-to-dashboard-btn" class="btn btn-primary" href ="{{ path('app_analysis') }}">Continue 🞂</a>
-        <a type="button" id="index-continue-btn" class="btn btn-primary" href ="{{ path('app_analysis') }}">0</a>
+        <a type="button" id="recommandations-to-dashboard-btn" class="btn btn-primary" href ="{{ path('app_recommandations_dashobard') }}">Continue 🞂</a>
+        <a type="button" id="index-continue-btn" class="btn btn-primary">0</a>
         </div>
     </div>
 {% endblock %}

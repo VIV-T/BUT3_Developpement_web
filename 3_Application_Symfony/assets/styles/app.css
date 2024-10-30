@@ -212,6 +212,18 @@ footer {
     z-index: 1;
 }
 
+.game-img-overlay-success {
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 1;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
+}
+
 
 #games_information_icon_recommandations {
     width: 35px;

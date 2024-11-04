@@ -114,6 +114,7 @@ footer {
     padding-top: 20px;
 }
 
+
 .title_block {
     display: flex;
     height: 20%;
@@ -213,8 +214,8 @@ footer {
 }
 
 .game-img-overlay-success {
-    width: inherit;
-    height: inherit;
+    min-width: inherit;
+    min-height: inherit;
     border-radius: 50px;
     position: absolute;
     background-color: #4A4A4A;
@@ -287,4 +288,35 @@ footer {
 
 .radio-btn-period-container {
     width: 120%;
+}
+
+
+/*Dashboard page*/
+
+.sidebar-dashboard {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #171d25;
+    padding-top: 20px;
+}
+
+.games-block-container-dashboard {
+    padding-top: 50px;
+    margin: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    column-gap: 10%;
+}
+
+.game-block-dashboard {
+    width: inherit;
+    height: auto;
+    display: flex;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
 }

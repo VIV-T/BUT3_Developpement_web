@@ -120,8 +120,11 @@ class RecommandationsController extends AbstractController
     #[Route('/recommandations/dashboard', name: 'app_recommandations_dashobard')]
     public function index_dashboard(DashboardRepository $dashboard_repository): Response
     {
+        $dashboard_games = $dashboard_repository->findAll();
+
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',
+            'dashboard_games' => $dashboard_games
         ]);
     }
 

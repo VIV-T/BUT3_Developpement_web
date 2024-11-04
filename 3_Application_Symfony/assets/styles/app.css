@@ -3,7 +3,7 @@ nav {
     background-color: #171d25;
 }
 
-div.container.ps-0{
+div.container.ps-0 {
     margin-left: 0px;
     margin-right: 0px;
 }
@@ -221,6 +221,8 @@ footer {
 .game-img-overlay-success {
     min-width: inherit;
     min-height: inherit;
+    width: inherit;
+    height: inherit;
     border-radius: 50px;
     position: absolute;
     background-color: #4A4A4A;
@@ -228,6 +230,14 @@ footer {
     opacity: 0.65;
     text-align: center;
     display: flex;
+}
+
+.check_icon {
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    border-radius: 50%;
+    margin: auto;
 }
 
 
@@ -319,9 +329,23 @@ footer {
 }
 
 .game-block-dashboard {
-    width: inherit;
+    width: 100%;
     height: auto;
     display: flex;
     margin-top: 2.5%;
     margin-bottom: 2.5%;
+}
+
+.game-img-overlay-success-dashboard {
+    min-width: inherit;
+    min-height: inherit;
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 1;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
 }

@@ -9,8 +9,8 @@
         <h2>Game list : </h2>
         {% for dashboard_game in dashboard_games %}
             <div class="game-block-dashboard">
-                <div class='game-img-overlay-success' {#onclick='unselectGameDashboard("+var_appID+")'#}>
-                    <p>test</p>
+                <div class='game-img-overlay-success-dashboard' {#onclick='unselectGameDashboard("+var_appID+")'#}>
+                    <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
                 </div>
                 <img class='game-img' src={{dashboard_game.headerImg}}></img>
             </div>

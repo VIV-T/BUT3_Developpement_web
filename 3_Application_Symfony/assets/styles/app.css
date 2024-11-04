@@ -3,8 +3,13 @@ nav {
     background-color: #171d25;
 }
 
+div.container.ps-0{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
 #img_navbar_steam {
-    margin-left: -7%;
+    /*margin-left: -7%;*/
     margin-right: 7%;
 }
 

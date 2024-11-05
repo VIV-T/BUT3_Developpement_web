@@ -317,6 +317,8 @@ footer {
     left: 0;
     background-color: #171d25;
     padding-top: 20px;
+    overflow-y: auto;
+    /* enable vertical scrolling */
 }
 
 .games-block-container-dashboard {
@@ -348,4 +350,24 @@ footer {
     opacity: 0.65;
     text-align: center;
     display: flex;
+}
+
+
+.game-img-overlay-dashboard {
+    min-width: inherit;
+    min-height: 30px;
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 0;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
+}
+
+
+.game-block-dashboard:hover .game-img-overlay-dashboard {
+    z-index: 1;
 }

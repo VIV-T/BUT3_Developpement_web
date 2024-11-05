@@ -8,8 +8,8 @@
     <section class="games-block-container-dashboard">
         <h2>Game list : </h2>
         {% for dashboard_game in dashboard_games %}
-            <div class="game-block-dashboard">
-                <div class='game-img-overlay-success-dashboard' {#onclick='unselectGameDashboard("+var_appID+")'#}>
+            <div class="game-block-dashboard" id="game_img_container_dashboard_{{dashboard_game.appID}}">
+                <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard({{dashboard_game.appID}})'>
                     <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
                 </div>
                 <img class='game-img' src={{dashboard_game.headerImg}}></img>
@@ -18,6 +18,70 @@
             {% else %}
             <li>Aucuun enregistrement dans la BD</li>
         {% endfor %}
-
 </div>
+
+<script>
+    // Select game for dashboard - call we we click on a game to select him.
+    function selectGameDashboard(var_appID) {
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ path('app_recommandations_ajax_select') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    appID: var_appID
+                },
+                async: true,
+                success: function (header_img) {
+                    //console.log(header_img);
+                    var chaineHtml = "\
+                        <div class='game-img-overlay-success' onclick='unselectGameDashboard("+var_appID+")'>\
+                            <img class='check_icon' src=\"{{asset('icons/check_icon.png')}}\"></img>\
+                        </div>\
+                        <img class='game-img' src="+header_img+"></img>\
+                        ";
+                            
+                    // intégration du contenu Html dans le squelette
+                    $('#game_img_container_dashboard_'+ var_appID).html(chaineHtml);
+                },
+                error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                    console.log("erreur select");
+                    console.log(var_appID);
+                }
+            })
+        });
+    }
+
+
+
+    // Remove a game from dashboard selection table - call we we click on a game to unselect him.
+    function unselectGameDashboard(var_appID) {
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ path('app_recommandations_ajax_unselect') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    appID: var_appID
+                },
+                async: true,
+                success: function (arrayDataGame) {
+                    // this var is about to change when we will change graphic aspect of the website.
+                    var chaineHtml = "\
+                        <div class='game-img-overlay-dashboard'  onclick='selectGameDashboard("+var_appID+")'>\
+                        </div>\
+                        <img class='game-img' src="+arrayDataGame.header_img+"></img>\
+                    ";
+                    
+                    // intégration du contenu dans le squelette
+                    $('#game_img_container_dashboard_'+ var_appID).html(chaineHtml);
+                },
+                error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                    console.log("erreur unselect");
+                    console.log(var_appID);
+                }
+            })
+        });
+    }
+</script>
 {% endblock %}

@@ -138,61 +138,60 @@ class RecommandationsController extends AbstractController
 
         $dataBarChartAge = $dashboard_repository->constructArray_DataBarChartAge();
         
-
+        // Barchart - Age
         $barChartAge= $this->createBarChartAgeDashboard($dashboard_repository, $chartBuilder);
         //dd($barChartAge);
+
+        // Barchart - ReviewScore
+        $barChartReviewScore= $this->createBarchartReviewScoreDashboard($dashboard_repository, $chartBuilder);
+        //dd($barChartReviewScore);
+
+        //Top 3 games in the data selection
+        $dataTop3 = $dashboard_repository->findDataTopGamesInSelection(); 
+        //dd($dataTop3);
 
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',
             'dashboard_games' => $dashboard_games,
             'barChartAge' => $barChartAge,
+            'barChartReviewScore'=> $barChartReviewScore,
+            'dataTop3'=>$dataTop3
         ]);
     }
 
-
+    // Bar chart - Age
     function createBarChartAgeDashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder) : Chart
     {
-
+        // Récupération des données utiles à la construction du graphique
         $dataBarChartAgeDashboard=$dashboard_repository->constructArray_DataBarChartAge()[0];
-        //dd($dataBarChartAgeDashboard);
 
+        // Appel de symfony UX pour créer le chart
         $BarChartAgeDashboard = $chartBuilder->createChart(Chart::TYPE_BAR);
-
-        //dd($dataBarChartAgeDashboard);
-        
-
         $BarChartAgeDashboard->setData([
             'labels' => array_values($dataBarChartAgeDashboard['label']),
             'datasets'=> [["label"=>"test", "data" => array_values($dataBarChartAgeDashboard['data'])]],
         ]);
-
-//        dd($BarChartAgeDashboard);
         
-        
-        // $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
-
-        // $chart->setData([
-        //     'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        //     'datasets' => [
-        //         [
-        //             'label' => 'My First dataset',
-        //             'backgroundColor' => 'rgb(255, 99, 132)',
-        //             'borderColor' => 'rgb(255, 99, 132)',
-        //             'data' => [0, 10, 5, 2, 20, 30, 45],
-        //         ],
-        //     ],
-        // ]);
-        
-        // $chart->setOptions([
-        //     'scales' => [
-        //         'y' => [
-        //             'suggestedMin' => 0,
-        //             'suggestedMax' => 100,
-        //         ],
-        //     ],
-        // ]);
         
         return $BarChartAgeDashboard;
+    }
+
+
+    // Histogramme - reviewScore
+    function createBarchartReviewScoreDashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder) : Chart
+    {
+        // Récupération des données utiles à la construction du graphique
+        $dataBarchartReviewScoreDashboard= $dashboard_repository->constructArray_DataBarChartReviewScore()[0];
+
+        // Appel de symfony UX pour créer le chart
+        $BarChartReviewScoreDashboard = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $BarChartReviewScoreDashboard->setData([
+            'labels' => array_values($dataBarchartReviewScoreDashboard['label']),
+            'datasets'=> [["label"=>"test", "data" => array_values($dataBarchartReviewScoreDashboard['data'])]],
+        ]);
+        
+        
+        return $BarChartReviewScoreDashboard;
     }
    
 }

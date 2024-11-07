@@ -196,4 +196,65 @@ class DashboardRepository extends ServiceEntityRepository
         return $result;
     }
    
+
+    /// Barchart ReviewScore
+    ///
+
+    // Requête SQL
+    //
+    public function findDataBarChartReviewScore()
+    {
+        $query = "SELECT 
+                        review_score, 
+                        count(*) as nbJeuxReviewScore
+                    FROM dashboard
+                    GROUP BY review_score";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    // Mise en forme des données pour chart js
+    //
+    public function constructArray_DataBarChartReviewScore()
+    {
+        // Appel de la requête SQL - obtention des données
+        $data = $this->findDataBarChartReviewScore();
+        
+        // création du tableau qui sera renvoyé
+        $result = array();
+        $labels = array();
+        $datasets = array();
+
+        // remplissage du tableau avec les données de la reqête
+        // a modifier notamment tout ce qui concerne les couleurs -  modifier ici.
+        foreach ($data as $key) {
+            array_push($labels, strval($key["review_score"]));
+            array_push($datasets, $key["nbJeuxReviewScore"]);
+        };
+
+        array_push($result, 
+                [
+                    'label'=>$labels,
+                    'data'=>$datasets,
+                ]
+            );
+    
+        return $result;
+    }
+
+    
+    /// Top 3 - games
+    ///
+
+    // Requête SQL
+    //
+    public function findDataTopGamesInSelection()
+    {
+        $query = "SELECT 
+                        review_score, header_img
+                    FROM dashboard
+                    ORDER BY review_score DESC LIMIT 3";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
 }

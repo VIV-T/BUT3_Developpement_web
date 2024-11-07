@@ -59,7 +59,7 @@
 
             
             {% else %}
-            <li>Aucuun enregistrement dans la BD</li>
+            <li>Aucun enregistrement dans la BD</li>
         {% endfor %}
         
 
@@ -67,7 +67,6 @@
         <script>
             // Modal
             function afficherInfoGame(var_appID) {
-                $(document).ready(function() {
                     $.ajax({
                         url: "{{ path('app_recommandations_ajax_modal') }}",
                         type: "POST",
@@ -88,14 +87,12 @@
                         error: function(jqXHR){         // Fonction à appeler si la requête échoue
                             console.log("erreur modal");
                         }
-                    })
                 });
             }
 
             // Dynamic count of selected games
             // No need to send data to the Controller, we just want to call the Ajax function of the Controller. 
             function countSelectedGame() {
-                $(document).ready(function() {
                     $.ajax({
                         url: "{{ path('app_recommandations_ajax_count') }}",
                         type: "POST",
@@ -112,14 +109,12 @@
                         error: function(jqXHR){         // Fonction à appeler si la requête échoue
                             console.log("erreur count");
                         }
-                    })
                 });
             }
 
 
             // Select game for dashboard - call we we click on a game to select him.
             function selectGameDashboard(var_appID) {
-                $(document).ready(function() {
                     $.ajax({
                         url: "{{ path('app_recommandations_ajax_select') }}",
                         type: "POST",
@@ -145,7 +140,6 @@
                             console.log("erreur select");
                             console.log(var_appID);
                         }
-                    })
                 });
             }
 
@@ -153,7 +147,6 @@
 
             // Remove a game from dashboard selection table - call we we click on a game to unselect him.
             function unselectGameDashboard(var_appID) {
-                $(document).ready(function() {
                     $.ajax({
                         url: "{{ path('app_recommandations_ajax_unselect') }}",
                         type: "POST",
@@ -200,7 +193,6 @@
                             console.log("erreur unselect");
                             console.log(var_appID);
                         }
-                    })
                 });
             }
         </script>

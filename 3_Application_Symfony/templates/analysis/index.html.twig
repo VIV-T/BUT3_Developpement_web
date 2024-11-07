@@ -45,7 +45,6 @@
             // Requête Ajax qui envoie la valeur de la constante précédente dans le controller avant
             // d'utiliser la valeur renvoyée par le controller pour construire un grahe et 
             // mettre à jour le canvas.
-			$(document).ready(function() {
 				$.ajax({
 					url: "{{ path('app_analysis_ajax_graph_period') }}",
 					type: "POST",
@@ -62,7 +61,6 @@
                     error: function(jqXHR){         // Fonction à appeler si la requête échoue
 						console.log("erreur");
 					}
-				})
 			});
 		}
     </script>

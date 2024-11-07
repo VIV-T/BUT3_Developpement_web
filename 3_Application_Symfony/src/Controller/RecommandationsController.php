@@ -15,13 +15,22 @@ class RecommandationsController extends AbstractController
     #[Route('/recommandations', name: 'app_recommandations')]
     public function index(GamesRepository $games_repository, DashboardRepository $dashboard_repository): Response
     {
-        $games = $games_repository->findBy(
-            ['review_score' => 90, 'price' => 50]
+        $games1 = $games_repository->findBy(
+            ['PEGI'=>3]
+        );
+        $games2 = $games_repository->findBy(
+            ['PEGI'=>7]
         );
 
-        // Truncation of the dashboard table data
-        $dashboard_repository->truncateDashboardTable();
+        $games = array_merge($games1, $games2);
+        
+        //$games = $games_repository->findDataRecommandationPage();
+        //dd($games2);
 
+        // Truncation of the dashboard table data
+        //$dashboard_repository->truncateDashboardTable();
+
+        
         
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
@@ -122,9 +131,12 @@ class RecommandationsController extends AbstractController
     {
         $dashboard_games = $dashboard_repository->findAll();
 
+        $testAge = $dashboard_repository->constructArray_DataBarChartAge();
+        dd($testAge);
+
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',
-            'dashboard_games' => $dashboard_games
+            'dashboard_games' => $dashboard_games,
         ]);
     }
 

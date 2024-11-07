@@ -235,4 +235,23 @@ class GamesRepository extends ServiceEntityRepository
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
         return $result->fetchAll();
     }
+
+
+    ////////// test
+
+    // Requête SQL
+    //
+    public function findDataRecommandationPage()
+    {
+
+        $query = "SELECT *
+                    FROM games
+                        JOIN link_games_genres USING (app_id)
+	                    JOIN genres USING(genres_id)
+                    WHERE pegi = 3 or pegi = 7";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
 }

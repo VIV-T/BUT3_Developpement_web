@@ -1,44 +1,89 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block title %}Home{% endblock %}
 
+
+
 {% block body %}
+
 <!-- Section - Presentation -->
+
     <section id="presentation">
+
         <div class="container px-3">
+
             <div class="row gx-4 justify-content-center">
+
                 <div id="presentation_text" class="col-lg-12">
+
                     <h2>Steam 2024 Promotion Campaign</h2>
+
                     <p class="lead">As part of a final-year university project in the BUT Data Science program, we were asked to develop a complete web application. After several searches for relevant and valuable datasets, we decided to exploit a set of information linked to the Steam platform. Steam is an online content distribution platform, offering a wide range of video games. Passionate about this universe, we sought to approach this content in a professional manner.</p>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
+
     <hr>
+
 <!-- Section - Problematic -->
+
     <section id="problematic">
+
         <div class="container px-2">
+
             <div class="row gx-4 justify-content-center">
+
                 <div class="col-lg-12">
+
                     <h2>Problematic</h2>
+
                     <p class="lead">As part of the marketing department of the famous distribution platform, we were asked to help our manager prepare the 2024 promotional campaign. The campaign is designed to reinforce Steam's position as leader in its business segment. To do this, it needs to identify which games have the greatest potential to meet the demands of increasingly demanding gamers.</p>
+
                 </div>
+
                 <div class="col-lg-12 home_problematic_icons_text_container">
+
                     <div class="home_problematic_icons_text_element">
+
                         <img src="{{asset("icons/video_game_icon.png")}}"></img>
-                        <p class="lead home_problematic_text"></p>
+
+                        <p class="lead home_problematic_text">The variables that describe more than 80,000 games are interested in both the descriptive characteristics of a game (name, release date, genre) but also marketing (turnover, number of sales, average ratings proposed by players). We then applied automated processing to the data in order to make them usable for you.</p>
+
                     </div>
+
                     <div class="home_problematic_icons_text_element">
+
                         <img src="{{asset("icons/statistics_icon.png")}}"></img>
-                        <p class="lead home_problematic_text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+                        <p class="lead home_problematic_text">This application contains an "Analysis" page that offers a global vision of video games for more than 15 years. Its objective is to provide the user with keys to understanding so that he can wisely choose the games for this year of promotion 2025. On the other hand, the "Recommendations" tab offers feedback on the profiles of the selected games: Are they in line with Steam's marketing policy?</p>
+
                     </div>
+
                     <div class="home_problematic_icons_text_element">
+
                         <img src="{{asset("icons/promotion_sales_icon.png")}}"></img>
-                        <p class="lead home_problematic_text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+                        <p class="lead home_problematic_text">The purpose of this development is to highlight games that will be profitable for Steam. It is important to consolidate Steam's reputation with gamers as a market leader while ensuring the sustainability of its business model.
+
+                        Our problem is therefore part of a promotional environment where, assigned to the marketing department, our superior asks us to study, based on the best sales, what theme and video games should be highlighted during this campaign in order to maximize the platform's profit: we must therefore find the most attractive features for Steam's next promotional campaign.</p>
+
                     </div>
+
                 </div>
+
                 <a type="button" class="btn btn-primary ms-auto" href ="{{ path('app_analysis') }}">Start Now 🞂</a>
+
             </div>
+
         </div>
+
     </section>
+
 {% endblock %}

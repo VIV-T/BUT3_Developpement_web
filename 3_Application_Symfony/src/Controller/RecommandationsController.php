@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\GamesRepository;
 use App\Repository\DashboardRepository;
 
+// To make chart with symfony UX - chartjs
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
+
+
 class RecommandationsController extends AbstractController
 {
     #[Route('/recommandations', name: 'app_recommandations')]
@@ -28,7 +33,7 @@ class RecommandationsController extends AbstractController
         //dd($games2);
 
         // Truncation of the dashboard table data
-        //$dashboard_repository->truncateDashboardTable();
+        $dashboard_repository->truncateDashboardTable();
 
         
         
@@ -127,18 +132,67 @@ class RecommandationsController extends AbstractController
 
     //Route : Dashboard - quand on click sur le bouton "Continue"
     #[Route('/recommandations/dashboard', name: 'app_recommandations_dashobard')]
-    public function index_dashboard(DashboardRepository $dashboard_repository): Response
+    public function index_dashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder): Response
     {
         $dashboard_games = $dashboard_repository->findAll();
 
-        $testAge = $dashboard_repository->constructArray_DataBarChartAge();
-        dd($testAge);
+        $dataBarChartAge = $dashboard_repository->constructArray_DataBarChartAge();
+        
+
+        $barChartAge= $this->createBarChartAgeDashboard($dashboard_repository, $chartBuilder);
+        //dd($barChartAge);
 
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',
             'dashboard_games' => $dashboard_games,
+            'barChartAge' => $barChartAge,
         ]);
     }
 
+
+    function createBarChartAgeDashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder) : Chart
+    {
+
+        $dataBarChartAgeDashboard=$dashboard_repository->constructArray_DataBarChartAge()[0];
+        //dd($dataBarChartAgeDashboard);
+
+        $BarChartAgeDashboard = $chartBuilder->createChart(Chart::TYPE_BAR);
+
+        //dd($dataBarChartAgeDashboard);
+        
+
+        $BarChartAgeDashboard->setData([
+            'labels' => array_values($dataBarChartAgeDashboard['label']),
+            'datasets'=> [["label"=>"test", "data" => array_values($dataBarChartAgeDashboard['data'])]],
+        ]);
+
+//        dd($BarChartAgeDashboard);
+        
+        
+        // $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+
+        // $chart->setData([
+        //     'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        //     'datasets' => [
+        //         [
+        //             'label' => 'My First dataset',
+        //             'backgroundColor' => 'rgb(255, 99, 132)',
+        //             'borderColor' => 'rgb(255, 99, 132)',
+        //             'data' => [0, 10, 5, 2, 20, 30, 45],
+        //         ],
+        //     ],
+        // ]);
+        
+        // $chart->setOptions([
+        //     'scales' => [
+        //         'y' => [
+        //             'suggestedMin' => 0,
+        //             'suggestedMax' => 100,
+        //         ],
+        //     ],
+        // ]);
+        
+        return $BarChartAgeDashboard;
+    }
    
 }

@@ -169,7 +169,7 @@ class DashboardRepository extends ServiceEntityRepository
 
     // Mise en forme des données pour chart js
     //
-    public function constructArray_DataBarChartAge ()
+    public function constructArray_DataBarChartAge()
     {
         // Appel de la requête SQL - obtention des données
         $data = $this->findDataBarChartAge();
@@ -182,7 +182,7 @@ class DashboardRepository extends ServiceEntityRepository
         // remplissage du tableau avec les données de la reqête
         // a modifier notamment tout ce qui concerne les couleurs -  modifier ici.
         foreach ($data as $key) {
-            array_push($labels, $key["pegi"]);
+            array_push($labels, strval($key["pegi"]));
             array_push($datasets, $key["nbJeuxPegi"]);
         };
 

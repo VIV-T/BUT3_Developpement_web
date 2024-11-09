@@ -190,6 +190,9 @@ class DashboardRepository extends ServiceEntityRepository
                 [
                     'label'=>$labels,
                     'data'=>$datasets,
+                    
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
                 ]
             );
     

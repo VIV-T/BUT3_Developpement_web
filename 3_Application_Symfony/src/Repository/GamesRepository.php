@@ -48,14 +48,31 @@ class GamesRepository extends ServiceEntityRepository
     {
         // Appel de la requête SQL - obtention des données
         $data = $this->findDataGraphFiveDim();
+        
 
-        // création des variable pour la partie visuelle (couleurs)
-        $background_red = 50;
-        $background_green = 60;
-        $background_blue = 100;
-        $border_red = 80;
-        $border_green = 10;
-        $border_blue = 120;
+        
+        /// création des variable pour la partie visuelle (couleurs & taille)
+        // extarction des informations utiles
+        $array_reviewScore = [];
+        $array_nbGames = [];
+        foreach ($data as $key) {
+            $array_reviewScore[]=$key["avgReviewScore"];
+            $array_nbGames[]=$key["nbGames"];
+        }
+        
+        $min_ref_color_reviewScore = min($array_reviewScore);
+        $ref_color_reviewScore = max($array_reviewScore)-$min_ref_color_reviewScore;
+        $min_ref_size_nbGames = min($array_nbGames);
+        $max_ref_size_nbGames = max($array_nbGames);
+        $ref_size_nbGames = max($array_nbGames)-$min_ref_size_nbGames;
+
+        // variables de références
+        $background_red = 135;
+        $background_green = 0;
+        $background_blue = 0;
+        $size_reference = 5;
+        
+        
         
         // création du tableau qui sera renvoyé
         $result = array();
@@ -63,28 +80,33 @@ class GamesRepository extends ServiceEntityRepository
         // remplissage du tableau avec les données de la reqête
         // a modifier notamment tout ce qui concerne les couleurs -  modifier ici.
         foreach ($data as $key) {
-            $color_ratio = intval($key["avgReviewScore"]);
+            // ce ratio est un pourcentage de l'ecart maximum entre les reviewScore des genres
+            $color_ratio = round((intval($key["avgReviewScore"])-$min_ref_color_reviewScore)/$ref_color_reviewScore,2);
+            $size_ratio = 1+round((intval($key["nbGames"])-$min_ref_size_nbGames)/$ref_size_nbGames,2)*4;
+            
 
             array_push($result, 
                 [
                     'label'=>$key["label"],
                     'data'=>[
                         [
-                        'x'=>(int) $key["sommeRevenue"],
-                        'y'=>(int) $key["sommeCopiesSold"],
-                        'r'=>intval($key["nbGames"]/1500),
+                        'x'=>(int) $key["sommeRevenue"]/10**9,
+                        'y'=>(int) $key["sommeCopiesSold"]/10**6,
+                        'r'=>ceil($size_reference*$size_ratio),
                         ],
                     ],
-                    // modifier ici.
-                    'backgroundColor'=> "rgb(".$background_red+$color_ratio.",".$background_green+$color_ratio.",".$background_blue+$color_ratio.")",
-                    'borderColor' => "rgb(".$border_red+$color_ratio.",".$border_green+$color_ratio.",".$border_blue+$color_ratio.")",
+                    // la couleur dépend du reviewScore
+                    // on utilise la var $color_ratio pour ajouter un pourcentage de la couleur de base au différentes composante de la couleur.
+                    'backgroundColor'=> "rgba(".$background_red+$color_ratio*$background_red.",".$background_green+$color_ratio*$background_green.",".$background_blue+$color_ratio*$background_blue.", 0.6)",
+                    
                 ]
             );
         };
-    
+        
         return $result;
     }
 
+    
     
     /// Second graphique
     ///
@@ -195,15 +217,21 @@ class GamesRepository extends ServiceEntityRepository
                 //dd($datasets_data);
             };
             
-            // intégration des données dans les objets de résultats $labels et $datasets
+            // intégration des données dans les objets de résultats $label et $data + paramètres visuels
             array_push($datasets, [
                 'label'=> $genre["label"],
                 'data'=> $datasets_data,
-            
+                'backgroundColor'=>"rgba(255,225,255,0)",
+                'borderColor'=>"rgba(".rand(0, 255).",".rand(0, 255).",".rand(0, 255).",0.8)",
             ]);
         };
 
-        $result = ["label" => $labels, "datasets" =>$datasets];
+        $result = [
+            "data"=>[
+                "label" => $labels, 
+                "datasets" =>$datasets
+            ], 
+        ];
         return $result;
     }
 

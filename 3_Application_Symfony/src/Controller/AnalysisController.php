@@ -60,6 +60,7 @@ class AnalysisController extends AbstractController
         ]);
     }
 
+    
     ///// Premier graphique - GraphFiveDim
     /////
     // création du graphe
@@ -76,9 +77,24 @@ class AnalysisController extends AbstractController
         //dd($queryGraphFiveDim[0]['nbGames']);
 
         $chartFiveDim = $chartBuilder->createChart(Chart::TYPE_BUBBLE);
-
         $chartFiveDim->setData([
             'datasets'=>$dataGraphFiveDim,
+        ]);
+        $chartFiveDim->setOptions([
+            "scales"=>[
+                "x"=>[
+                    "title"=>[
+                        'display' => true,
+                        'text' => "Revenue (Billions $)"
+                    ]
+                ],
+                "y"=>[
+                    "title"=>[
+                        'display' => true,
+                        'text' => "Copies Sold (Millions)"
+                    ]
+                ],
+            ]
         ]);
 
         return array($queryGraphFiveDim, $chartFiveDim);
@@ -87,22 +103,6 @@ class AnalysisController extends AbstractController
 
     ///// Second graphique - GraphYearGenre
     /////
-    /// Stade expérimental :
-    // création du graphe
-    public function construcGraphYearGenre(GamesRepository $repository, ChartBuilderInterface $chartBuilder, $period): Array
-    {
-        $queryGraphYearGenre= $repository->findData_Period($period);
-        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);
-
-        $chartYearGenre = $chartBuilder->createChart(Chart::TYPE_LINE);
-
-        $chartYearGenre -> setData([
-            'labels' => $dataGraphYearGenre['label'],
-            'datasets' => $dataGraphYearGenre['datasets']
-        ]);
-
-        return array($queryGraphYearGenre, $chartYearGenre);
-    }
 
     //création du formulaire pour le choix des perido - radio button
     // modifier ici. - rajouter les paramètre visuels (ex: id ou classe html ?)
@@ -130,8 +130,11 @@ class AnalysisController extends AbstractController
             $period = 1;
         }
 
-
+        // Appel de la méthode qui renvoie les données et options relatives au graphique
+        // il est ensuite créé dans le JS à partir de ces données.
+        // note probleme de legende des axes + regler les couleurs (ici : valeurs aléatoires)
         $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);
+        
 
         $response = new Response(json_encode($dataGraphYearGenre));
         return $response;

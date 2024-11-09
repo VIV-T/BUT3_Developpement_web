@@ -23,7 +23,6 @@
 
 
     <section class="graphPeriodGenre-container">
-    {#{{render_chart(chartYearGenres)}}#}
         <canvas id="graphPeriodGenre"></canvas>
         <div id="radio-button-period-container">
         {{form_start(form)}}            
@@ -53,13 +52,40 @@
 						period : var_period
 					},
 					success: function (response) {
+                        console.log(response);
                         var ctx = $("#graphPeriodGenre");
-                        var myChart = new Chart(ctx, { type: 'line', data: { labels: response.label, datasets: response.datasets} });
-
+                        
+                        var myChart = new Chart(
+                            ctx, 
+                            {
+                                type: 'line', 
+                                data: { 
+                                    labels: response.data.label, 
+                                    datasets: response.data.datasets
+                                }, 
+                                options :{
+                                    scales : {
+                                        x:{
+                                            title:{
+                                                display : true, 
+                                                text : var_period
+                                            }
+                                        }, 
+                                        y:{
+                                            title:{
+                                                display : true, 
+                                                text : 'Copies Sold (Millions)'
+                                            }
+                                        }
+                                    }
+                                } 
+                            }
+                        );
+                        console.log(myChart);
                         myChart.update();
 					},
                     error: function(jqXHR){         // Fonction à appeler si la requête échoue
-						console.log("erreur");
+						console.log("erreur affichage graphe PeriodGenre");
 					}
 			});
 		}

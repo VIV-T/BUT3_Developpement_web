@@ -169,9 +169,30 @@ class RecommandationsController extends AbstractController
         $BarChartAgeDashboard = $chartBuilder->createChart(Chart::TYPE_BAR);
         $BarChartAgeDashboard->setData([
             'labels' => array_values($dataBarChartAgeDashboard['label']),
-            'datasets'=> [["label"=>"test", "data" => array_values($dataBarChartAgeDashboard['data'])]],
+            'datasets'=> [[
+                "label"=>"Number of games",
+                "data" => array_values($dataBarChartAgeDashboard['data']),
+                'backgroundColor' => 'rgba(20,122,255,0.5)',
+                'borderColor' => 'rgba(20,122,255,1)',
+                'borderWidth' => 3    
+            ]],
         ]);
-        
+        $BarChartAgeDashboard->setOptions([
+            'scales' => [
+                'x'=>[
+                    'title'=>[
+                        'display'=>true, 
+                        'text'=>'PEGI'
+                    ]
+                ], 
+                'y'=>[
+                    'title'=>[
+                        'display'=>true, 
+                        'text'=>'Number of games'
+                    ]
+                ]    
+            ],
+        ]);
         
         return $BarChartAgeDashboard;
     }
@@ -187,7 +208,37 @@ class RecommandationsController extends AbstractController
         $BarChartReviewScoreDashboard = $chartBuilder->createChart(Chart::TYPE_BAR);
         $BarChartReviewScoreDashboard->setData([
             'labels' => array_values($dataBarchartReviewScoreDashboard['label']),
-            'datasets'=> [["label"=>"test", "data" => array_values($dataBarchartReviewScoreDashboard['data'])]],
+            'datasets'=> [[
+                "label"=>"Number of games", 
+                "data" => array_values($dataBarchartReviewScoreDashboard['data']),
+                'boderWidth'=>1,
+                'barPercentage'=>1,
+                'categoryPercentage'=>1,
+                'backgroundColor' => '#147aff',
+                'borderColor' => '#1A2A3F',
+                'borderWidth' =>1
+            ]],
+        ]);
+        $BarChartReviewScoreDashboard->setOptions([
+            'scales' => [
+                'x'=>[
+                    'type'=>'linear',
+                    'offset'=>false, 
+                    'grid'=>[
+                        'offset'=>false
+                    ], 
+                    'title'=>[
+                        'display'=>true, 
+                        'text'=>'Review Score'
+                    ]
+                ], 
+                'y'=>[
+                    'title'=>[
+                        'display'=>true, 
+                        'text'=>'Number of games'
+                    ]
+                ]    
+            ],
         ]);
         
         

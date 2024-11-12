@@ -76,8 +76,27 @@
                         },
                         async: true,
                         success: function (arrayDataGame) {
+                            //console.log(arrayDataGame[0]);
                             // On ecrit ici le script HTML définissant le contenu de la modal.
-                            var chaineHtml = "<p>"+arrayDataGame[0].game_name+"</p><button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>";
+                            let warning = arrayDataGame[0].notes;
+                            let chaine_vide = " ";
+                            let warning_vide = chaine_vide.repeat(236);
+                            let warning_affichage = ""
+                            if (warning !== warning_vide) {
+                                warning_affichage = "<p>Warning : "+warning+"</p>";
+                            }
+                            // Problèmes pour la récupération des genres et warning qui ne fonctionne pas correctement
+                            var chaineHtml =   "<img class='game-img' src="+arrayDataGame[0].header_img+"></img>\
+                                                <p>Release date : "+arrayDataGame[0].release_date+"</p>\
+                                                <p>Publisher : "+arrayDataGame[0].publishers+"</p>\
+                                                <p>Developper : "+arrayDataGame[0].developers+"</p>\
+                                                <p>Genres : "+arrayDataGame[0].genres+"</p>\
+                                                <p>Categories : "+arrayDataGame[0].categories+"</p>\
+                                                "+warning_affichage+"\
+                                                <p>Note : "+arrayDataGame[0].review_score+"/100</p>\
+                                                <p>Price : "+arrayDataGame[0].price+"$</p>\
+                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>\
+                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Add</button>";
                             
                             // intégration du contenu de la modal dans le squelette
                             $('#gameInfoContent').html(chaineHtml);

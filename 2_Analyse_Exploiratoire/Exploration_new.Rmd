@@ -1,0 +1,262 @@
+---
+title: "ProjetSteam_exploration"
+output: html_document
+date: "2024-11-11"
+---
+
+Appel des packages
+```{r}
+library(ggplot2)
+library(dplyr)
+library(fdm2id)
+```
+
+Lecture des données
+```{r}
+data = read.csv2(".\\data_view\\games.csv", encoding = "UTF-8")
+```
+
+
+Passage en numérique des variables stockées en string. 
+```{r}
+data$revenue = as.numeric(data$revenue)
+data$avgPlaytime = as.numeric(data$avgPlaytime)
+data$price = as.numeric(data$price)
+```
+
+
+# Analyse Exploratoire
+
+Nb jeux sortis par années : interresant
+```{r}
+hist(data$releaseYear)
+```
+
+Nb de jeux sortis par mois : modifier l'ordre alpha en ordre temporel.
+```{r}
+barplot(height = table(data$releaseMonth))
+```
+
+
+Aperçu des données : utile pour la sélection (analyse macro/micro)
+```{r}
+summary(data)
+```
+
+Distinction analyse Macro/Micro :
+  - analyse Macro : proposer une analyse sur un maximum de jeux possibles en ne gardant que les jeux significatifs. Dans le cadree d'une campagne marketing, il ne selble pas pertinent de mettre en avant des jeux qui ne rapporte pas d'argent ou qui ont un nombre de vente non significatif. pour affiner la sélection, il est même possible d'ajouter des critère sur le score du jeux ou un temps de jeux moyen minimum par exemple (personne ne veut acheter un jeux pour y jouer 2h...).
+  Pour l'analyse Macro, les paramètres de sélection doivent être clairement établis et justifiables (encore plus que pour l'analyse Micro).
+  
+  - analyse Micro : Il s'agit de se concentrer sur des jeux qui seront intégré aux système de recommandation. Tous les jeux de l'analyse Macro ne sont pas intérrressant à intégrer dans une campagne marketing en 2024, notamment pour des problématique de période - un jeux sorti en 2012, qui a déjà fait son temps n'a pas sa place dans une campagne marketing en 2024, sauf si celle-ci se concentre sur des jeux plus anciens (pas notre cas ici).
+
+
+
+
+
+Expliquer choix de filtrage (en general il s'agit d'un quartile des variables concernées)
+```{r}
+data_games_macro <- subset(data, subset = data$copiesSold > 567 & data$revenue > 9816)
+summary(data_games_macro)
+```
+
+Expliquer nouveau choix de filtrages => analyse macro VS recommandation micro
+```{r}
+data_game_micro <- subset(data_games_macro, subset = data_games_macro$reviewScore >= 80 & data_games_macro$price >= 10 & data_games_macro$releaseYear >= 2023)
+
+summary(data_game_micro)
+
+
+#data_test3 <- subset(data_game_micro, subset = data_game_micro$revenue >= 18023)
+
+#summary(data_test3)
+```
+
+
+data_game_micro = recommandation -> campagne marketing 
+data_games_macro -> analyse macro economique
+
+
+
+###################### Travail a partir de data_games_macro #################################
+
+
+## essais des graphes imaginés lors des reunions
+lecture des tables de données additionnelles
+```{r}
+data_link_games_genres = read.csv2(".\\data_view\\link_games_genres.csv", encoding="UTF-8")
+data_genres = read.csv2(".\\data_view\\genres.csv", encoding = "UTF-8")
+```
+
+# Creation de la table de données complète games + genres
+```{r}
+data_macro_genre = inner_join(data_link_games_genres, data_games_macro,by="AppID")
+data_macro_genre = inner_join(data_macro_genre, data_genres, by="GenresId")
+```
+
+## Analyse descriptive
+
+
+
+# Essais Graphes
+
+x = avg_playtime, y=recommandation, color = publisher_class
+```{r}
+data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+
+x = reviewScore, y=avgPlaytime, color = publisher_class
+```{r}
+data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$reviewScore, y=data_test_graph02$avgPlaytime))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+regression linéaire sur le graphique précédent
+```{r}
+model = LINREG(data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
+
+regplot(model, data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
+```
+
+
+test de graphes avec la variable price.
+```{r}
+data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$publisherClass=="AA      " & data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$reviewScore, y=data_test_graph02$price))+
+  geom_point(aes(color = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+tentative de discretisation de la variable price en utilisant une CAH centrée sur cette variable.
+```{r}
+# Clusterisation
+
+myclust <- hclust(dist(data_macro_genre$price, method = "euclidean"), method = "ward.D2")
+
+# Calcul de l'inertie (les hauteurs des fusions dans le clustering)
+
+inertie <- sort(myclust$height, decreasing = TRUE)
+
+# Calcul des différences d'inertie entre chaque fusion
+
+diff_inertie <- diff(inertie)
+
+# Trouver la plus grande différence (le "saut" le plus important dans l'inertie)
+
+# On travaille sur les intervalles 2 à 4 car on envisage 3 à 5 catégories
+
+optimal_clusters <- which.min(diff_inertie[2:4]) + 2  # Ajouter 1 car l'indice renvoie au point avant la coupure
+```
+
+
+```{r}
+# Affichage de l'inertie pour les 20 premières fusions
+
+plot(inertie[1:20], type = "s", 
+	ylab="Inertie",
+	xlab = "", lwd=2, 
+	main="Nombre de catégories la plus probable",
+	sub=paste("Le nombre optimal de catégories est :", optimal_clusters, "\n"))
+
+grid()
+
+points(optimal_clusters,inertie[optimal_clusters],pch=16,cex=2,col="red")
+```
+
+
+```{r}
+test_hca_price = HCA(data_macro_genre$price, method = "ward")
+plot(test_hca_price)
+```
+
+
+
+
+x = reviewScore, y=recommandations, color = publisher_class
+```{r}
+data_test_graph03 = subset(x = data_macro_genre,data_macro_genre$publisherClass=="AAA     " & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$recommandations))+
+  geom_point(aes(color = data_test_graph03$publisherClass))
+
+test_graph03
+```
+
+
+
+
+Graphe interressant
+x = copiesSold, y=revenue, color = reviewScore, shape = publisher_class
+```{r}
+data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$copiesSold, y=data_test_graph02$revenue))+
+  geom_point(aes(color = data_test_graph02$reviewScore, shape = data_test_graph02$publisherClass))
+
+test_graph02
+```
+
+
+
+
+
+# Application methodes de classification non-suppervisée : 
+
+K-MEANS
+```{r}
+data_macro_genre_quanti = data_games_macro[,c(5:6, 9, 11:13)]
+
+data_macro_genre_kmeans = KMEANS(data_macro_genre_quanti, k=6)
+pseudoF(data_macro_genre_kmeans)
+kmeans.getk(data_macro_genre_quanti)
+```
+recuperation des données du premier cluster -> choses intérressantes ?
+```{r}
+clust1=as.vector(which(data_macro_genre_kmeans$cluster == 1))
+#View(clust1)
+data_macro_genre_clust1 = data_games_macro[clust1,]
+```
+
+
+
+
+# ACP
+```{r}
+data_macro_genre.pca = PCA(data_games_macro[,c(6, 9:13)])
+plot(data_macro_genre.pca, type = "cor")
+plot(data_macro_genre.pca)
+data_macro_genre.pca$eig
+```
+K-MEANS sur ACP
+```{r}
+data_macro_genre_kmeans = KMEANS(data_macro_genre.pca$ind$coord, k=2)
+pseudoF(data_macro_genre_kmeans)
+kmeans.getk(data_macro_genre.pca$ind$coor)
+```
+recuperation des données du premier cluster -> choses intérressantes ?
+```{r}
+clust1=as.vector(which(data_macro_genre_kmeans$cluster == 1))
+View(clust1)
+data_macro_genre_clust1 = data_games_macro[clust1,]
+```
+
+
+
+
+
+
+ A faire : discretiser la variable price. construire un graphe en l'ajoutant en paramtre de size, shape ou color.

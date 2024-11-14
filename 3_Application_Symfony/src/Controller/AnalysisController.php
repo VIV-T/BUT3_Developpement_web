@@ -19,8 +19,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-
-
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AnalysisController extends AbstractController
 {
@@ -53,6 +53,25 @@ class AnalysisController extends AbstractController
         // execution du script R appliquant des méthodes de DM aux données
         //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
         //exec("Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
+        
+        $cwd = $this->getParameter("dir_script_r");
+        $dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
+        $dir_output_r = $cwd."\\assests\\RGraph";
+
+        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
+        // putenv("OUTPUT_DIRECTORY=".$dir_output_r);
+        // exec("Rscript.exe ".$dir_script_r);
+        
+
+
+        $process = new Process(['.\Rscript.exe', $dir_script_r], null,['OUTPUT_DIRECTORY'=>$dir_output_r]);
+        $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
+        //dd($process);
+        $process->run();
+        if (!$process->isSuccessful()){
+            dd(new ProcessFailedException($process));
+        }
 
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [

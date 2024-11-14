@@ -7,6 +7,17 @@ library(cluster)
 library(fdm2id)
 library(plotly)
 library(htmlwidgets)
+library(rrepast)
+
+###### Code a lancer que lorsque l'execution provient de Symfony
+## Initialisation du dossier d'output a partir de la var 
+# d'environement passee en parametre depuis le script Symfony
+# exemple d'utilisation :
+# test = Sys.getenv("R_HOME")
+# test
+output_dir = Sys.getenv("OUTPUT_DIRECTORY")
+# set the output dir
+setOutputDir(output_dir)
 
 ## Connection à la base de donn?es 
 

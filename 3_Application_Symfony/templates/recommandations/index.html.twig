@@ -87,16 +87,21 @@
                             }
                             // Problèmes pour la récupération des genres et warning qui ne fonctionne pas correctement
                             var chaineHtml =   "<img class='game-img' src="+arrayDataGame[0].header_img+"></img>\
-                                                <p><b>Release date</b> : "+arrayDataGame[0].release_date+"</p>\
-                                                <p>Publisher : "+arrayDataGame[0].publishers+"</p>\
-                                                <p>Developper : "+arrayDataGame[0].developers+"</p>\
-                                                <p>Genres : "+arrayDataGame[0].genres+"</p>\
-                                                <p>Categories : "+arrayDataGame[0].categories+"</p>\
-                                                "+warning_affichage+"\
-                                                <p>Note : "+arrayDataGame[0].review_score+"/100</p>\
-                                                <p>Price : "+arrayDataGame[0].price+"$</p>\
-                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>\
-                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Add</button>";
+                                                <div class = 'container_modale_recommandations'>\
+                                                    <div class = 'info_non_chiffre'>\
+                                                        <p><b>Release date :</b>  "+arrayDataGame[0].release_date+"</p>\
+                                                        <p><b>Publisher :</b>  "+arrayDataGame[0].publishers+"</p>\
+                                                        <p><b>Developper :</b>  "+arrayDataGame[0].developers+"</p>\
+                                                        <p><b>Genres :</b>  "+arrayDataGame[0].genres+"</p>\
+                                                        <p><b>Categories :</b>  "+arrayDataGame[0].categories+"</p>\
+                                                        "+warning_affichage+"\
+                                                    </div>\
+                                                    <div class = 'info_chiffre'>\
+                                                        <p><b>Note :</b></br>"+arrayDataGame[0].review_score+"/100</p>\
+                                                        <p><b>Price :</b>  </br>"+arrayDataGame[0].price+"$</p>\
+                                                    </div>\
+                                                </div>\
+                                                <button type='button' class='btn btn-secondary active' id = 'cancel_recommandation' data-bs-dismiss='modal'>Close</button>";
                             
                             // intégration du contenu de la modal dans le squelette
                             $('#gameInfoContent').html(chaineHtml);
@@ -223,7 +228,7 @@
         #}
         <div class="modal fade" id="gameInfoModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered infoModal">
-            <div class="modal-content">
+            <div class="modal-content" id = "modal_synthese_recommandations">
             <div class="modal-body" id="gameInfoContent">
             </div>
             </div>

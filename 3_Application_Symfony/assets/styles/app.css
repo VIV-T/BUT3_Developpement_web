@@ -214,8 +214,10 @@ footer {
 }
 
 .overlay-content {
-    margin: auto;
+    /*margin: auto;*/
     font-size: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .overlay-content-top {
@@ -224,10 +226,12 @@ footer {
 }
 
 #overlay-left {
+    margin-left: auto;
     border-right: solid;
 }
 
 #overlay-right {
+    margin-right: auto;
     border-left: solid;
 }
 
@@ -388,4 +392,10 @@ footer {
 
 .game-block-dashboard:hover .game-img-overlay-dashboard {
     z-index: 1;
+}
+
+
+.icon_recommandations_KPI{
+    width : 25%;
+    height : 25%;
 }

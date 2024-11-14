@@ -33,21 +33,21 @@
                     <div class="overlay-content" id="overlay-left">
                         <div class="overlay-content-top">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/dollar_icon.png")}}"></img>
-                        <p>{{game.revenue}}</p>
+                        <p>{{game.revenue}}</br> dollars</p>
                         </div>
                         <div class="overlay-content-bottom">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/time_icon.png")}}"></img>
-                        <p>{{game.AvgPlayTime}}</p>
+                        <p>{{game.AvgPlayTime}}</br> hours</p>
                         </div>
                     </div>
                     <div class="overlay-content" id="overlay-right">
                         <div class="overlay-content-top">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/caddie_icon.png")}}"></img>
-                        <p>{{game.copiesSold}}</p>
+                        <p>{{game.copiesSold}}</br>unit sales</p>
                         </div>
                         <div class="overlay-content-bottom">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/like_icon.png")}}"></img>
-                        <p>{{game.recommandations}}</p>
+                        <p>{{game.recommandations}}</br>good reviews</p>
                         </div>
                     </div>
                     </div>
@@ -87,7 +87,7 @@
                             }
                             // Problèmes pour la récupération des genres et warning qui ne fonctionne pas correctement
                             var chaineHtml =   "<img class='game-img' src="+arrayDataGame[0].header_img+"></img>\
-                                                <p>Release date : "+arrayDataGame[0].release_date+"</p>\
+                                                <p><b>Release date</b> : "+arrayDataGame[0].release_date+"</p>\
                                                 <p>Publisher : "+arrayDataGame[0].publishers+"</p>\
                                                 <p>Developper : "+arrayDataGame[0].developers+"</p>\
                                                 <p>Genres : "+arrayDataGame[0].genres+"</p>\

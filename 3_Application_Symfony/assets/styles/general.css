@@ -1,0 +1,121 @@
+/*index - main*/
+/* mets le fond en noir (notamment l'entête)*/
+nav {
+    background-color: #171d25;
+}
+
+/* permet que l'entête prenne bien toute la place (bug sur PC Mathis, espace à droite) */
+div.container.ps-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+/* rajoute un espace à droite pour le logo steam */
+#img_navbar_steam {
+    /*margin-left: -7%;*/
+    margin-right: 7%;
+}
+
+/* rajoute un espace à gauche à Home Analysis Recommandations */
+#pages_name_pagetop {
+    margin-left: 250px;
+}
+
+/* gère la taille du bouton information dans l'entête */
+#site_information_icon_pagetop {
+    width: 30px;
+    height: auto;
+    margin-left: 7%;
+    margin-right: -7%;
+}
+
+/* gère la largeur du texte, la couleur du texte, et du fond des différentes pages */
+body {
+    padding-top: 100px;
+    background-color: #1A2A3F;
+    color: #c5c3c0;
+    font-family: Verdana, sans-serif;
+    width: 80%;
+    margin: auto;
+}
+
+/* permet un écart entre Steam 2024 Promotion Campaign et Problematic */
+hr {
+    width: 80%;
+    margin-inline: auto;
+    margin-top: 75px;
+    margin-bottom: 75px;
+}
+
+/* gère la couleur des liens du footer */
+.footer_link_text {
+    color: #c5c3c0;
+}
+
+.home_problematic_icons_text_container {
+    display: flex;
+    justify-content: center;
+}
+
+.home_problematic_icons_text_element {
+    text-align: center;
+    margin: 20px;
+}
+
+.home_problematic_text {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+/* gère la taille du bouton start now dans Home */
+.btn {
+    width: 130px;
+    border-radius: 70px;
+    background-color: #147aff;
+}
+
+/* gère le bouton information pour voir correctement le reste derrière */
+.btn-secondary {
+    width: 130px;
+    border-radius: 70px;
+    background-color: white;
+    color: #171d25;
+    border-color: white;
+}
+
+/* permet de prendre toute la largeur (mais se place à la suite du body (qui est vide) et ne prends pas en compte Game List dans Recommandations) */
+/* changer le z-index par 1 et mettre 2 à .sidebar (voir en dessous) */
+footer {
+    position: relative;
+    bottom: 0;
+    z-index: 2;
+    /*Pour compenser le width du Body, on augmente la taille du footer + 
+    deplacer le body sur la gauche pour qu'il occupe toute la largeur de la page*/
+    width: 132.5%;
+    margin-left: -20%;
+}
+
+/* forme après clic du bouton information */
+.modal-content {
+    border-radius: 50px;
+    margin: auto;
+}
+
+/* pareil ?? */
+.infoModal {
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+.modal-title {
+    margin-top: 20px;
+    color: black;
+}
+
+.modal-body {
+    color: black;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}

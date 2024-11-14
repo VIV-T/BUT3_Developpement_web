@@ -180,24 +180,24 @@
                             var chaineHtml = "\
                                 <div class='game-img-overlay'  onclick='selectGameDashboard("+var_appID+")'>\
                                     <div class='overlay-content' id='overlay-left'>\
-                                        <div class='overlay-content-top'>\
-                                        <p>top-left</p>\
-                                        <p>"+arrayDataGame.revenue+"</p>\
-                                        </div>\
-                                        <div class='overlay-content-bottom'>\
-                                        <p>bottom-left</p>\
-                                        <p>"+arrayDataGame.avg_play_time+"</p>\
-                                        </div>\
-                                    </div>\
-                                    <div class='overlay-content' id='overlay-right'>\
-                                        <div class='overlay-content-top'>\
-                                        <p>top-right</p>\
-                                        <p>"+arrayDataGame.copies_sold+"</p>\
-                                        </div>\
-                                        <div class='overlay-content-bottom'>\
-                                        <p>bottom-right</p>\
-                                        <p>"+arrayDataGame.recommandations+"</p>\
-                                        </div>\
+                                        <div class="overlay-content-top">
+                                            <img class = "icon_recommandations_KPI" src="{{asset("icons/dollar_icon.png")}}"></img>
+                                            <p>{{game.revenue}}</p>
+                                            </div>
+                                            <div class="overlay-content-bottom">
+                                            <img class = "icon_recommandations_KPI" src="{{asset("icons/time_icon.png")}}"></img>
+                                            <p>{{game.AvgPlayTime}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="overlay-content" id="overlay-right">
+                                            <div class="overlay-content-top">
+                                            <img class = "icon_recommandations_KPI" src="{{asset("icons/caddie_icon.png")}}"></img>
+                                            <p>{{game.copiesSold}}</p>
+                                            </div>
+                                            <div class="overlay-content-bottom">
+                                            <img class = "icon_recommandations_KPI" src="{{asset("icons/like_icon.png")}}"></img>
+                                            <p>{{game.recommandations}}</p>
+                                            </div>
                                     </div>\
                                     </div>\
                                     <img class='game-img' src="+arrayDataGame.header_img+"></img>\

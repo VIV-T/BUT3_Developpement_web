@@ -50,6 +50,9 @@ class AnalysisController extends AbstractController
         // La recupération de la valeur du formulaire pour la contruction du graph
         // et la construction en querstion se font dans la requête Ajax.        
 
+        // execution du script R appliquant des méthodes de DM aux données
+        //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
+        //exec("Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
 
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [

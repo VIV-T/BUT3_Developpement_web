@@ -84,15 +84,17 @@
     height: inherit;
     border-radius: 50px;
     position: absolute;
+    color: whitesmoke;
     background-color: #4A4A4A;
     z-index: 0;
-    opacity: 0.65;
+    opacity: 0.85;
     text-align: center;
     display: flex;
 }
 
 .overlay-content {
     /*margin: auto;*/
+    width: 50%;
     font-size: 100%;
     margin-top: auto;
     margin-bottom: auto;
@@ -101,11 +103,26 @@
 .overlay-content-top {
     border-bottom: solid;
     padding-bottom: 0;
+    display: flex;
+    /*justify-content: space-around;*/
+    padding-bottom: 5%;
+    padding-left: 20px;
+    column-gap: 10px;
+
 }
+
+.overlay-content-bottom {
+    display: flex;
+    /*justify-content: space-around;*/
+    padding-top: 10%;
+    padding-left: 20px;
+    column-gap: 10px;
+}
+
 
 #overlay-left {
     margin-left: auto;
-    border-right: solid;
+    /*border-right: solid;*/
 }
 
 #overlay-right {
@@ -175,4 +192,9 @@
 
     padding-left: 10px;
     padding-top: 2px;
+}
+
+.icon_recommandations_KPI{
+    width : 25%;
+    height : 25%;
 }

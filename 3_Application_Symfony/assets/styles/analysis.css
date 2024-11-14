@@ -1,6 +1,9 @@
-/*.analysis-section-graph {
-    
-}*/
+/*Analysis page*/
+.main-container-analysis-page {
+    margin: 20%;
+    width: 80%;
+
+}
 
 /*graphic containers*/
 .graphFiveDim-container {
@@ -18,6 +21,6 @@
     width: 100%;
 }
 
-.radio-button-period-container {
+.radio-btn-period-container {
     width: 120%;
 }

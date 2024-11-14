@@ -1,0 +1,23 @@
+/*.analysis-section-graph {
+    
+}*/
+
+/*graphic containers*/
+.graphFiveDim-container {
+    width: 50%;
+    height: auto;
+}
+
+.graphPeriodGenre-container {
+    height: auto;
+    display: flex;
+    gap: 5%;
+}
+
+#graphPeriodGenre {
+    width: 100%;
+}
+
+.radio-button-period-container {
+    width: 120%;
+}

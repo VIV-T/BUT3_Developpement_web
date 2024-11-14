@@ -1,0 +1,71 @@
+/*Dashboard page*/
+
+.sidebar-dashboard {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #171d25;
+    padding-top: 20px;
+    overflow-y: auto;
+    /* enable vertical scrolling */
+}
+
+.games-block-container-dashboard {
+    padding-top: 50px;
+    margin: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    column-gap: 10%;
+}
+
+.game-block-dashboard {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+
+.game-img-overlay-success-dashboard {
+    min-width: inherit;
+    min-height: inherit;
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 1;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
+}
+
+
+.game-img-overlay-dashboard {
+    min-width: inherit;
+    min-height: 30px;
+    width: inherit;
+    height: inherit;
+    border-radius: 50px;
+    position: absolute;
+    background-color: #4A4A4A;
+    z-index: 0;
+    opacity: 0.65;
+    text-align: center;
+    display: flex;
+}
+
+
+.game-block-dashboard:hover .game-img-overlay-dashboard {
+    z-index: 1;
+}
+
+
+.icon_recommandations_KPI{
+    width : 25%;
+    height : 25%;
+}

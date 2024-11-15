@@ -122,6 +122,8 @@ footer {
 
 #presentation_text {
     width: 50%;
+    align-items: start;
+    margin-top: 10%;
 }
 
 #button_start_now {

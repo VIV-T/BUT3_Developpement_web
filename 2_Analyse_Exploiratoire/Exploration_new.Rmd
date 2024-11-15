@@ -101,28 +101,29 @@ data_macro_genre = inner_join(data_macro_genre, data_genres, by="GenresId")
 
 x = avg_playtime, y=recommandation, color = publisher_class
 ```{r}
-data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+data_test_graph01 = subset(x = data_macro_genre, subset=data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
+test_graph01 = ggplot(data_test_graph01, aes(x = data_test_graph01$avgPlaytime, y=data_test_graph01$recommandations))+
+  geom_point(aes(color = data_test_graph01$publisherClass))
 
-test_graph02
+test_graph01
 ```
 
 
-
+Graphe interressant 
+Rajouter variable price (size, shape, ou color)
 x = reviewScore, y=avgPlaytime, color = publisher_class
+proposer des grpahiques différents en fonction du publisher class => division du nombre de point + meilleur visibilité
 ```{r}
-data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$reviewScore, y=data_test_graph02$avgPlaytime))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
+test_graph02 = ggplot(data_macro_genre, aes(x = data_macro_genre$reviewScore, y=data_macro_genre$avgPlaytime))+
+  geom_point(aes(color = data_macro_genre$publisherClass))
 
 test_graph02
 ```
 
 
-regression linéaire sur le graphique précédent
+regression linéaire sur le graphique précédent -> echec
 ```{r}
 model = LINREG(data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
 
@@ -132,14 +133,53 @@ regplot(model, data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
 
 test de graphes avec la variable price.
 ```{r}
-data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$publisherClass=="AA      " & data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+data_test_graph03 = subset(x = data_macro_genre, subset=data_macro_genre$publisherClass=="AA      " & data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$reviewScore, y=data_test_graph02$price))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
+test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$price))+
+  geom_point(aes(color = data_test_graph03$publisherClass))
 
-test_graph02
+test_graph03
 ```
 
+
+
+
+x = reviewScore, y=recommandations, color = publisher_class
+```{r}
+data_test_graph04 = subset(x = data_macro_genre,data_macro_genre$publisherClass=="AAA     " & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph04 = ggplot(data_test_graph04, aes(x = data_test_graph04$reviewScore, y=data_test_graph04$recommandations))+
+  geom_point(aes(color = data_test_graph04$publisherClass))
+
+test_graph04
+```
+
+
+
+
+Graphe interressant
+x = copiesSold, y=revenue, color = reviewScore, shape = publisher_class
+```{r}
+data_test_graph05 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph05 = ggplot(data_test_graph05, aes(x = data_test_graph05$copiesSold, y=data_test_graph05$revenue))+
+  geom_point(aes(color = data_test_graph05$reviewScore, shape = data_test_graph05$publisherClass))
+
+test_graph05
+```
+
+
+### Remarques
+  - retravailler les légendes et axes pour que tout soit clair et explicite 
+    cf doc ggplot2
+  
+  - revoir graphe_04 (=> piste interressante ?)
+
+
+### A faire
+
+ A faire : discretiser la variable price. construire un graphe en l'ajoutant en paramtre de size, shape ou color.
+ 
 
 tentative de discretisation de la variable price en utilisant une CAH centrée sur cette variable.
 ```{r}
@@ -182,81 +222,3 @@ points(optimal_clusters,inertie[optimal_clusters],pch=16,cex=2,col="red")
 test_hca_price = HCA(data_macro_genre$price, method = "ward")
 plot(test_hca_price)
 ```
-
-
-
-
-x = reviewScore, y=recommandations, color = publisher_class
-```{r}
-data_test_graph03 = subset(x = data_macro_genre,data_macro_genre$publisherClass=="AAA     " & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
-
-test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$recommandations))+
-  geom_point(aes(color = data_test_graph03$publisherClass))
-
-test_graph03
-```
-
-
-
-
-Graphe interressant
-x = copiesSold, y=revenue, color = reviewScore, shape = publisher_class
-```{r}
-data_test_graph02 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
-
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$copiesSold, y=data_test_graph02$revenue))+
-  geom_point(aes(color = data_test_graph02$reviewScore, shape = data_test_graph02$publisherClass))
-
-test_graph02
-```
-
-
-
-
-
-# Application methodes de classification non-suppervisée : 
-
-K-MEANS
-```{r}
-data_macro_genre_quanti = data_games_macro[,c(5:6, 9, 11:13)]
-
-data_macro_genre_kmeans = KMEANS(data_macro_genre_quanti, k=6)
-pseudoF(data_macro_genre_kmeans)
-kmeans.getk(data_macro_genre_quanti)
-```
-recuperation des données du premier cluster -> choses intérressantes ?
-```{r}
-clust1=as.vector(which(data_macro_genre_kmeans$cluster == 1))
-#View(clust1)
-data_macro_genre_clust1 = data_games_macro[clust1,]
-```
-
-
-
-
-# ACP
-```{r}
-data_macro_genre.pca = PCA(data_games_macro[,c(6, 9:13)])
-plot(data_macro_genre.pca, type = "cor")
-plot(data_macro_genre.pca)
-data_macro_genre.pca$eig
-```
-K-MEANS sur ACP
-```{r}
-data_macro_genre_kmeans = KMEANS(data_macro_genre.pca$ind$coord, k=2)
-pseudoF(data_macro_genre_kmeans)
-kmeans.getk(data_macro_genre.pca$ind$coor)
-```
-recuperation des données du premier cluster -> choses intérressantes ?
-```{r}
-clust1=as.vector(which(data_macro_genre_kmeans$cluster == 1))
-View(clust1)
-data_macro_genre_clust1 = data_games_macro[clust1,]
-```
-
-
-
-
-
-
- A faire : discretiser la variable price. construire un graphe en l'ajoutant en paramtre de size, shape ou color.

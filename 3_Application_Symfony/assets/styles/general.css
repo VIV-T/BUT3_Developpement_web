@@ -133,3 +133,9 @@ footer {
 #image_jeux_home {
     height: 80%;
 }
+
+
+#pages_name_pagetop, #img_navbar_steam, .container{
+    margin: 0;
+    padding: 0;
+}

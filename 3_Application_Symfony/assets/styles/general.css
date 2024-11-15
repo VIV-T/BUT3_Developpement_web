@@ -119,3 +119,11 @@ footer {
     text-align: center;
     margin: auto;
 }
+
+#presentation_text {
+    width: 50%;
+}
+
+#button_start_now {
+    margin-left: 75%;
+}

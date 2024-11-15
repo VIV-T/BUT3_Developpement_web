@@ -54,14 +54,10 @@ class AnalysisController extends AbstractController
         //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
         //exec("Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
         
-        $cwd = $this->getParameter("dir_script_r");
-        $dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
+        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
+        //$dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
+        $dir_script_r = $cwd."\\assests\\RGraph\\test.R";
         $dir_output_r = $cwd."\\assests\\RGraph";
-
-        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
-        // putenv("OUTPUT_DIRECTORY=".$dir_output_r);
-        // exec("Rscript.exe ".$dir_script_r);
-        
 
 
         $process = new Process(['.\Rscript.exe', $dir_script_r], null,['OUTPUT_DIRECTORY'=>$dir_output_r]);

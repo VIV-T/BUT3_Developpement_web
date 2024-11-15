@@ -15,9 +15,10 @@ library(rrepast)
 # exemple d'utilisation :
 # test = Sys.getenv("R_HOME")
 # test
-output_dir = Sys.getenv("OUTPUT_DIRECTORY")
+#output_dir = Sys.getenv("OUTPUT_DIRECTORY")
 # set the output dir
-setOutputDir(output_dir)
+#setOutputDir(output_dir)
+#setwd()
 
 ## Connection à la base de donn?es 
 

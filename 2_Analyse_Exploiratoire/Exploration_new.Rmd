@@ -199,7 +199,7 @@ diff_inertie <- diff(inertie)
 
 # On travaille sur les intervalles 2 à 4 car on envisage 3 à 5 catégories
 
-optimal_clusters <- which.min(diff_inertie[2:4]) + 2  # Ajouter 1 car l'indice renvoie au point avant la coupure
+optimal_clusters <- which.min(diff_inertie[2:4]) + 1  # Ajouter 1 car l'indice renvoie au point avant la coupure
 ```
 
 
@@ -215,6 +215,16 @@ plot(inertie[1:20], type = "s",
 grid()
 
 points(optimal_clusters,inertie[optimal_clusters],pch=16,cex=2,col="red")
+```
+
+
+```{r}
+plot(myclust)
+```
+
+
+```{r}
+plot(data_macro_genre$price)
 ```
 
 

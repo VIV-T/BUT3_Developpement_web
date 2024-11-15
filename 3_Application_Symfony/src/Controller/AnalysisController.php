@@ -57,14 +57,13 @@ class AnalysisController extends AbstractController
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         //$dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
         $dir_script_r = $cwd."\\assests\\RGraph\\test.R";
-        $dir_output_r = $cwd."\\assests\\RGraph";
+        //dd($dir_script_r);
 
-
-        $process = new Process(['.\Rscript.exe', $dir_script_r], null,['OUTPUT_DIRECTORY'=>$dir_output_r]);
+        $process = new Process(['Rscript.exe', $dir_script_r]);
         $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
         //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
         //dd($process);
-        $process->run();
+        $process->mustRun();
         if (!$process->isSuccessful()){
             dd(new ProcessFailedException($process));
         }

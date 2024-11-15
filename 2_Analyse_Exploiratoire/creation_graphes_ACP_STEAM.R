@@ -1,24 +1,45 @@
 ##### Creation graphe ACP - Projet STEAM #####
 
-## Import des packages
+## Import des packages - détailler pourquoi on les utilises
 library(DBI)
 library(ggplot2)
-library(cluster)
 library(fdm2id)
 library(plotly)
 library(htmlwidgets)
-library(rrepast)
+library(stringr)
+library(pandoc)
 
-###### Code a lancer que lorsque l'execution provient de Symfony
-## Initialisation du dossier d'output a partir de la var 
-# d'environement passee en parametre depuis le script Symfony
-# exemple d'utilisation :
-# test = Sys.getenv("R_HOME")
-# test
-#output_dir = Sys.getenv("OUTPUT_DIRECTORY")
-# set the output dir
-#setOutputDir(output_dir)
-#setwd()
+##### Pour initialiser la sortie des graphes au bon endroit : 
+# etant donner que le code est executer depuis la ligne de cmd, on recupere les arguments donne a la cmd Rscript.exe
+# L'argument recupere est le filePath du fichier courant
+# On le retravail pour obtenir le path du directory avant de setwd(la path en question)
+# Il faut modifier le fichier de sortie pour eviter d'avoir les graphes dans le dossier de la cmd d'execution.
+
+# Obtenir les arguments de la commande
+args <- commandArgs(trailingOnly = FALSE)
+
+# Extraire le chemin du fichier
+script_path <- sub("--file=", "", args[grep("--file=", args)])
+
+# Convertir le chemin en absolu (si nécessaire)
+absolute_path <- normalizePath(script_path, mustWork = TRUE)
+
+absolute_path_dir = stringr::str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
+# Afficher le chemin absolu
+print(absolute_path_dir)
+
+tryCatch(
+  setwd(absolute_path_dir), 
+  error = function(e) {  
+    print("test")
+  }
+)
+
+getwd()
+
+
+
+
 
 ## Connection à la base de donn?es 
 
@@ -33,16 +54,13 @@ connexion <- DBI::dbConnect(RMySQL::MySQL(),
 
 
 # # Get table names
-tables <- dbListTables(connexion)
-
+tables <- DBI::dbListTables(connexion)
 
 # Display structure of tables
-str(tables)
-
+#str(tables)
 
 # Import the accounts table from mydb
-games <- dbReadTable(connexion, "games")
-
+games <- DBI::dbReadTable(connexion, "games")
 
 data_games = as.data.frame(games)
 
@@ -55,21 +73,11 @@ data_games = as.data.frame(games)
 #  - revenue
 #  - recommandations
 
-data_games.pca = PCA(data_games[,c(15:19,21)])
-
-# enregistrement des graphes de l'ACP : 
-# - cercles des corr?lations
-# - projection sur le premier plan factoriel
-# - renvoyer aussi l'inertie totale du premier plan factoriel
-graphe_ACP_cercle_cor = plot(data_games.pca, type = "cor")
-ggsave("graphe_ACP_cercle_cor.png", plot=graphe_ACP_cercle_cor)
-
-graphe_ACP_projection_points = plot(data_games.pca)
-ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
-
+data_games.pca = fdm2id::PCA(data_games[,c(15:19,21)])
 
 # inertie
 inertie_premier_plan_factoriel = data_games.pca$eig[2,3]
+
 
 
 ## Application du K-MEANS sur les coordonn?es de l'ACP
@@ -102,32 +110,35 @@ for (i in 1:nb_cluster_opti) {
 }
 
 
-
-## Partie experimentale :
-
 data_games.pca$ind$coord=as.matrix(data_games_clust)
-
-
 data_games_clust =data_games_clust[,c(1,2,7)]
 
 
+# enregistrement des graphes de l'ACP : 
+# - cercles des corr?lations
+# - projection sur le premier plan factoriel
+# - renvoyer aussi l'inertie totale du premier plan factoriel
+graphe_ACP_cercle_cor = plot(data_games.pca, type = "cor")
+ggsave("graphe_ACP_cercle_cor.png", plot=graphe_ACP_cercle_cor)
 
 
+graphe_ACP_projection_points = plot(data_games.pca)
+ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
 
-fig <- plot_ly(data_games_clust, x = ~Dim.1, y = ~Dim.2, color = ~cluster, colors = c('#636EFA','#EF553B'), type = 'scatter', mode = 'markers') %>% 
-  layout(
-    legend=list(title=list(text='color')),
-    plot_bgcolor = "#e5ecf6",
-    xaxis = list(
-      title = "0"),
-    yaxis = list(
-      title = "1"))
-for (i in 1:nrow(data_games.pca$var$coord)){
-  fig <- fig %>%
-    add_segments(x = 0, xend = 30*data_games.pca$var$coord[i,"Dim.1"], y = 0, yend = 30*data_games.pca$var$coord[i,"Dim.2"], line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
-    add_annotations(x=30*data_games.pca$var$coord[i,"Dim.1"], y=30*data_games.pca$var$coord[i,"Dim.2"], ax = 0, ay = 0,text = rownames(data_games.pca$var$coord)[i], xanchor = 'center', yanchor= 'bottom')
-}
 
+#fig <- plot_ly(data_games_clust, x = ~Dim.1, y = ~Dim.2, color = ~cluster, colors = c('#636EFA','#EF553B'), type = 'scatter', mode = 'markers') %>% 
+#  layout(
+#    legend=list(title=list(text='color')),
+#    plot_bgcolor = "#e5ecf6",
+#    xaxis = list(
+#      title = "0"),
+#    yaxis = list(
+#      title = "1"))
+#for (i in 1:nrow(data_games.pca$var$coord)){
+#  fig <- fig %>%
+#    add_segments(x = 0, xend = 30*data_games.pca$var$coord[i,"Dim.1"], y = 0, yend = 30*data_games.pca$var$coord[i,"Dim.2"], line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+#    add_annotations(x=30*data_games.pca$var$coord[i,"Dim.1"], y=30*data_games.pca$var$coord[i,"Dim.2"], ax = 0, ay = 0,text = rownames(data_games.pca$var$coord)[i], xanchor = 'center', yanchor= 'bottom')
+#}
 
 # Sauvegarde du plot -> dans un objet HTML (particularité de plotly)
-htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.png.html")
+#htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.png.html")

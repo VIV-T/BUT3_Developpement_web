@@ -50,20 +50,36 @@ class AnalysisController extends AbstractController
         // La recupération de la valeur du formulaire pour la contruction du graph
         // et la construction en querstion se font dans la requête Ajax.        
 
-        // execution du script R appliquant des méthodes de DM aux données
+        
+        //// execution du script R appliquant des méthodes de DM aux données
         //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
         //exec(".\Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
         
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
-        //$dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
-        $dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
-        $dir_script_r_bis = "C:\\3eme_annee\\Dev_Web\\ProjetSteam\\2_Analyse_Exploiratoire\\scriptR_application\\creation_graphes_ACP_STEAM.R";
         //dd($cwd);
         
+        //// Execution des script stocké dans un directory annexe.
+        
+        // Si execution des scripts contenus dans les directory d'assets de l'application :
         // Erreur d'execution : code -1073741819 => probleme de permission pour executer la cmd depuis symfony
         // Conclusion : les deux facon de faire : exec/Process ne sont pas un probleme car elles renvoient la mm erreur.
 
-        //// Ne fonctionne pas
+
+        // creation des path pour chacun des fichier R a executer :
+        $path_main_dir = preg_replace("(\\\[1-9a-zA-Z_]+$)", "", $cwd);
+        $path_dir_r_script_acp = $path_main_dir."\\scriptR_application\\creation_graphes_ACP_STEAM.R";
+        $path_dir_r_script_graph = $path_main_dir."\\scriptR_application\\creation_graphes_analysis.R";
+        $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
+        
+
+        foreach($liste_scripts as $r_script){
+            $process = new Process(['.\Rscript.exe', $r_script]);
+            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+            $process->setTimeout(300);
+            $process->run();
+        }
+        
+        //// Méthode 1 : utilisation de exec()
         // $cmd = ".\Rscript.exe ".$dir_script_r_bis;
         // //dd($cmd);
         // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
@@ -71,41 +87,19 @@ class AnalysisController extends AbstractController
         // dd([$output, $retval]);
 
 
-        //// Ne fonctionne pas
-        $process = new Process(['.\Rscript.exe', $dir_script_r_bis]);
-        $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
-        //dd($process);
-        $process->run();
-        $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                //dd('ERR > '.$buffer);
-            } else {
-                //dd( 'OUT > '.$buffer);
-            }
-        });
-
-
-
-        //// Test des voies d'execution : Process() & exec()
-        // Tout fonctionne correctement
-
-        // $cmd = ".\Rscript.exe --version";
-        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
-        // exec($cmd, $output, $retval);
-        // dd([$output, $retval]);
-
-        // $process = new Process(['.\Rscript.exe', "--version"]);
-        // $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        // //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
-        // //dd($process);
-        // $process->run(function ($type, $buffer) {
-        //     if (Process::ERR === $type) {
-        //         dd('ERR > '.$buffer);
-        //     } else {
-        //         dd( 'OUT > '.$buffer);
-        //     }
-        // });
+        //// Méthode 2 : utilisation de Process()
+        //$process = new Process(['.\Rscript.exe', $path_dir_r_script_graph]);
+        //$process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        //$process->setTimeout(300);
+        //$process->run();
+        // deboggage
+        //$process->run(function ($type, $buffer) {
+        //    if (Process::ERR === $type) {
+        //        //dd('ERR > '.$buffer);
+        //    } else {
+        //        //dd( 'OUT > '.$buffer);
+        //    }
+        //});
 
 
         ///// Renvoie tous les objets dans le template twig associé.

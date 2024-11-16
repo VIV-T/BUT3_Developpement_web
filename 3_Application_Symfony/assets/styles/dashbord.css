@@ -1,20 +1,36 @@
 /*Dashboard page*/
 
-.sidebar-dashboard {
-    height: 100%;
-    width: 25%;
+.gamelist-dashboard {
+    height: 27.2vw;
+    width: 20%;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
     background-color: #171d25;
-    padding-top: 20px;
+    margin-top: 10%;
+    margin-left: 10%;
+    border-top-left-radius: 50px;
+    /*border-top-right-radius: 50px;*/
     overflow-y: auto;
     /* enable vertical scrolling */
 }
 
+.button_back_dashboard {
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #171d25;
+    margin-top: 37.1vw;
+    margin-left: 10%;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
 .games-block-container-dashboard {
-    padding-top: 50px;
+    padding-top: 2%;
     margin: 5%;
     display: flex;
     flex-wrap: wrap;
@@ -24,17 +40,15 @@
 
 .game-block-dashboard {
     width: 100%;
-    height: auto;
+    height: 7vw;
     display: flex;
     margin-top: 2.5%;
     margin-bottom: 2.5%;
 }
 
 .game-img-overlay-success-dashboard {
-    min-width: inherit;
-    min-height: inherit;
-    width: inherit;
-    height: inherit;
+    width: 90%;
+    height: 7vw;
     border-radius: 50px;
     position: absolute;
     background-color: #4A4A4A;
@@ -46,10 +60,8 @@
 
 
 .game-img-overlay-dashboard {
-    min-width: inherit;
-    min-height: 30px;
-    width: inherit;
-    height: inherit;
+    width: 90%;
+    height: 7vw;
     border-radius: 50px;
     position: absolute;
     background-color: #4A4A4A;
@@ -68,4 +80,27 @@
 .icon_recommandations_KPI{
     width : 25%;
     height : 25%;
+}
+
+.container_dashboard {
+    display: flex;
+    margin-left: 28%;
+}
+
+#dashboard-to-recommandations-btn {
+    border-color: #1A2A3F;
+    margin: 5%;
+}
+
+#game-img-dashboard {
+    height: 7vw;
+}
+
+h2 {
+    position: fixed;
+    margin-top: 1%;
+}
+
+.graph-container {
+    margin-top: 3%;
 }

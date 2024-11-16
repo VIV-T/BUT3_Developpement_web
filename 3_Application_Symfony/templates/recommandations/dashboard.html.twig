@@ -5,26 +5,6 @@
 {% block body %}
 <!--Sidebar-->
 
-<div class = 'sidebar-dashboard'>
-    
-    <h2>Game list : </h2>
-    <div class = 'gamelist-dashboard'>
-        <section class="games-block-container-dashboard">
-            {% for dashboard_game in dashboard_games %}
-                <div class="game-block-dashboard" id="game_img_container_dashboard_{{dashboard_game.appID}}">
-                    <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard({{dashboard_game.appID}})'>
-                        <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
-                    </div>
-                    <img class='game-img' src={{dashboard_game.headerImg}}></img>
-                </div>
-
-                {% else %}
-                <li>Aucun enregistrement dans la BD</li>
-            {% endfor %}
-        </section>
-    </div>
-</div>
-
 <script>
     // Select game for dashboard - call we we click on a game to select him.
     function selectGameDashboard(var_appID) {
@@ -86,11 +66,48 @@
     }
 </script>
 
-<section class="graph-container">
-    <canvas id="PieChartDashboard"></canvas>
-    <canva id="HistogramDashboard">{{render_chart(barChartReviewScore)}}</canva>
-    <canva id="BarChartAgeDashboard">{{render_chart(barChartAge)}}</canva>
-</section>
+<h2>Games list : </h2>
+
+<div class = "container_dashboard">
+    <div class = 'sidebar-dashboard'>
+        
+        <div class = 'gamelist-dashboard'>
+            <section class="games-block-container-dashboard">
+                {% for dashboard_game in dashboard_games %}
+                    <div class="game-block-dashboard" id="game_img_container_dashboard_{{dashboard_game.appID}}">
+                        <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard({{dashboard_game.appID}})'>
+                            <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
+                        </div>
+                        <img class='game-img' id='game-img-dashboard' src={{dashboard_game.headerImg}}></img>
+                    </div>
+
+                    {% else %}
+                    <li>Aucun enregistrement dans la BD</li>
+                {% endfor %}
+            </section>
+        </div>
+        <div class="button_back_dashboard">
+            <a type="button" id="dashboard-to-recommandations-btn" class="btn btn-primary" href ="{{ path('app_recommandations') }}">Back</a>
+        </div>
+    </div>
+
+    <div>
+
+        <section class="graph-container">
+            <canva id="HistogramDashboard">{{render_chart(barChartReviewScore)}}</canva>
+            <canva id="BarChartAgeDashboard">{{render_chart(barChartAge)}}</canva>
+        </section>
+
+        <section class="graph-container">
+            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </section>
+        <section class="graph-container">
+            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </section>
+
+    </div>
+
+</div>
 
 
 <script>
@@ -162,13 +179,5 @@
     }
 
 </script>
-
-
-<section class="graph-container">
-    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-</section>
-<section class="graph-container">
-    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-</section>
 
 {% endblock %}

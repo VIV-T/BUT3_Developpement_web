@@ -13,7 +13,7 @@ library(fdm2id)
 
 Lecture des données
 ```{r}
-data = read.csv2(".\\data_view\\games.csv", encoding = "UTF-8")
+data = read.csv2("./data_view/games.csv", encoding = "UTF-8")
 ```
 
 
@@ -31,6 +31,22 @@ Nb jeux sortis par années : interresant
 ```{r}
 hist(data$releaseYear)
 ```
+diagrammeJeuAnnee = ggplot(data_games[dataafter2004,], aes(x = releaseYear, fill = publisherClass)) +
++   geom_bar()+xlab("release date")+ylab("number of new game")+scale_fill_discrete(name = "Publisher class name")+theme_classic()+theme(legend.position = "bottom")+ggtitle("Evolution of the number of new games per year since 2004")+scale_fill_brewer(palette = "Blues")
+
+```{r}
+dataafter2004 = which(data$releaseYear > 2004)
+
+ggplot(data[dataafter2004,], aes(x = releaseYear, fill = publisherClass)) +
+  geom_bar() +
+  xlab("Release Year") +
+  ylab("Number of New Games") +
+  theme_classic() +
+  theme(legend.position = "bottom") +
+  ggtitle("Evolution of the Number of New Games Per Year Since 2004") +
+  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"))
+```
+
 
 Nb de jeux sortis par mois : modifier l'ordre alpha en ordre temporel.
 ```{r}
@@ -83,8 +99,8 @@ data_games_macro -> analyse macro economique
 ## essais des graphes imaginés lors des reunions
 lecture des tables de données additionnelles
 ```{r}
-data_link_games_genres = read.csv2(".\\data_view\\link_games_genres.csv", encoding="UTF-8")
-data_genres = read.csv2(".\\data_view\\genres.csv", encoding = "UTF-8")
+data_link_games_genres = read.csv2("./data_view/link_games_genres.csv", encoding="UTF-8")
+data_genres = read.csv2("./data_view/genres.csv", encoding = "UTF-8")
 ```
 
 # Creation de la table de données complète games + genres
@@ -111,6 +127,8 @@ test_graph01
 
 
 Graphe interressant 
+
+
 Rajouter variable price (size, shape, ou color)
 x = reviewScore, y=avgPlaytime, color = publisher_class
 proposer des grpahiques différents en fonction du publisher class => division du nombre de point + meilleur visibilité
@@ -120,6 +138,63 @@ test_graph02 = ggplot(data_macro_genre, aes(x = data_macro_genre$reviewScore, y=
   geom_point(aes(color = data_macro_genre$publisherClass))
 
 test_graph02
+```
+
+Discretiser prix selon la fonction 
+```{r}
+data_macro_genre['priceDiscretize'] <- discretize(data_macro_genre$price, "cluster", labels = c("low price", "medium price", "high price"))
+```
+
+
+
+```{r}
+gamesAA = which(data_macro_genre$publisher_class == "AA      ")
+
+rwperAVGAA = ggplot(data_macro_genre[gamesAA,], aes(x = review_score, y = avg_play_time.x)) +
+  geom_point(aes(color = priceDiscretize)) +
+  xlab("Review Score") +
+  ylab("Average Playtime (Hours)") +
+  theme_classic() +
+  ggtitle("Overall 'AA' Game Ratings by Average Playtime") +
+  scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+
+gamesAAA = which(data_macro_genre$publisher_class == "AAA     ")
+
+rwperAVGAAA = ggplot(data_macro_genre[gamesAAA,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'AAA' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+
+gamesIndie = which(data_macro_genre$publisher_class == "Indie   ")
+
+rwperAVGIndie = ggplot(data_macro_genre[gamesIndie,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'Indie' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+gamesHobbyist = which(data_macro_genre$publisher_class == "Hobbyist")
+
+rwperAVGHobbyist = ggplot(data_macro_genre[gamesHobbyist,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'Hobbyist' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+rwperAVGAA
+rwperAVGAAA
+rwperAVGIndie
+rwperAVGHobbyist
 ```
 
 
@@ -162,8 +237,17 @@ x = copiesSold, y=revenue, color = reviewScore, shape = publisher_class
 ```{r}
 data_test_graph05 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph05 = ggplot(data_test_graph05, aes(x = data_test_graph05$copiesSold, y=data_test_graph05$revenue))+
-  geom_point(aes(color = data_test_graph05$reviewScore, shape = data_test_graph05$publisherClass))
+options(scipen = 999)
+test_graph05 = ggplot(data_test_graph05, aes(x = copiesSold, y= revenue)) +
+  geom_point(aes(color = reviewScore, shape = publisherClass)) +
+  xlab("Number of copies sold") +
+  ylab("Amount of income") +
+  ggtitle("Is selling games a source of significant income ? (for each publisher class)") +
+  theme_classic() +
+  theme(legend.position = "right") +
+  labs(color = "Review Score levels", shape = "Publisher Class")+
+  scale_y_continuous(labels =  scales::comma)+
+  scale_x_continuous(labels =  scales::comma)
 
 test_graph05
 ```
@@ -201,6 +285,8 @@ diff_inertie <- diff(inertie)
 
 optimal_clusters <- which.min(diff_inertie[2:4]) + 1  # Ajouter 1 car l'indice renvoie au point avant la coupure
 ```
+
+
 
 
 ```{r}

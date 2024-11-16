@@ -59,11 +59,11 @@ class AnalysisController extends AbstractController
         $dir_script_r = $cwd."\\assests\\RGraph\\test.R";
         //dd($dir_script_r);
 
-        $process = new Process(['Rscript.exe', $dir_script_r]);
+        $process = new Process(['.\Rscript.exe', $dir_script_r]);
         $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
         //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
         //dd($process);
-        $process->mustRun();
+        $process->run();
         if (!$process->isSuccessful()){
             dd(new ProcessFailedException($process));
         }

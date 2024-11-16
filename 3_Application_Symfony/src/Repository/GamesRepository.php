@@ -254,11 +254,12 @@ class GamesRepository extends ServiceEntityRepository
         }
 
         // on récupère toutes les données associées au jeu
-        $query = "SELECT *
+        $query = "SELECT app_id, game_name, release_date, release_month, release_year, pegi, english_supported, header_img, notes, categories, publisher_class, publishers, developers, systems, copies_sold, revenue, price, games.avg_play_time, review_score, achievements, recommandations, GROUP_CONCAT(label SEPARATOR ', ') AS labels
                     FROM games
-                        JOIN link_games_genres USING (app_id)
+	                    JOIN link_games_genres USING (app_id)
 	                    JOIN genres USING(genres_id)
-                    WHERE app_id = $appID";
+                    WHERE app_id = $appID
+                    GROUP BY app_id";
         
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
         return $result->fetchAll();

@@ -68,7 +68,16 @@ class AnalysisController extends AbstractController
         // creation des path pour chacun des fichier R a executer :
         $path_main_dir = preg_replace("(\\\[1-9a-zA-Z_]+$)", "", $cwd);
         $path_dir_r_script_acp = $path_main_dir."\\scriptR_application\\creation_graphes_ACP_STEAM.R";
+        $path_dir_r_script_graph = $path_main_dir."\\scriptR_application\\creation_graphes_analysis.R";
+        $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
         
+
+        foreach($liste_scripts as $r_script){
+            $process = new Process(['.\Rscript.exe', $r_script]);
+            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+            $process->setTimeout(300);
+            $process->run();
+        }
         
         //// Méthode 1 : utilisation de exec()
         // $cmd = ".\Rscript.exe ".$dir_script_r_bis;
@@ -79,9 +88,10 @@ class AnalysisController extends AbstractController
 
 
         //// Méthode 2 : utilisation de Process()
-        $process = new Process(['.\Rscript.exe', $path_dir_r_script_acp]);
-        $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        $process->run();
+        //$process = new Process(['.\Rscript.exe', $path_dir_r_script_graph]);
+        //$process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        //$process->setTimeout(300);
+        //$process->run();
         // deboggage
         //$process->run(function ($type, $buffer) {
         //    if (Process::ERR === $type) {

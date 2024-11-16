@@ -1,6 +1,6 @@
 ##### Creation graphe ACP - Projet STEAM #####
 
-## Import des packages - détailler pourquoi on les utilises
+## Import des packages
 # connection a la BD
 library(DBI)
 # Manipulation de string => utile pour le setwd()

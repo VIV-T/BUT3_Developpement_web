@@ -79,9 +79,9 @@ class AnalysisController extends AbstractController
         $process->run();
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
-                dd('ERR > '.$buffer);
+                //dd('ERR > '.$buffer);
             } else {
-                dd( 'OUT > '.$buffer);
+                //dd( 'OUT > '.$buffer);
             }
         });
 

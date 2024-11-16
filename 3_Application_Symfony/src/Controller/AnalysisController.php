@@ -52,21 +52,61 @@ class AnalysisController extends AbstractController
 
         // execution du script R appliquant des méthodes de DM aux données
         //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
-        //exec("Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
+        //exec(".\Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
         
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         //$dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
-        $dir_script_r = $cwd."\\assests\\RGraph\\test.R";
-        //dd($dir_script_r);
+        $dir_script_r = $cwd."\\assests\\RGraph\\creation_graphes_ACP_STEAM.R";
+        $dir_script_r_bis = "C:\\3eme_annee\\Dev_Web\\ProjetSteam\\2_Analyse_Exploiratoire\\scriptR_application\\creation_graphes_ACP_STEAM.R";
+        //dd($cwd);
+        
+        // Erreur d'execution : code -1073741819 => probleme de permission pour executer la cmd depuis symfony
+        // Conclusion : les deux facon de faire : exec/Process ne sont pas un probleme car elles renvoient la mm erreur.
 
-        $process = new Process(['.\Rscript.exe', $dir_script_r]);
+        //// Ne fonctionne pas
+        // $cmd = ".\Rscript.exe ".$dir_script_r_bis;
+        // //dd($cmd);
+        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
+        // exec($cmd, $output, $retval);
+        // dd([$output, $retval]);
+
+
+        //// Ne fonctionne pas
+        $process = new Process(['.\Rscript.exe', $dir_script_r_bis]);
         $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
         //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
         //dd($process);
         $process->run();
-        if (!$process->isSuccessful()){
-            dd(new ProcessFailedException($process));
-        }
+        $process->run(function ($type, $buffer) {
+            if (Process::ERR === $type) {
+                dd('ERR > '.$buffer);
+            } else {
+                dd( 'OUT > '.$buffer);
+            }
+        });
+
+
+
+        //// Test des voies d'execution : Process() & exec()
+        // Tout fonctionne correctement
+
+        // $cmd = ".\Rscript.exe --version";
+        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
+        // exec($cmd, $output, $retval);
+        // dd([$output, $retval]);
+
+        // $process = new Process(['.\Rscript.exe', "--version"]);
+        // $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        // //$process->setEnv('OUTPUT_DIRECTORY', $dir_script_r);
+        // //dd($process);
+        // $process->run(function ($type, $buffer) {
+        //     if (Process::ERR === $type) {
+        //         dd('ERR > '.$buffer);
+        //     } else {
+        //         dd( 'OUT > '.$buffer);
+        //     }
+        // });
+
 
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [

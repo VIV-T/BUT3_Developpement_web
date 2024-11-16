@@ -8,8 +8,10 @@ library(plotly)
 library(htmlwidgets)
 library(stringr)
 
-sys_pandoc <- find_program("pandoc")
-sources <- c(Sys.getenv("RSTUDIO_PANDOC"), if (nzchar(sys_pandoc)) dirname(sys_pandoc))
+
+### nécéssaire d'intaller pandoc sur la machine pour pouvoir y accéder depuis l'invite de cmd ###
+### logiciel déjà installer avec Rstudio MAIS pas au bon emplacement !
+
 
 ##### Pour initialiser la sortie des graphes au bon endroit : 
 # etant donner que le code est executer depuis la ligne de cmd, on recupere les arguments donne a la cmd Rscript.exe
@@ -121,11 +123,11 @@ data_games_clust =data_games_clust[,c(1,2,7)]
 # - projection sur le premier plan factoriel
 # - renvoyer aussi l'inertie totale du premier plan factoriel
 graphe_ACP_cercle_cor = plot(data_games.pca, type = "cor")
-#ggsave("graphe_ACP_cercle_cor.png", plot=graphe_ACP_cercle_cor)
+ggsave("graphe_ACP_cercle_cor.png", plot=graphe_ACP_cercle_cor)
 
 
 graphe_ACP_projection_points = plot(data_games.pca)
-#ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
+ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
 
 
 fig <- plot_ly(data_games_clust, x = ~Dim.1, y = ~Dim.2, color = ~cluster, colors = c('#636EFA','#EF553B'), type = 'scatter', mode = 'markers') %>% 

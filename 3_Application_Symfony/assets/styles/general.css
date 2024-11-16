@@ -6,27 +6,27 @@ nav {
 
 /* permet que l'entête prenne bien toute la place (bug sur PC Mathis, espace à droite) */
 div.container.ps-0 {
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* rajoute un espace à droite pour le logo steam */
-#img_navbar_steam {
-    /*margin-left: -7%;*/
+/*#img_navbar_steam {
+    margin-left: -7%;
     margin-right: 7%;
-}
+}*/
 
 /* rajoute un espace à gauche à Home Analysis Recommandations */
-#pages_name_pagetop {
+/*#pages_name_pagetop {
     margin-left: 250px;
-}
+}*/
 
 /* gère la taille du bouton information dans l'entête */
 #site_information_icon_pagetop {
     width: 30px;
     height: auto;
-    margin-left: 7%;
-    margin-right: -7%;
+    /*margin-left: 7%;
+    margin-right: -7%;*/
 }
 
 /* gère la largeur du texte, la couleur du texte, et du fond des différentes pages */
@@ -41,10 +41,10 @@ body {
 
 /* permet un écart entre Steam 2024 Promotion Campaign et Problematic */
 hr {
-    width: 80%;
+    width: 85%;
     margin-inline: auto;
-    margin-top: 75px;
-    margin-bottom: 75px;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 /* gère la couleur des liens du footer */
@@ -93,6 +93,7 @@ footer {
     deplacer le body sur la gauche pour qu'il occupe toute la largeur de la page*/
     width: 132.5%;
     margin-left: -20%;
+    justify-items: center;
 }
 
 /* forme après clic du bouton information */
@@ -132,10 +133,22 @@ footer {
 
 #image_jeux_home {
     height: 80%;
+    border-radius: 50px;
 }
 
 
-#pages_name_pagetop, #img_navbar_steam, .container{
+/*#pages_name_pagetop, #img_navbar_steam, .container{
     margin: 0;
     padding: 0;
+}*/
+
+.navbar-expand-lg {
+    justify-content: center;
+}
+
+.container_presentation {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5%;
+    margin-bottom: -10%;
 }

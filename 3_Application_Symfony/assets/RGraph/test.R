@@ -4,6 +4,7 @@
 # On le retravail pour obtenir le path du directory avant de setwd(la path en question)
 # Il faut modifier le fichier de sortie pour eviter d'avoir les graphes dans le dossier de la cmd d'execution.
 library(stringr)
+library(rmarkdown)
 
 
 # Obtenir les arguments de la commande
@@ -22,8 +23,9 @@ absolute_path_dir = str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
 tryCatch(
   setwd(absolute_path_dir), 
   error = function(e) {  
+    print("test")
   }
 )
+
   
 
-getwd()

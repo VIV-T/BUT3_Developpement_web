@@ -194,49 +194,50 @@
     padding-top: 2px;
 }
 
-.icon_recommandations_KPI{
-    width : 25%;
-    height : 25%;
+.icon_recommandations_KPI {
+    width: 25%;
+    height: 25%;
 }
 
 
-.modal-dialog-centered{
+#taille_modal_recommandations {
     margin: auto;
     width: 100%;
+    /*margin-top: 2%;*/
 }
 
-.container_modale_recommandations{
+.container_modale_recommandations {
     display: flex;
     justify-content: space-around;
     margin: 5%;
     margin-top: 10%;
 }
 
-#gameInfoContent{
+#gameInfoContent {
     padding: 0;
     margin: 0;
     width: auto;
 }
 
-.info_non_chiffre{
+.info_non_chiffre {
     text-align: left;
     color: lightgray;
 }
 
-.info_non_chiffre p b{
+.info_non_chiffre p b {
     color: black;
 }
 
-.info_chiffre{
+.info_chiffre {
     color: lightgray;
-    font-size:xx-large;
+    font-size: xx-large;
 }
 
-.info_chiffre p b{
+.info_chiffre p b {
     color: black;
 }
 
-#cancel_recommandation{
+#cancel_recommandation {
     margin-bottom: 5%;
     font-size: large;
 }

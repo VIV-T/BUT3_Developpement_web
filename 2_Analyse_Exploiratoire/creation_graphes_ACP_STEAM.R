@@ -7,7 +7,11 @@ library(fdm2id)
 library(plotly)
 library(htmlwidgets)
 library(stringr)
-library(pandoc)
+
+
+### nécéssaire d'intaller pandoc sur la machine pour pouvoir y accéder depuis l'invite de cmd ###
+### logiciel déjà installer avec Rstudio MAIS pas au bon emplacement !
+
 
 ##### Pour initialiser la sortie des graphes au bon endroit : 
 # etant donner que le code est executer depuis la ligne de cmd, on recupere les arguments donne a la cmd Rscript.exe
@@ -126,19 +130,19 @@ graphe_ACP_projection_points = plot(data_games.pca)
 ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
 
 
-#fig <- plot_ly(data_games_clust, x = ~Dim.1, y = ~Dim.2, color = ~cluster, colors = c('#636EFA','#EF553B'), type = 'scatter', mode = 'markers') %>% 
-#  layout(
-#    legend=list(title=list(text='color')),
-#    plot_bgcolor = "#e5ecf6",
-#    xaxis = list(
-#      title = "0"),
-#    yaxis = list(
-#      title = "1"))
-#for (i in 1:nrow(data_games.pca$var$coord)){
-#  fig <- fig %>%
-#    add_segments(x = 0, xend = 30*data_games.pca$var$coord[i,"Dim.1"], y = 0, yend = 30*data_games.pca$var$coord[i,"Dim.2"], line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
-#    add_annotations(x=30*data_games.pca$var$coord[i,"Dim.1"], y=30*data_games.pca$var$coord[i,"Dim.2"], ax = 0, ay = 0,text = rownames(data_games.pca$var$coord)[i], xanchor = 'center', yanchor= 'bottom')
-#}
+fig <- plot_ly(data_games_clust, x = ~Dim.1, y = ~Dim.2, color = ~cluster, colors = c('#636EFA','#EF553B'), type = 'scatter', mode = 'markers') %>% 
+  layout(
+    legend=list(title=list(text='color')),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = list(
+      title = "0"),
+    yaxis = list(
+      title = "1"))
+for (i in 1:nrow(data_games.pca$var$coord)){
+  fig <- fig %>%
+    add_segments(x = 0, xend = 30*data_games.pca$var$coord[i,"Dim.1"], y = 0, yend = 30*data_games.pca$var$coord[i,"Dim.2"], line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+    add_annotations(x=30*data_games.pca$var$coord[i,"Dim.1"], y=30*data_games.pca$var$coord[i,"Dim.2"], ax = 0, ay = 0,text = rownames(data_games.pca$var$coord)[i], xanchor = 'center', yanchor= 'bottom')
+}
 
-# Sauvegarde du plot -> dans un objet HTML (particularité de plotly)
-#htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.png.html")
+  # Sauvegarde du plot -> dans un objet HTML (particularité de plotly)
+htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.png.html")

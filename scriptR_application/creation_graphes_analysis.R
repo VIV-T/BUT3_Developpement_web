@@ -36,7 +36,7 @@ script_path <- sub("--file=", "", args[grep("--file=", args)])
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
 
 absolute_path_dir = stringr::str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
-absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+absolute_path_dir = paste(absolute_path_dir, "\\results\\analysis",sep = "")
 
 # Afficher le chemin absolu
 #print(absolute_path_dir)
@@ -158,7 +158,7 @@ ggsave("GameHobbyistRevPerHours.png", plot=rwperAVGHobbyist)
 data_test_graph05 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
 options(scipen = 999)
-test_graph05 = ggplot(data_test_graph05, aes(x = copies_sold, y= revenue)) +
+quatres.dimensions.copie.revenue = ggplot(data_test_graph05, aes(x = copies_sold, y= revenue)) +
   geom_point(aes(color = review_score, shape = publisher_class)) +
   xlab("Number of copies sold") +
   ylab("Amount of income") +
@@ -169,6 +169,5 @@ test_graph05 = ggplot(data_test_graph05, aes(x = copies_sold, y= revenue)) +
   scale_y_continuous(labels =  scales::comma)+
   scale_x_continuous(labels =  scales::comma)
 
-quatres.dimensions.copie.revenue = plot(test_graph05)
 ggsave("quatre_dimensions_copy_sold_revenue.png", plot=quatres.dimensions.copie.revenue)
 

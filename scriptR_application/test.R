@@ -17,7 +17,7 @@ script_path <- sub("--file=", "", args[grep("--file=", args)])
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
 
 absolute_path_dir = str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
-absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+absolute_path_dir = paste(absolute_path_dir, "\\results\\analysis",sep = "")
 
 # Afficher le chemin absolu
 print(absolute_path_dir)

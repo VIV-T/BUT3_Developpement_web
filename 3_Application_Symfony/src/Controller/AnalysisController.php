@@ -66,18 +66,23 @@ class AnalysisController extends AbstractController
 
 
         // creation des path pour chacun des fichier R a executer :
-        $path_main_dir = preg_replace("(\\\[1-9a-zA-Z_]+$)", "", $cwd);
-        $path_dir_r_script_acp = $path_main_dir."\\scriptR_application\\creation_graphes_ACP_STEAM.R";
-        $path_dir_r_script_graph = $path_main_dir."\\scriptR_application\\creation_graphes_analysis.R";
+        //$path_main_dir = preg_replace("(\\\[1-9a-zA-Z_]+$)", "", $cwd);
+        //$path_dir_r_script_acp = $path_main_dir."\\scriptR_application\\creation_graphes_ACP_STEAM.R";
+        //$path_dir_r_script_graph = $path_main_dir."\\scriptR_application\\creation_graphes_analysis.R";
+        //$path_to_graphes_analyis = $path_main_dir."\\scriptR_application\\results\\analysis";
+        $path_dir_r_script_acp = $cwd."\\assets\\RGraph\\creation_graphes_ACP_STEAM.R";
+        $path_dir_r_script_graph = $cwd."\\assets\\RGraph\\creation_graphes_analysis.R";
         $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
+        $path_to_graphes_analyis = $cwd."\\assets\\RGraph\\results\\analysis";
         
-
-        foreach($liste_scripts as $r_script){
-            $process = new Process(['.\Rscript.exe', $r_script]);
-            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-            $process->setTimeout(300);
-            $process->run();
-        }
+        
+        // Execution de tous les scripts R
+        // foreach($liste_scripts as $r_script){
+        //     $process = new Process(['.\Rscript.exe', $r_script]);
+        //     $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        //     $process->setTimeout(300);
+        //     $process->run();
+        // }
         
         //// Méthode 1 : utilisation de exec()
         // $cmd = ".\Rscript.exe ".$dir_script_r_bis;
@@ -108,6 +113,7 @@ class AnalysisController extends AbstractController
             'viewGraphFiveDim' => $queryGraphFiveDim,
             'chartFiveDim' => $chartFiveDim,
             'form' => $form,
+            'path_to_graphes_analyis'=> $path_to_graphes_analyis,
         ]);
     }
 

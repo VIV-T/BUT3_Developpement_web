@@ -33,7 +33,7 @@ script_path <- sub("--file=", "", args[grep("--file=", args)])
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
 
 absolute_path_dir = stringr::str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
-absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+absolute_path_dir = paste(absolute_path_dir, "\\results\\analysis",sep = "")
 
 # Afficher le chemin absolu
 #print(absolute_path_dir)
@@ -159,4 +159,4 @@ for (i in 1:nrow(data_games.pca$var$coord)){
 fig
 
 # Sauvegarde du plot -> dans un objet HTML (particularité de plotly)
-htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.png.html")
+htmlwidgets::saveWidget(as_widget(fig), "graphe_cluster_projection_acp.html")

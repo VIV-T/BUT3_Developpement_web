@@ -48,7 +48,7 @@
 
     <section class="analysis-section-graph">
         <div class="graph_1-container">
-            <canva>{# rajouter le graphique #}</canva>
+            <img class="graphe_R" src="{{asset('RGraph/results/analysis/quatre_dimensions_copy_sold_revenue.png')}}"></img>
         </div> 
         <div>
             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.<p>
@@ -58,7 +58,19 @@
 
     <section class="analysis-section-graph">
         <div class="graph_2-container">
-            <canva>{# rajouter le graphique #}</canva>
+            {# tentative d'insertion du graphe plotly sans succès #}
+            {#{{ dump(asset('RGraph/results/analysis/graphe_cluster_projection_acp.html')) }}#}
+            {#
+            {{ dump("/assets/RGraph/results/analysis/Test-0fb7a252b21173803b187e50ed370952.html"|)}}
+            {{dump(preg_replace('(-[A-Za-z0-9]+)(.html)$', '$2', "/assets/RGraph/results/analysis/Test-0fb7a252b21173803b187e50ed370952.html"))}}
+            {{ dump(asset('RGraph/results/analysis/Test.html'))}}
+            
+            {{dump('test.hmtl'|slice(-4, 'test.hmtl'|length))}}
+            {{dump('-0fb7a252b21173803b187e50ed370952.hmtl'|length)}}
+            {{dump(asset('RGraph/results/analysis/Test.html')|slice(-38, asset('RGraph/results/analysis/Test.html')|length))}}
+            {% include asset('RGraph/results/analysis/Test.html')|slice(0, -38)~".html" %}
+            {{include(asset('RGraph/results/analysis/Test.html'))}}
+            #}
         </div> 
         <div>
             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.<p>

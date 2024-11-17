@@ -67,9 +67,9 @@ class GamesRepository extends ServiceEntityRepository
         $ref_size_nbGames = max($array_nbGames)-$min_ref_size_nbGames;
 
         // variables de références
-        $background_red = 135;
-        $background_green = 0;
-        $background_blue = 0;
+        $background_red = 0;
+        $background_green = 60;
+        $background_blue = 135;
         $size_reference = 5;
         
         

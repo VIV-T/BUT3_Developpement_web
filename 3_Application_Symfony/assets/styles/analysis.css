@@ -31,3 +31,8 @@
     height: auto;
     border-radius: 50px;
 }
+
+canvas {
+    background-color: white;
+    border-radius: 25px;
+}

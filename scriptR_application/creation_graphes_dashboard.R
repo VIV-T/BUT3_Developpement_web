@@ -1,12 +1,19 @@
 ##### Creation graphe ACP - Projet STEAM #####
 
 ## Import des packages - détailler pourquoi on les utilises
+# connection a la BD
 library(DBI)
+# Manipulation de string => utile pour le setwd()
+library(stringr)
+# graphes
 library(ggplot2)
-library(fdm2id)
 library(plotly)
 library(htmlwidgets)
-library(stringr)
+library(ggrepel)
+# Datamining
+library(fdm2id)
+# Data manipulation => inner_join
+library(dplyr)
 
 ##### Pour initialiser la sortie des graphes au bon endroit : 
 # etant donner que le code est executer depuis la ligne de cmd, on recupere les arguments donne a la cmd Rscript.exe
@@ -61,7 +68,8 @@ tables <- DBI::dbListTables(connexion)
 #str(tables)
 
 # Import the accounts table from mydb
-games <- DBI::dbReadTable(connexion, "games")
+# games data.frame contains here games of the dashboard table
+games <- DBI::dbReadTable(connexion, "dashboard")
 genres = DBI::dbReadTable(connexion, "genres")
 games.genres = DBI::dbReadTable(connexion, "link_games_genres")
 

@@ -51,25 +51,16 @@ class AnalysisController extends AbstractController
         // et la construction en querstion se font dans la requête Ajax.        
 
         
-        //// execution du script R appliquant des méthodes de DM aux données
-        //chdir("C:/Program Files/R/R-4.4.2/bin/x64");
-        //exec(".\Rscript.exe C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/3_Application_Symfony/assets/RGraph/creation_graphes_ACP_STEAM.R");
-        
+        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
+
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         //dd($cwd);
-        
-        //// Execution des script stocké dans un directory annexe.
         
         // Si execution des scripts contenus dans les directory d'assets de l'application :
         // Erreur d'execution : code -1073741819 => probleme de permission pour executer la cmd depuis symfony
         // Conclusion : les deux facon de faire : exec/Process ne sont pas un probleme car elles renvoient la mm erreur.
 
-
         // creation des path pour chacun des fichier R a executer :
-        //$path_main_dir = preg_replace("(\\\[1-9a-zA-Z_]+$)", "", $cwd);
-        //$path_dir_r_script_acp = $path_main_dir."\\scriptR_application\\creation_graphes_ACP_STEAM.R";
-        //$path_dir_r_script_graph = $path_main_dir."\\scriptR_application\\creation_graphes_analysis.R";
-        //$path_to_graphes_analyis = $path_main_dir."\\scriptR_application\\results\\analysis";
         $path_dir_r_script_acp = $cwd."\\assets\\RGraph\\Analysis\\creation_graphes_ACP_STEAM.R";
         $path_dir_r_script_graph = $cwd."\\assets\\RGraph\\Analysis\\creation_graphes_analysis.R";
         $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
@@ -83,20 +74,6 @@ class AnalysisController extends AbstractController
             $process->setTimeout(300);
             $process->run();
         }
-        
-        //// Méthode 1 : utilisation de exec()
-        // $cmd = ".\Rscript.exe ".$dir_script_r_bis;
-        // //dd($cmd);
-        // chdir("C:/Program Files/R/R-4.4.2/bin/x64");
-        // exec($cmd, $output, $retval);
-        // dd([$output, $retval]);
-
-
-        //// Méthode 2 : utilisation de Process()
-        //$process = new Process(['.\Rscript.exe', $path_dir_r_script_graph]);
-        //$process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        //$process->setTimeout(300);
-        //$process->run();
         // deboggage
         //$process->run(function ($type, $buffer) {
         //    if (Process::ERR === $type) {
@@ -107,6 +84,7 @@ class AnalysisController extends AbstractController
         //});
 
 
+        
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [
             'controller_name' => 'AnalysisController',

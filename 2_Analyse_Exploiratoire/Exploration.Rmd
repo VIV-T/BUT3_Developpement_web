@@ -1,133 +1,218 @@
 ---
 title: "ProjetSteam_exploration"
 output: html_document
-date: "2024-10-08"
+date: "2024-11-11"
 ---
 
-
-```{r}
-data_Steam = read.csv2(".\\data_view\\games.csv", encoding = "UTF-8")
-```
-
+Appel des packages
 ```{r}
 library(ggplot2)
 library(dplyr)
+library(fdm2id)
+library(ggrepel)
+library(tidyverse)
+```
+
+Lecture des données
+```{r}
+data = read.csv2("./data_view/games.csv", encoding = "UTF-8")
 ```
 
 
+Passage en numérique des variables stockées en string. 
 ```{r}
-data_Steam$revenue = as.numeric(data_Steam$revenue)
-data_Steam$avgPlaytime = as.numeric(data_Steam$avgPlaytime)
-data_Steam$price = as.numeric(data_Steam$price)
+data$revenue = as.numeric(data$revenue)
+data$avgPlaytime = as.numeric(data$avgPlaytime)
+data$price = as.numeric(data$price)
 ```
 
 
+# Analyse Exploratoire
+
+Nb jeux sortis par années : interresant
 ```{r}
-hist(data_Steam$releaseYear)
-table(data_Steam$releaseMonth)
-barplot(height = table(data_Steam$releaseMonth))
+hist(data$releaseYear)
+```
+diagrammeJeuAnnee = ggplot(data_games[dataafter2004,], aes(x = releaseYear, fill = publisherClass)) +
++   geom_bar()+xlab("release date")+ylab("number of new game")+scale_fill_discrete(name = "Publisher class name")+theme_classic()+theme(legend.position = "bottom")+ggtitle("Evolution of the number of new games per year since 2004")+scale_fill_brewer(palette = "Blues")
+
+```{r}
+dataafter2004 = which(data$releaseYear > 2004)
+
+ggplot(data[dataafter2004,], aes(x = releaseYear, fill = publisherClass)) +
+  geom_bar() +
+  xlab("Release Year") +
+  ylab("Number of New Games") +
+  theme_classic() +
+  theme(legend.position = "bottom") +
+  ggtitle("Evolution of the Number of New Games Per Year Since 2004") +
+  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"))
 ```
 
 
+Nb de jeux sortis par mois : modifier l'ordre alpha en ordre temporel.
 ```{r}
-summary(data_Steam)
-#summary(subset(data_Steam, subset=data_Steam$copiesSold >= 567 & data_Steam$revenue > 680 & data_Steam$price > 10))
+barplot(height = table(data$releaseMonth))
 ```
 
-Expliuer choix de filtrage (en genral il s'agit d'un quartile des variables concernées)
+
+Aperçu des données : utile pour la sélection (analyse macro/micro)
 ```{r}
-data_test1 <- subset(data_Steam, subset = data_Steam$copiesSold > 567 & data_Steam$revenue > 9816)
-summary(data_test1)
+summary(data)
+```
+
+Distinction analyse Macro/Micro :
+  - analyse Macro : proposer une analyse sur un maximum de jeux possibles en ne gardant que les jeux significatifs. Dans le cadree d'une campagne marketing, il ne selble pas pertinent de mettre en avant des jeux qui ne rapporte pas d'argent ou qui ont un nombre de vente non significatif. pour affiner la sélection, il est même possible d'ajouter des critère sur le score du jeux ou un temps de jeux moyen minimum par exemple (personne ne veut acheter un jeux pour y jouer 2h...).
+  Pour l'analyse Macro, les paramètres de sélection doivent être clairement établis et justifiables (encore plus que pour l'analyse Micro).
+  
+  - analyse Micro : Il s'agit de se concentrer sur des jeux qui seront intégré aux système de recommandation. Tous les jeux de l'analyse Macro ne sont pas intérrressant à intégrer dans une campagne marketing en 2024, notamment pour des problématique de période - un jeux sorti en 2012, qui a déjà fait son temps n'a pas sa place dans une campagne marketing en 2024, sauf si celle-ci se concentre sur des jeux plus anciens (pas notre cas ici).
+
+
+
+
+
+Expliquer choix de filtrage (en general il s'agit d'un quartile des variables concernées)
+```{r}
+data_games_macro <- subset(data, subset = data$copiesSold > 567 & data$revenue > 9816)
+summary(data_games_macro)
 ```
 
 Expliquer nouveau choix de filtrages => analyse macro VS recommandation micro
 ```{r}
-data_test2 <- subset(data_test1, subset = data_test1$reviewScore >= 80 & data_test1$price >= 10 & data_test1$releaseYear >= 2023)
+data_game_micro <- subset(data_games_macro, subset = data_games_macro$reviewScore >= 80 & data_games_macro$price >= 10 & data_games_macro$releaseYear >= 2023)
 
-summary(data_test2)
+summary(data_game_micro)
 
 
-#data_test3 <- subset(data_test2, subset = data_test2$revenue >= 18023)
+#data_test3 <- subset(data_game_micro, subset = data_game_micro$revenue >= 18023)
 
 #summary(data_test3)
 ```
 
 
-data_test2 = recommandation -> campagne marketing 
-data_test1 -> analyse macro economique
+data_game_micro = recommandation -> campagne marketing 
+data_games_macro -> analyse macro economique
 
 
 
-###################### Travail a partir de data_test1 #################################
+###################### Travail a partir de data_games_macro #################################
 
 
 ## essais des graphes imaginés lors des reunions
 lecture des tables de données additionnelles
 ```{r}
-data_link_games_genres = read.csv2(".\\data_view\\link_games_genres.csv", encoding="UTF-8")
-data_genres = read.csv2(".\\data_view\\genres.csv", encoding = "UTF-8")
+data_link_games_genres = read.csv2("./data_view/link_games_genres.csv", encoding="UTF-8")
+data_genres = read.csv2("./data_view/genres.csv", encoding = "UTF-8")
 ```
 
 # Creation de la table de données complète games + genres
 ```{r}
-data_temp01 = inner_join(data_link_games_genres, data_test1,by="AppID")
-data_temp02 = inner_join(data_temp01, data_genres, by="GenresId")
+data_macro_genre = inner_join(data_link_games_genres, data_games_macro,by="AppID")
+data_macro_genre = inner_join(data_macro_genre, data_genres, by="GenresId")
 ```
 
 ## Analyse descriptive
 
-```{r}
-hist(x = data_temp01$releaseYear)
-```
-
-```{r}
-# creation de la colonne year 
-table(data_temp02$releaseYear)
-```
 
 
 # Essais Graphes
+
+x = avg_playtime, y=recommandation, color = publisher_class
 ```{r}
-test_graph01 = ggplot(data = data_temp02, aes(x = data_temp02$releaseYear, y=data_temp02$copiesSold, group = data_temp02$Genres))+
-  geom_point(aes(color = data_temp02$Genres))
+data_test_graph01 = subset(x = data_macro_genre, subset=data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph01 = ggplot(data_test_graph01, aes(x = data_test_graph01$avgPlaytime, y=data_test_graph01$recommandations))+
+  geom_point(aes(color = data_test_graph01$publisherClass))
 
 test_graph01
 ```
 
 
+Graphe interressant 
 
+
+Rajouter variable price (size, shape, ou color)
+x = reviewScore, y=avgPlaytime, color = publisher_class
+proposer des grpahiques différents en fonction du publisher class => division du nombre de point + meilleur visibilité
 ```{r}
-data_test_graph02 = subset(x = data_temp02, subset=data_temp02$Genres == "Action" & data_temp02$recommandations < max(data_temp02$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
-
-test_graph02
-```
-```{r}
-data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
-
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$avgPlaytime, y=data_test_graph02$recommandations))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
+test_graph02 = ggplot(data_macro_genre, aes(x = data_macro_genre$reviewScore, y=data_macro_genre$avgPlaytime))+
+  geom_point(aes(color = data_macro_genre$publisherClass))
 
 test_graph02
 ```
 
-
+Discretiser prix selon la fonction 
 ```{r}
-data_test_graph02 = subset(x = data_temp02, subset=data_temp02$Genres == "Action" & data_temp02$recommandations < max(data_temp02$recommandations))
-
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$notes, y=data_test_graph02$recommandations))+
-  geom_point(aes(color = data_test_graph02$publisherClass))
-
-test_graph02
+data_macro_genre['priceDiscretize'] <- discretize(data_macro_genre$price, "cluster", labels = c("low price", "medium price", "high price"))
 ```
 
 
-```{r}
-data_test_graph03 = subset(x = data_temp02, subset=data_temp02$Genres == "Action"& data_temp02$recommandations < max(data_temp02$recommandations))
 
-test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$recommandations))+
+```{r}
+gamesAA = which(data_macro_genre$publisher_class == "AA      ")
+
+rwperAVGAA = ggplot(data_macro_genre[gamesAA,], aes(x = review_score, y = avg_play_time.x)) +
+  geom_point(aes(color = priceDiscretize)) +
+  xlab("Review Score") +
+  ylab("Average Playtime (Hours)") +
+  theme_classic() +
+  ggtitle("Overall 'AA' Game Ratings by Average Playtime") +
+  scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+
+gamesAAA = which(data_macro_genre$publisher_class == "AAA     ")
+
+rwperAVGAAA = ggplot(data_macro_genre[gamesAAA,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'AAA' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+
+gamesIndie = which(data_macro_genre$publisher_class == "Indie   ")
+
+rwperAVGIndie = ggplot(data_macro_genre[gamesIndie,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'Indie' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+gamesHobbyist = which(data_macro_genre$publisher_class == "Hobbyist")
+
+rwperAVGHobbyist = ggplot(data_macro_genre[gamesHobbyist,], aes(x = review_score, y=avg_play_time.x))+
+  geom_point(aes(color = priceDiscretize))+xlab("review score")+ylab("average play time per hours")+theme_classic()+ggtitle("Overall 'Hobbyist' Game Ratings by Average Playtime")+scale_color_manual(
+    values = c("lightblue", "#3774A5", "#1A3654"),
+    name = "Price Categories",
+    labels = c("Low", "Medium", "High") 
+  )
+
+rwperAVGAA
+rwperAVGAAA
+rwperAVGIndie
+rwperAVGHobbyist
+```
+
+
+regression linéaire sur le graphique précédent -> echec
+```{r}
+model = LINREG(data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
+
+regplot(model, data_macro_genre$reviewScore, data_macro_genre$avgPlaytime)
+```
+
+
+test de graphes avec la variable price.
+```{r}
+data_test_graph03 = subset(x = data_macro_genre, subset=data_macro_genre$publisherClass=="AA      " & data_macro_genre$Genres == "Action" & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
+
+test_graph03 = ggplot(data_test_graph03, aes(x = data_test_graph03$reviewScore, y=data_test_graph03$price))+
   geom_point(aes(color = data_test_graph03$publisherClass))
 
 test_graph03
@@ -135,109 +220,150 @@ test_graph03
 
 
 
+
+x = reviewScore, y=recommandations, color = publisher_class
 ```{r}
-data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
+data_test_graph04 = subset(x = data_macro_genre,data_macro_genre$publisherClass=="AAA     " & data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$copiesSold, y=data_test_graph02$revenue))+
-  geom_point(aes(color = data_test_graph02$reviewScore, shape = data_test_graph02$Genres))
+test_graph04 = ggplot(data_test_graph04, aes(x = data_test_graph04$reviewScore, y=data_test_graph04$recommandations))+
+  geom_point(aes(color = data_test_graph04$publisherClass))
 
-test_graph02
-```
-
-```{r}
-data_test_graph02 = data_temp02
-
-test_graph02 = ggplot(data_genres, aes(x = data_genres$numberOfGames, y=data_genres$totalRevenue))+
-  geom_point(aes(size = data_genres$averagePlayTime))
-
-test_graph02
+test_graph04
 ```
 
 
 
 
-
+Graphe interressant
+x = copiesSold, y=revenue, color = reviewScore, shape = publisher_class
 ```{r}
-data_test_graph02 = subset(x = data_temp02, subset=data_temp02$recommandations < max(data_temp02$recommandations))
+data_test_graph05 = subset(x = data_macro_genre, subset=data_macro_genre$recommandations < max(data_macro_genre$recommandations))
 
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$PEGI, y=data_test_graph02$copiesSold, group = data_test_graph02$Genres))+
-  geom_line(aes(color = data_test_graph02$Genres))
+options(scipen = 999)
+test_graph05 = ggplot(data_test_graph05, aes(x = copiesSold, y= revenue)) +
+  geom_point(aes(color = reviewScore, shape = publisherClass)) +
+  xlab("Number of copies sold") +
+  ylab("Amount of income") +
+  ggtitle("Is selling games a source of significant income ? (for each publisher class)") +
+  theme_classic() +
+  theme(legend.position = "right") +
+  labs(color = "Review Score levels", shape = "Publisher Class")+
+  scale_y_continuous(labels =  scales::comma)+
+  scale_x_continuous(labels =  scales::comma)
 
-test_graph02
-```
-
-```{r}
-data_test_graph02 = data_temp02
-
-test_graph02 = ggplot(data_test_graph02, aes(x = data_test_graph02$PEGI, y=data_test_graph02$revenue))+
-  geom_point(aes(color = data_test_graph02$Genres))
-
-test_graph02
-```
-
-
-```{r}
-summary(data_test1)
+test_graph05
 ```
 
 
+### Remarques
+  - retravailler les légendes et axes pour que tout soit clair et explicite 
+    cf doc ggplot2
+  
+  - revoir graphe_04 (=> piste interressante ?)
 
-# import des view créées sur MySQL
 
+### A faire
+
+ A faire : discretiser la variable price. construire un graphe en l'ajoutant en paramtre de size, shape ou color.
+ 
+
+tentative de discretisation de la variable price en utilisant une CAH centrée sur cette variable.
 ```{r}
-view_genres_5_dim = read.csv(".\\data_view\\view_genres_5_dim.csv", encoding="UTF-8")
-view_revenue_pegi_genres = read.csv(".\\data_view\\view_revenue_pegi_genres.csv", encoding = "UTF-8")
-view_year_month_genres = read.csv(".\\data_view\\view_year_month_genres.csv", encoding = "UTF-8")
-view_month_genres = read.csv(".\\data_view\\view_month_genres.csv", encoding = "UTF-8")
-view_year_genres = read.csv(".\\data_view\\view_year_genres.csv", encoding = "UTF-8")
+# Clusterisation
+
+myclust <- hclust(dist(data_macro_genre$price, method = "euclidean"), method = "ward.D2")
+
+# Calcul de l'inertie (les hauteurs des fusions dans le clustering)
+
+inertie <- sort(myclust$height, decreasing = TRUE)
+
+# Calcul des différences d'inertie entre chaque fusion
+
+diff_inertie <- diff(inertie)
+
+# Trouver la plus grande différence (le "saut" le plus important dans l'inertie)
+
+# On travaille sur les intervalles 2 à 4 car on envisage 3 à 5 catégories
+
+optimal_clusters <- which.min(diff_inertie[2:4]) + 1  # Ajouter 1 car l'indice renvoie au point avant la coupure
 ```
 
 
-# Création des graphiques
 
-## graph_genres_5_dim
-```{r}
-require(ggrepel)
-graph_genres_5_dim = ggplot(data=view_genres_5_dim, aes(x=sommeRevenue, y=sommeCopiesSold, label=Label))+
-  geom_point(data=view_genres_5_dim, aes(color=averageReviewScore, size=nbGames))+
-  geom_text_repel()
-
-graph_genres_5_dim
-```
-
-## graph_year_genres
 
 ```{r}
-graph_year_genres = ggplot(data = view_year_genres, aes(x=releaseYear, y=sommeCopiesSold))+
-  geom_line(data=view_year_genres, aes(color=Label))
+# Affichage de l'inertie pour les 20 premières fusions
 
-graph_year_genres
-```
+plot(inertie[1:20], type = "s", 
+	ylab="Inertie",
+	xlab = "", lwd=2, 
+	main="Nombre de catégories la plus probable",
+	sub=paste("Le nombre optimal de catégories est :", optimal_clusters, "\n"))
 
-## graph_month_genres
+grid()
 
-```{r}
-df_month = data.frame(month=c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
-                      month_number = c(1,2,3,4,5,6,7,8,9,10,11,12))
-
-
-new_view_month_genres = inner_join(view_month_genres, df_month,by=join_by(releaseMonth==month))
+points(optimal_clusters,inertie[optimal_clusters],pch=16,cex=2,col="red")
 ```
 
 
 ```{r}
-graph_month_genres = ggplot(data = new_view_month_genres, aes(x=month_number, y=sommeCopiesSold))+
-  geom_line(data=new_view_month_genres, aes(color=Label))
-
-graph_month_genres
+plot(myclust)
 ```
 
-## graph_genres_5_dim
 
 ```{r}
-graph_revenue_pegi_genres = ggplot(data = view_revenue_pegi_genres, aes(x=PEGI, y=sommeRevenue))+
-  geom_bar(stat = "identity", data = view_revenue_pegi_genres, aes(fill=Label))
+plot(data_macro_genre$price)
+```
 
-graph_revenue_pegi_genres
+
+```{r}
+test_hca_price = HCA(data_macro_genre$price, method = "ward")
+plot(test_hca_price)
+```
+
+
+Plot Dashboard
+
+
+```{r}
+jeu_par_publisher_class <- table(games$publisher_class)
+
+# Conversion en tableau de données pour affichage ou analyse
+tableau_pc <- as.data.frame(jeu_par_publisher_class)
+
+# Affichage du résultat
+print(tableau_pc)
+```
+
+```{r}
+
+df2 <- tableau_pc %>% 
+  mutate(csum = rev(cumsum(rev(Freq))), 
+         pos = Freq/2 + lead(csum, 1),
+         pos = if_else(is.na(pos), Freq/2, pos))
+
+ggplot(tableau_pc, aes(x="", y= Freq , fill=Var1)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)+
+  xlab("")+
+  ylab("")+
+  theme_classic() +
+  theme(legend.position = "bottom") +
+  ggtitle("Distribution of publisher class games") +
+  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"),name = "Publisher class")+
+  theme_void()+
+  geom_label_repel(data = df2,
+                   aes(y = pos, label = Freq),
+                   size = 4.5, nudge_x = 1, show.legend = FALSE)
+```
+
+
+```{r}
+ggplot(games, aes(x = review_score, y = price)) +
+  geom_point(color = "#3774A5") +
+  xlab("Review Score") +
+  ylab("Price") +
+  theme_classic() +
+  ggtitle("Global position of videos games considering their prices and ratings")
 ```
 

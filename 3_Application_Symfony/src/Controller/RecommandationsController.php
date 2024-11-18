@@ -14,6 +14,10 @@ use App\Repository\DashboardRepository;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
+// execution des scripts R
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 
 class RecommandationsController extends AbstractController
 {
@@ -149,6 +153,25 @@ class RecommandationsController extends AbstractController
         //Top 3 games in the data selection
         $dataTop3 = $dashboard_repository->findDataTopGamesInSelection(); 
         //dd($dataTop3);
+
+
+        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
+        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
+        //dd($cwd);
+
+        // creation des path pour chacun des fichier R a executer :
+        $path_dir_r_script_graph = $cwd."\\assets\\RGraph\\Dashboard\\creation_graphes_dashboard.R";
+        $path_to_graphes_analyis = $cwd."\\assets\\RGraph\\Dashboard\\results";
+        
+        
+        // Execution de tous les scripts R
+        $process = new Process(['.\Rscript.exe', $path_dir_r_script_graph]);
+        $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        $process->setTimeout(300);
+        $process->run();
+        
+        
+
 
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',

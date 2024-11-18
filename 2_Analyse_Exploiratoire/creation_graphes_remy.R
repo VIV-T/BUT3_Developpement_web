@@ -161,3 +161,5 @@ test_graph05 = ggplot(data_test_graph05, aes(x = copies_sold, y= revenue)) +
 cinq.dimensions.copie.revenue = plot(test_graph05)
 ggsave("cinq_dimensions_copy_sold_revenue.png", plot=cinq.dimensions.copie.revenue)
 
+
+

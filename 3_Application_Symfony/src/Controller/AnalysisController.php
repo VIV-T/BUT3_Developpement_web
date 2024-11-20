@@ -53,7 +53,7 @@ class AnalysisController extends AbstractController
 
 
         $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
-        dd($os);
+        //dd($os);
 
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
 
@@ -74,7 +74,12 @@ class AnalysisController extends AbstractController
         // Execution de tous les scripts R
         foreach($liste_scripts as $r_script){
             $process = new Process(['.\Rscript.exe', $r_script]);
-            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+            if ($os === "Windows"){
+                $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+                dd("ok !");
+            }else{
+                dd("mac ou linux");
+            }
             $process->setTimeout(300);
             $process->run();
         }

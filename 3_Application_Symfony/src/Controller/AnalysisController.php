@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use Symfony\Component\Kernel\Kernel;
+// execution des scripts R
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -52,11 +52,12 @@ class AnalysisController extends AbstractController
         // et la construction en querstion se font dans la requête Ajax.        
 
 
-        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
-        //dd($os);
+      
 
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
 
+        // recuperation de l'OS
+        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         //dd($cwd);
         
@@ -64,7 +65,7 @@ class AnalysisController extends AbstractController
         // Erreur d'execution : code -1073741819 => probleme de permission pour executer la cmd depuis symfony
         // Conclusion : les deux facon de faire : exec/Process ne sont pas un probleme car elles renvoient la mm erreur.
 
-        // creation des path pour chacun des fichier R a executer :
+        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
         if ($os === "Windows"){
             $sep="\\";
             $R_cmd = ".\Rscript.exe";
@@ -72,11 +73,12 @@ class AnalysisController extends AbstractController
             $sep="/";
             $R_cmd = "Rscript";
         }
+        // creation des path pour chacun des fichier R a executer :
         $path_dir_r_script_acp = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."creation_graphes_ACP_STEAM.R";
         $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."creation_graphes_analysis.R";
         $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
         $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."results";
-        //dd($path_to_graphes_analyis);
+        
         
         // Execution de tous les scripts R
         foreach($liste_scripts as $r_script){

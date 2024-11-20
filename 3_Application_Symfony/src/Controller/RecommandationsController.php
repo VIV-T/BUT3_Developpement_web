@@ -139,7 +139,6 @@ class RecommandationsController extends AbstractController
     public function index_dashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder): Response
     {
         $dashboard_games = $dashboard_repository->findAll();
-
         $dataBarChartAge = $dashboard_repository->constructArray_DataBarChartAge();
         
         // Barchart - Age
@@ -156,22 +155,32 @@ class RecommandationsController extends AbstractController
 
 
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
+        // recuperation de l'OS
+        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
-        //dd($cwd);
-
+        
+        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
+        if ($os === "Windows"){
+            $sep="\\";
+            $R_cmd = ".\Rscript.exe";
+        }else{
+            $sep="/";
+            $R_cmd = "Rscript";
+        }
         // creation des path pour chacun des fichier R a executer :
-        $path_dir_r_script_graph = $cwd."\\assets\\RGraph\\Dashboard\\creation_graphes_dashboard.R";
-        $path_to_graphes_analyis = $cwd."\\assets\\RGraph\\Dashboard\\results";
+        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."creation_graphes_dashboard.R";
+        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."results";
         
         
         // Execution de tous les scripts R
-        $process = new Process(['.\Rscript.exe', $path_dir_r_script_graph]);
-        $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        $process = new Process([$R_cmd, $path_dir_r_script_graph]);
+        if ($os === "Windows"){
+            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        }
         $process->setTimeout(300);
         $process->run();
         
         
-
 
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',

@@ -7,6 +7,8 @@ library(fdm2id)
 library(plotly)
 library(htmlwidgets)
 library(stringr)
+library(dplyr)
+library(ggrepel)
 
 ##### Pour initialiser la sortie des graphes au bon endroit : 
 # etant donner que le code est executer depuis la ligne de cmd, on recupere les arguments donne a la cmd Rscript.exe
@@ -38,7 +40,7 @@ print(absolute_path_dir)
 tryCatch(
   setwd(absolute_path_dir), 
   error = function(e) {  
-    setwd("/Users/remycourte/ProjetSteam/2_Analyse_Exploiratoire")
+    setwd("C:/Users/TV/Documents/Thib/Metz/Etudes/BUT_3/dvp_web/ProjetSteam/2_Analyse_Exploiratoire")
   }
 )
 
@@ -88,7 +90,7 @@ df2 <- tableau_pc %>%
          pos = Freq/2 + lead(csum, 1),
          pos = if_else(is.na(pos), Freq/2, pos))
 
-piechartpublishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
+piechart_publishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
   geom_bar(stat="identity", width=1) +
   coord_polar("y", start=0) +
   xlab("") +
@@ -111,14 +113,14 @@ piechartpublishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
     show.legend = FALSE
   )
 
-ggsave("pie_chart_pc_dashboard.png", plot=piechartpublishersclass)
+ggsave("pie_chart_pc_dashboard.png", plot=piechart_publishersclass)
 
 
-scatterplotdashboard = ggplot(data_games, aes(x = review_score, y = price)) +
+scatterplot_dashboard = ggplot(data_games, aes(x = review_score, y = price)) +
   geom_point(color = "#3774A5") +
   xlab("Review Score") +
   ylab("Price") +
   theme_classic() +
   ggtitle("Global position of videos games considering their prices and ratings")
 
-ggsave("scatter_plot_dashboard.png", plot=scatterplotdashboard)
+ggsave("scatterplot_dashboard.png", plot=scatterplot_dashboard)

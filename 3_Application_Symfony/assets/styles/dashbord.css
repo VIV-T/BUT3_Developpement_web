@@ -96,7 +96,7 @@
     height: 7vw;
 }
 
-h2 {
+#title_dashboard {
     position: fixed;
     margin-top: 1%;
 }

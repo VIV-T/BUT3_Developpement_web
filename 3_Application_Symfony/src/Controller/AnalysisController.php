@@ -73,7 +73,7 @@ class AnalysisController extends AbstractController
         
         // Execution de tous les scripts R
         foreach($liste_scripts as $r_script){
-            $process = new Process(['.\Rscript.exe', $r_script]);
+            $process = new Process(['Rscript', $r_script]);
             if ($os === "Windows"){
                 $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
             }

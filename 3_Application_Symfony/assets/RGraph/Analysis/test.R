@@ -16,11 +16,22 @@ script_path <- sub("--file=", "", args[grep("--file=", args)])
 # Convertir le chemin en absolu (si nécessaire)
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
 
-absolute_path_dir = str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
-absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+
+if (Sys.getenv("R_BROWSER")=="/usr/bin/open"){
+  absolute_path_dir = str_replace(absolute_path, "/[a-zA-Z_]+.R$", "")
+  absolute_path_dir = paste(absolute_path_dir, "/results",sep = "")
+}else{
+  absolute_path_dir = str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
+  absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+}
+
+
+
 
 # Afficher le chemin absolu
 print(absolute_path_dir)
+
+setwd(absolute_path_dir)
 
 tryCatch(
   setwd(absolute_path_dir), 

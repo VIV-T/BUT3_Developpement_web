@@ -69,38 +69,74 @@ class RecommandationsController extends AbstractController
     public function ajaxSelectDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
     {
         $appID = $request->request->get('appID');
-
-
-        // on verifie que l'ID du jeu selectionné n'est pas déjà dans la table Dashboard.
-        // on SELECT tous les jeux de la table dashboard
-        $dataTableDashboard = $dashboard_repository->findDataSelectedGames();
-
-        // creation d'un observateur bool : si le jeux est présent dans la table => true
-        $observateur_presence_game_dashboardTable = true;
-
-        for ($i = 0; $i <= count($dataTableDashboard)-1; $i++) {
-            if ($appID === $dataTableDashboard[strval($i)]["app_id"]){
-                $observateur_presence_game_dashboardTable = false;
-                break;
-            }
-        }
-
-        // Récupération des données du jeu dans la table Games.
-        $dataGameToInsert = $dashboard_repository->findDataTableGames($appID)["0"];
-
-        //Envoi de ces données dans le repository pour l'insertion.
-        if ($observateur_presence_game_dashboardTable){
-            $dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
-        }
-        //$booleen_insertion=$dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
-        // le booleen est utile pour les test mais les cas d'erreur sont déjà gérés par symfony.
-        //dd($booleen_insertion);
-
-        $header_img = $dataGameToInsert["header_img"];
         
+        // vérifions que la requete AJAX n'est pas appelée depuis la page dashboard - 
+        // traitement particulier si c'est le cas.
+        $from_dashboard = $request->request->get('from_dashboard');
+            
+        //$response = new Response(json_encode(empty($from_dashboard)));
+        //return $response;
+        if (empty($from_dashboard)===TRUE){
+            // on verifie que l'ID du jeu selectionné n'est pas déjà dans la table Dashboard.
+            // on SELECT tous les jeux de la table dashboard
+            $dataTableDashboard = $dashboard_repository->findDataSelectedGames();
 
-        $response = new Response(json_encode($header_img));
-        return $response;
+            // creation d'un observateur bool : si le jeux est présent dans la table => true
+            $observateur_presence_game_dashboardTable = true;
+
+            for ($i = 0; $i <= count($dataTableDashboard)-1; $i++) {
+                if ($appID === $dataTableDashboard[strval($i)]["app_id"]){
+                    $observateur_presence_game_dashboardTable = false;
+                    break;
+                }
+            }
+
+            // Récupération des données du jeu dans la table Games.
+            $dataGameToInsert = $dashboard_repository->findDataTableGames($appID)["0"];
+
+            //Envoi de ces données dans le repository pour l'insertion.
+            if ($observateur_presence_game_dashboardTable){
+                $dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
+            }
+            //$booleen_insertion=$dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
+            // le booleen est utile pour les test mais les cas d'erreur sont déjà gérés par symfony.
+            //dd($booleen_insertion);
+
+            $header_img = $dataGameToInsert["header_img"];
+            
+
+            $response = new Response(json_encode($header_img));
+            return $response;
+        }else{ ////// Pourquoi ce else ? => si la requete viens de la table dashboard, il faut mettre à jour les graphique du dashboard.
+            ///// Même code que précédement
+            // on verifie que l'ID du jeu selectionné n'est pas déjà dans la table Dashboard.
+            // on SELECT tous les jeux de la table dashboard
+            $dataTableDashboard = $dashboard_repository->findDataSelectedGames();
+
+            // creation d'un observateur bool : si le jeux est présent dans la table => true
+            $observateur_presence_game_dashboardTable = true;
+
+            for ($i = 0; $i <= count($dataTableDashboard)-1; $i++) {
+                if ($appID === $dataTableDashboard[strval($i)]["app_id"]){
+                    $observateur_presence_game_dashboardTable = false;
+                    break;
+                }
+            }
+
+            // Récupération des données du jeu dans la table Games.
+            $dataGameToInsert = $dashboard_repository->findDataTableGames($appID)["0"];
+
+            //Envoi de ces données dans le repository pour l'insertion.
+            if ($observateur_presence_game_dashboardTable){
+                $dashboard_repository->insertIntoDashboardTable($dataGameToInsert);
+            }
+
+            $header_img = $dataGameToInsert["header_img"];
+
+            ///// Mise à jour des graphiques.
+            // graphiques R
+            $this-> loadRGraphs();
+        }
     }
 
 
@@ -134,6 +170,10 @@ class RecommandationsController extends AbstractController
     }
 
 
+    /////
+    ///// Page Dashboard
+    /////
+
     //Route : Dashboard - quand on click sur le bouton "Continue"
     #[Route('/recommandations/dashboard', name: 'app_recommandations_dashobard')]
     public function index_dashboard(DashboardRepository $dashboard_repository, ChartBuilderInterface $chartBuilder): Response
@@ -153,35 +193,11 @@ class RecommandationsController extends AbstractController
         $dataTop3 = $dashboard_repository->findDataTopGamesInSelection(); 
         //dd($dataTop3);
 
-
-        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
-        // recuperation de l'OS
-        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
-        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         
-        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
-        if ($os === "Windows"){
-            $sep="\\";
-            $R_cmd = ".\Rscript.exe";
-        }else{
-            $sep="/";
-            $R_cmd = "Rscript";
-        }
-        // creation des path pour chacun des fichier R a executer :
-        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."creation_graphes_dashboard.R";
-        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."results";
+        // Execution du script R associé à la construction des graphiques.
+        $this->loadRGraphs();
         
         
-        // Execution de tous les scripts R
-        $process = new Process([$R_cmd, $path_dir_r_script_graph]);
-        if ($os === "Windows"){
-            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        }
-        $process->setTimeout(300);
-        $process->run();
-        
-        
-
         return $this->render('recommandations/dashboard.html.twig', [
             'controller_name' => 'RecommandationsController',
             'dashboard_games' => $dashboard_games,
@@ -277,4 +293,31 @@ class RecommandationsController extends AbstractController
         return $BarChartReviewScoreDashboard;
     }
    
+    public function loadRGraphs(){
+        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
+        // recuperation de l'OS
+        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
+        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
+        
+        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
+        if ($os === "Windows"){
+            $sep="\\";
+            $R_cmd = ".\Rscript.exe";
+        }else{
+            $sep="/";
+            $R_cmd = "Rscript";
+        }
+        // creation des path pour chacun des fichier R a executer :
+        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."creation_graphes_dashboard.R";
+        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."results";
+        
+        
+        // Execution de tous les scripts R
+        $process = new Process([$R_cmd, $path_dir_r_script_graph]);
+        if ($os === "Windows"){
+            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        }
+        $process->setTimeout(300);
+        $process->run();
+    }
 }

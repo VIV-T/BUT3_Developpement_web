@@ -6,6 +6,7 @@
 parameters:
     dir_script_r: '%kernel.project_dir%'
 
+
 services:
     # default configuration for services in *this* file
     _defaults:

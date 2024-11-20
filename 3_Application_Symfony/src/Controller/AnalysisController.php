@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Symfony\Component\Kernel\Kernel;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -50,7 +51,10 @@ class AnalysisController extends AbstractController
         // La recupération de la valeur du formulaire pour la contruction du graph
         // et la construction en querstion se font dans la requête Ajax.        
 
-        
+
+        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
+        dd($os);
+
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
 
         $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.

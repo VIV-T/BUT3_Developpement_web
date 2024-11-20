@@ -342,19 +342,30 @@ df2 <- tableau_pc %>%
          pos = Freq/2 + lead(csum, 1),
          pos = if_else(is.na(pos), Freq/2, pos))
 
-ggplot(tableau_pc, aes(x="", y= Freq , fill=Var1)) +
+piechartpublishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
   geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0)+
-  xlab("")+
-  ylab("")+
-  theme_classic() +
-  theme(legend.position = "bottom") +
+  coord_polar("y", start=0) +
+  xlab("") +
+  ylab("") +
   ggtitle("Distribution of publisher class games") +
-  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"),name = "Publisher class")+
-  theme_void()+
-  geom_label_repel(data = df2,
-                   aes(y = pos, label = Freq),
-                   size = 4.5, nudge_x = 1, show.legend = FALSE)
+  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"), name = "Publisher class") +
+  theme_classic() +
+  theme(
+    legend.position = "bottom",
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.ticks = element_blank(),             # Supprime les ticks des axes
+    axis.text = element_blank()               # Supprime les étiquettes des axes
+  ) +
+  geom_label_repel(
+    data = df2,
+    aes(y = pos, label = Freq),
+    size = 4.5,
+    nudge_x = 1,
+    show.legend = FALSE
+  )
+
+piechartpublishersclass
 ```
 
 

@@ -23,8 +23,14 @@ script_path <- sub("--file=", "", args[grep("--file=", args)])
 # Convertir le chemin en absolu (si nécessaire)
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
 
-absolute_path_dir = stringr::str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
-absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+if (Sys.getenv("R_BROWSER")=="/usr/bin/open"){
+  absolute_path_dir = str_replace(absolute_path, "/[a-zA-Z_]+.R$", "")
+  absolute_path_dir = paste(absolute_path_dir, "/results",sep = "")
+}else{
+  absolute_path_dir = str_replace(absolute_path, "\\\\[a-zA-Z_]+.R$", "")
+  absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
+}
+
 
 # Afficher le chemin absolu
 print(absolute_path_dir)
@@ -32,7 +38,7 @@ print(absolute_path_dir)
 tryCatch(
   setwd(absolute_path_dir), 
   error = function(e) {  
-    setwd("error setting working directory")
+    setwd("/Users/remycourte/ProjetSteam/2_Analyse_Exploiratoire")
   }
 )
 
@@ -82,19 +88,28 @@ df2 <- tableau_pc %>%
          pos = Freq/2 + lead(csum, 1),
          pos = if_else(is.na(pos), Freq/2, pos))
 
-piechartpublishersclass = ggplot(tableau_pc, aes(x="", y= Freq , fill=Var1)) +
+piechartpublishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
   geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0)+
-  xlab("")+
-  ylab("")+
-  theme_classic() +
-  theme(legend.position = "bottom") +
+  coord_polar("y", start=0) +
+  xlab("") +
+  ylab("") +
   ggtitle("Distribution of publisher class games") +
-  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"),name = "Publisher class")+
-  theme_void()+
-  geom_label_repel(data = df2,
-                   aes(y = pos, label = Freq),
-                   size = 4.5, nudge_x = 1, show.legend = FALSE)
+  scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"), name = "Publisher class") +
+  theme_classic() +
+  theme(
+    legend.position = "bottom",
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    axis.ticks = element_blank(),             # Supprime les ticks des axes
+    axis.text = element_blank()               # Supprime les étiquettes des axes
+  ) +
+  geom_label_repel(
+    data = df2,
+    aes(y = pos, label = Freq),
+    size = 4.5,
+    nudge_x = 1,
+    show.legend = FALSE
+  )
 
 ggsave("pie_chart_pc_dashboard.png", plot=piechartpublishersclass)
 

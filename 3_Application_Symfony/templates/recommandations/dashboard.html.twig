@@ -13,16 +13,17 @@
                 type: "POST",
                 dataType: "json",
                 data: {
-                    appID: var_appID
+                    appID: var_appID,
+                    from_dashboard:1
                 },
                 async: true,
-                success: function (header_img) {
-                    console.log(header_img);
+                success: function (array_results) {
+                    console.log(array_results);
                     var chaineHtml = "\
                         <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard("+var_appID+")'>\
                             <img class='check_icon' src=\"{{asset('icons/check_icon.png')}}\"></img>\
                         </div>\
-                        <img class='game-img' src="+header_img+"></img>\
+                        <img class='game-img' src="+array_results.header_img+"></img>\
                         ";
                             
                     // intégration du contenu Html dans le squelette

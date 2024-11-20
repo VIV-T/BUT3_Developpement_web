@@ -76,9 +76,6 @@ class AnalysisController extends AbstractController
             $process = new Process(['.\Rscript.exe', $r_script]);
             if ($os === "Windows"){
                 $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-                dd("ok !");
-            }else{
-                dd("mac ou linux");
             }
             $process->setTimeout(300);
             $process->run();

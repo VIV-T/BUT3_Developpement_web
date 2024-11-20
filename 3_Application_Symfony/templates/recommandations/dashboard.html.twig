@@ -45,15 +45,17 @@
                 type: "POST",
                 dataType: "json",
                 data: {
-                    appID: var_appID
+                    appID: var_appID,
+                    from_dashboard:1
                 },
                 async: true,
-                success: function (arrayDataGame) {
+                success: function (array_results) {
+                    console.log(array_results);
                     // this var is about to change when we will change graphic aspect of the website.
                     var chaineHtml = "\
                         <div class='game-img-overlay-dashboard'  onclick='selectGameDashboard("+var_appID+")'>\
                         </div>\
-                        <img class='game-img' src="+arrayDataGame.header_img+"></img>\
+                        <img class='game-img' src="+array_results.arrayDataGame.header_img+"></img>\
                     ";
                     
                     // intégration du contenu dans le squelette

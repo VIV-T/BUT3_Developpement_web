@@ -145,27 +145,57 @@ class RecommandationsController extends AbstractController
     }
 
 
-
-
-    // fonction secondaire - appelée depuis la methode AJAX de déselection des jeux.
-    // permet de factoriser le code.
-
-
-
     // Methode AJAX - appelée quand un jeu est déselectionné : on supprime ses données de la table dashboard.
     #[Route('/recommandations/ajaxUnselect', name: 'app_recommandations_ajax_unselect')]
     public function ajaxUnselectDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
     {
         $appID = $request->request->get('appID');
 
-        //suppression des données du jeu dans la table dashboard
-        $dashboard_repository->deleteGameFromDashboardTable($appID);
+        // vérifions que la requete AJAX n'est pas appelée depuis la page dashboard - 
+        // traitement particulier si c'est le cas.
+        $from_dashboard = $request->request->get('from_dashboard');
+            
+        //$response = new Response(json_encode(empty($from_dashboard)));
+        //return $response;
+        if (empty($from_dashboard)===TRUE){
 
-        // Récupération des données du jeu dans la table Games. => pour l'affichage
-        $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
-    
-        $response = new Response(json_encode($arrayDataGame));
-        return $response;
+            //suppression des données du jeu dans la table dashboard
+            $dashboard_repository->deleteGameFromDashboardTable($appID);
+
+            // Récupération des données du jeu dans la table Games. => pour l'affichage
+            $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
+        
+            $response = new Response(json_encode($arrayDataGame));
+            return $response;
+        }else{////// Pourquoi ce else ? => si la requete viens de la table dashboard, il faut mettre à jour les graphique du dashboard.
+            ///// Ré-utilisation du code précédent : suppression des données de la table Dashboard
+            $dashboard_repository->deleteGameFromDashboardTable($appID);
+
+            // Récupération des données du jeu dans la table Games. => pour l'affichage
+            $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
+            
+
+            ///// Mise à jour des graphiques.
+            /// graphiques R
+            $this-> loadRGraphs();
+
+            /// graphes Chart JS 
+            // barchart age
+            $data_options_barChartAge= $this->set_data_options_barchart_age_Dashboard($dashboard_repository);
+
+            // barchart Review Score
+            $data_options_barChartReviewScore= $this->set_data_options_barchart_reviewScoreDashboard($dashboard_repository);
+
+            $array_results = [
+                "arrayDataGame"=>$arrayDataGame,
+                "data_options_barChartAge"=> $data_options_barChartAge, 
+                "data_options_barChartReviewScore"=> $data_options_barChartReviewScore
+            ];
+            $response = new Response(json_encode($array_results));
+            return $response;
+
+            
+        }
     }
 
 

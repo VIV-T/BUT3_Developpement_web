@@ -65,15 +65,22 @@ class AnalysisController extends AbstractController
         // Conclusion : les deux facon de faire : exec/Process ne sont pas un probleme car elles renvoient la mm erreur.
 
         // creation des path pour chacun des fichier R a executer :
-        $path_dir_r_script_acp = $cwd."\\assets\\RGraph\\Analysis\\creation_graphes_ACP_STEAM.R";
-        $path_dir_r_script_graph = $cwd."\\assets\\RGraph\\Analysis\\creation_graphes_analysis.R";
+        if ($os === "Windows"){
+            $sep="\\";
+            $R_cmd = ".\Rscript.exe";
+        }else{
+            $sep="/";
+            $R_cmd = "Rscript";
+        }
+        $path_dir_r_script_acp = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."creation_graphes_ACP_STEAM.R";
+        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."creation_graphes_analysis.R";
         $liste_scripts = [$path_dir_r_script_acp, $path_dir_r_script_graph];
-        $path_to_graphes_analyis = $cwd."\\assets\\RGraph\\Analysis\\results";
-        
+        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."results";
+        //dd($path_to_graphes_analyis);
         
         // Execution de tous les scripts R
         foreach($liste_scripts as $r_script){
-            $process = new Process(['Rscript', $r_script]);
+            $process = new Process([$R_cmd, $r_script]);
             if ($os === "Windows"){
                 $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
             }

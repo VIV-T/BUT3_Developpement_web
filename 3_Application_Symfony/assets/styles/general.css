@@ -137,10 +137,10 @@ footer {
 }
 
 
-/*#pages_name_pagetop, #img_navbar_steam, .container{
+#img_navbar_steam, .container{
     margin: 0;
     padding: 0;
-}*/
+}
 
 .navbar-expand-lg {
     justify-content: center;
@@ -151,4 +151,8 @@ footer {
     justify-content: space-around;
     margin-top: 5%;
     margin-bottom: -10%;
+}
+
+#site_information_icon_pagetop{
+    margin-left: 6%;
 }

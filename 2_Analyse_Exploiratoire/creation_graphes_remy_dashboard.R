@@ -33,6 +33,7 @@ if (Sys.getenv("R_BROWSER")=="/usr/bin/open"){
   absolute_path_dir = paste(absolute_path_dir, "\\results",sep = "")
 }
 
+print(Sys.getenv("R_BROWSER"))
 
 # Afficher le chemin absolu
 print(absolute_path_dir)

@@ -195,14 +195,22 @@ class GamesRepository extends ServiceEntityRepository
             array_push($labels, $year_month['release_'.$period]);
         };
 
+        
+        // variables pour les couleurs
+        $compteur_couleur = 1;
+        $max_compteur_couleur = 9;
+        $border_red = 0;
+        $border_green = 60;
+        $border_blue = 135;
+
         // creation des données du graphes - a partir des données des requêtes
         foreach ($data_genres as $genre) {
             $datasets_data = array();
             foreach ($data_copiesSold as $line) {
-                    if ($line['Label']===$genre["label"]){
-                        array_push($datasets_data, $line["sommeCopiesSold"]);
-                    };
-                }
+                if ($line['Label']===$genre["label"]){
+                    array_push($datasets_data, $line["sommeCopiesSold"]);
+                };
+            }
             
             //vérification de la longueur du tableau de données pour chaque genre
             // Si le tableau n'est pas complet, on rajoute des 0 au debut 
@@ -218,12 +226,15 @@ class GamesRepository extends ServiceEntityRepository
             };
             
             // intégration des données dans les objets de résultats $label et $data + paramètres visuels
+            $color_ratio = $compteur_couleur/$max_compteur_couleur;
             array_push($datasets, [
                 'label'=> $genre["label"],
                 'data'=> $datasets_data,
                 'backgroundColor'=>"rgba(255,225,255,0)",
-                'borderColor'=>"rgba(".rand(0, 255).",".rand(0, 255).",".rand(0, 255).",0.8)",
+                //'borderColor'=>"rgba(".rand(0, 255).",".rand(0, 255).",".rand(0, 255).",0.8)",
+                'borderColor'=> "rgba(".$border_red+$color_ratio*$border_red.",".$border_green+$color_ratio*$border_green.",".$border_blue+$color_ratio*$border_blue.", 0.8)"
             ]);
+            $compteur_couleur = $compteur_couleur +1;
         };
 
         $result = [

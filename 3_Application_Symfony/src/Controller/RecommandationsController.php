@@ -18,12 +18,33 @@ use Symfony\UX\Chartjs\Model\Chart;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
+// Filtres
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+
 
 class RecommandationsController extends AbstractController
 {
     #[Route('/recommandations', name: 'app_recommandations')]
     public function index(GamesRepository $games_repository, DashboardRepository $dashboard_repository): Response
     {
+        # Test slider range
+        
+        $slider_range_builder = $this->createFormBuilder()->add('name', RangeType::class, [
+            'attr' => [
+                'min' => 5,
+                'max' => 50
+            ],
+        ])->add('name2', RangeType::class, [
+            'attr' => [
+                'min' => 50,
+                'max' => 100
+            ],
+        ])->getForm();
+
+
+
+
         $games1 = $games_repository->findBy(
             ['PEGI'=>3]
         );
@@ -43,6 +64,7 @@ class RecommandationsController extends AbstractController
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,
+            'slider_range_builder'=>$slider_range_builder
         ]);
     }
 
@@ -303,9 +325,5 @@ class RecommandationsController extends AbstractController
         
         
         return $BarChartReviewScoreDashboard;
-    }
-   
-    public function loadRGraphs(){
-        
     }
 }

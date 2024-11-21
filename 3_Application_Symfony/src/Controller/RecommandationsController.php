@@ -69,9 +69,6 @@ class RecommandationsController extends AbstractController
     public function ajaxSelectDashboard(DashboardRepository $dashboard_repository, Request $request) : Response
     {
         $appID = $request->request->get('appID');
-        // vérifions que la requete AJAX n'est pas appelée depuis la page dashboard - 
-        // traitement particulier si c'est le cas.
-        $from_dashboard = $request->request->get('from_dashboard');
         
         //// Code d'insertion dans la table Dashboard.
         // on verifie que l'ID du jeu selectionné n'est pas déjà dans la table Dashboard.
@@ -100,30 +97,7 @@ class RecommandationsController extends AbstractController
 
         $header_img = $dataGameToInsert["header_img"];
 
-        //$response = new Response(json_encode(empty($from_dashboard)));
-        //return $response;
-        if (empty($from_dashboard)===FALSE){
-            ////// Pourquoi ce if ? => si la requete viens de la table dashboard, il faut mettre à jour les graphique du dashboard.
-
-            ///// Mise à jour des graphiques.
-            /// graphiques R
-            $this-> loadRGraphs();
-
-            /// graphes Chart JS 
-            // barchart age
-            $data_options_barChartAge= $this->set_data_options_barchart_age_Dashboard($dashboard_repository);
-
-            // barchart Review Score
-            $data_options_barChartReviewScore= $this->set_data_options_barchart_reviewScoreDashboard($dashboard_repository);
-
-            $array_results = [
-                "header_img"=> $header_img, 
-                "data_options_barChartAge"=> $data_options_barChartAge, 
-                "data_options_barChartReviewScore"=> $data_options_barChartReviewScore
-            ];
-            $response = new Response(json_encode($array_results));
-            return $response;
-        }
+        
         $response = new Response(json_encode($header_img));
         return $response;
     }
@@ -135,44 +109,12 @@ class RecommandationsController extends AbstractController
     {
         $appID = $request->request->get('appID');
 
-        // vérifions que la requete AJAX n'est pas appelée depuis la page dashboard - 
-        // traitement particulier si c'est le cas.
-        $from_dashboard = $request->request->get('from_dashboard');
-
         //suppression des données du jeu dans la table dashboard
         $dashboard_repository->deleteGameFromDashboardTable($appID);
 
         // Récupération des données du jeu dans la table Games. => pour l'affichage
         $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
             
-        if (empty($from_dashboard)===FALSE){
-            ////// Pourquoi ce if ? => si la requete viens de la table dashboard, il faut mettre à jour les graphique du dashboard.
-            ///// Ré-utilisation du code précédent : suppression des données de la table Dashboard
-            $dashboard_repository->deleteGameFromDashboardTable($appID);
-
-            // Récupération des données du jeu dans la table Games. => pour l'affichage
-            $arrayDataGame = $dashboard_repository->findDataTableGames($appID)["0"];
-            
-
-            ///// Mise à jour des graphiques.
-            /// graphiques R
-            $this-> loadRGraphs();
-
-            /// graphes Chart JS 
-            // barchart age
-            $data_options_barChartAge= $this->set_data_options_barchart_age_Dashboard($dashboard_repository);
-
-            // barchart Review Score
-            $data_options_barChartReviewScore= $this->set_data_options_barchart_reviewScoreDashboard($dashboard_repository);
-
-            $array_results = [
-                "arrayDataGame"=>$arrayDataGame,
-                "data_options_barChartAge"=> $data_options_barChartAge, 
-                "data_options_barChartReviewScore"=> $data_options_barChartReviewScore
-            ];
-            $response = new Response(json_encode($array_results));
-            return $response;
-        }
         $response = new Response(json_encode($arrayDataGame));
         return $response;
     }
@@ -215,8 +157,31 @@ class RecommandationsController extends AbstractController
         //dd($dataTop3);
 
         
-        // Execution du script R associé à la construction des graphiques.
-        $this->loadRGraphs();
+        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
+        // recuperation de l'OS
+        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
+        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
+        
+        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
+        if ($os === "Windows"){
+            $sep="\\";
+            $R_cmd = ".\Rscript.exe";
+        }else{
+            $sep="/";
+            $R_cmd = "Rscript";
+        }
+        // creation des path pour chacun des fichier R a executer :
+        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."creation_graphes_dashboard.R";
+        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."results";
+        
+        
+        // Execution de tous les scripts R
+        $process = new Process([$R_cmd, $path_dir_r_script_graph]);
+        if ($os === "Windows"){
+            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
+        }
+        $process->setTimeout(300);
+        $process->run();
         
         
         return $this->render('recommandations/dashboard.html.twig', [
@@ -341,30 +306,6 @@ class RecommandationsController extends AbstractController
     }
    
     public function loadRGraphs(){
-        //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
-        // recuperation de l'OS
-        $os = preg_replace("/(^[\w]+)([A-Za-z0-9 ().-]+$)/", "$1", php_uname()); 
-        $cwd = $this->getParameter("dir_script_r"); // la variable d'environement créée précédement.
         
-        // Condition sur les path des fichiers et sur la cmd à executer en fonction de l'os (windows ou macOS)
-        if ($os === "Windows"){
-            $sep="\\";
-            $R_cmd = ".\Rscript.exe";
-        }else{
-            $sep="/";
-            $R_cmd = "Rscript";
-        }
-        // creation des path pour chacun des fichier R a executer :
-        $path_dir_r_script_graph = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."creation_graphes_dashboard.R";
-        $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Dashboard".$sep."results";
-        
-        
-        // Execution de tous les scripts R
-        $process = new Process([$R_cmd, $path_dir_r_script_graph]);
-        if ($os === "Windows"){
-            $process->setWorkingDirectory("C:/Program Files/R/R-4.4.2/bin/x64");
-        }
-        $process->setTimeout(300);
-        $process->run();
     }
 }

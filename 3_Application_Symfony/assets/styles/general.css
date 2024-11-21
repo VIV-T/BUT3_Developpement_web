@@ -142,6 +142,11 @@ footer {
     padding: 0;
 }
 
+/*footer, .container {
+    margin: 0;
+    padding: 0;
+}*/
+
 .navbar-expand-lg {
     justify-content: center;
 }

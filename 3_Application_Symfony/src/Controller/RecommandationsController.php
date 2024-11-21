@@ -40,7 +40,6 @@ class RecommandationsController extends AbstractController
         $dashboard_repository->truncateDashboardTable();
 
         
-        
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,

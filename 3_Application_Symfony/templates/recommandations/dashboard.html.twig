@@ -5,6 +5,62 @@
 {% block body %}
 <!--Sidebar-->
 
+
+
+<h2 id = "title_dashboard">Games list : </h2>
+
+<div class = "container_dashboard">
+    <div class = 'sidebar-dashboard'>
+        
+        <div class = 'gamelist-dashboard'>
+            <section class="games-block-container-dashboard">
+                {% for dashboard_game in dashboard_games %}
+                    <div class="game-block-dashboard" id="game_img_container_dashboard_{{dashboard_game.appID}}">
+                        <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard({{dashboard_game.appID}})'>
+                            <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
+                        </div>
+                        <img class='game-img' id='game-img-dashboard' src={{dashboard_game.headerImg}}></img>
+                    </div>
+
+                    {% else %}
+                    <li>Aucun enregistrement dans la BD</li>
+                {% endfor %}
+            </section>
+        </div>
+        <div class="button_back_dashboard">
+            <a type="button" id="dashboard-to-recommandations-btn" class="btn btn-primary" href ="{{ path('app_recommandations') }}">Back</a>
+        </div>
+    </div>
+
+    <div>
+
+        <section class="graph-container">
+            <canva id="HistogramDashboard">{{render_chart(barChartReviewScore)}}</canva>
+            <canva id="BarChartAgeDashboard">{{render_chart(barChartAge)}}</canva>
+        </section>
+
+        <section class="graph-container">
+            <div id="pie_chart_pc_dashboard">
+                <img class="graphe_R" id="pie_chart_pc_dashboard" src="{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}"></img>
+            </div>
+            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </section>
+        <section class="graph-container">
+            <div id="scatter_plot_dashboard">
+                <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}"></img>
+            </div>
+            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </section>
+
+    </div>
+
+</div>
+
+
+
+
+
+
 <script>
     // Select game for dashboard - call we we click on a game to select him.
     function selectGameDashboard(var_appID) {
@@ -52,14 +108,37 @@
                 success: function (array_results) {
                     console.log(array_results);
                     // this var is about to change when we will change graphic aspect of the website.
-                    var chaineHtml = "\
+                    var chaineHtml_game = "\
                         <div class='game-img-overlay-dashboard'  onclick='selectGameDashboard("+var_appID+")'>\
                         </div>\
                         <img class='game-img' src="+array_results.arrayDataGame.header_img+"></img>\
                     ";
                     
                     // intégration du contenu dans le squelette
-                    $('#game_img_container_dashboard_'+ var_appID).html(chaineHtml);
+                    $('#game_img_container_dashboard_'+ var_appID).html(chaineHtml_game);
+
+
+                    var chaineHtml_graphe_R_1 ="<img class='graphe_R' id='pie_chart_pc_dashboard' src='{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}'></img>";
+                    // intégration du contenu dans le squelette
+                    $('#pie_chart_pc_dashboard').html(chaineHtml_graphe_R_1);
+
+
+                    var chaineHtml_graphe_R_2 ="<img class='graphe_R' src='{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}'></img>";
+                    // intégration du contenu dans le squelette
+                    $('#scatter_plot_dashboard').html(chaineHtml_graphe_R_2);
+
+
+                    // Maj des graphes Chart JS
+                    //console.log(array_results.data_options_barChartReviewScore.data);
+                    //console.log(array_results.data_options_barChartReviewScore.options);
+                    const hist_chart = document.querySelectorAll('#HistogramDashboard > canvas')[0];
+                    var ctx = hist_chart.getContext('2d');
+                    var myChart = new Chart(ctx, { type: 'bar', data: array_results.data_options_barChartReviewScore.data, options: array_results.data_options_barChartReviewScore.options});
+
+                    myChart.update();
+                
+                
+                
                 },
                 error: function(jqXHR){         // Fonction à appeler si la requête échoue
                     console.log("erreur unselect");
@@ -69,50 +148,11 @@
     }
 </script>
 
-<h2 id = "title_dashboard">Games list : </h2>
 
-<div class = "container_dashboard">
-    <div class = 'sidebar-dashboard'>
-        
-        <div class = 'gamelist-dashboard'>
-            <section class="games-block-container-dashboard">
-                {% for dashboard_game in dashboard_games %}
-                    <div class="game-block-dashboard" id="game_img_container_dashboard_{{dashboard_game.appID}}">
-                        <div class='game-img-overlay-success-dashboard' onclick='unselectGameDashboard({{dashboard_game.appID}})'>
-                            <img class='check_icon' src="{{asset('icons/check_icon.png')}}"></img>
-                        </div>
-                        <img class='game-img' id='game-img-dashboard' src={{dashboard_game.headerImg}}></img>
-                    </div>
 
-                    {% else %}
-                    <li>Aucun enregistrement dans la BD</li>
-                {% endfor %}
-            </section>
-        </div>
-        <div class="button_back_dashboard">
-            <a type="button" id="dashboard-to-recommandations-btn" class="btn btn-primary" href ="{{ path('app_recommandations') }}">Back</a>
-        </div>
-    </div>
 
-    <div>
 
-        <section class="graph-container">
-            <canva id="HistogramDashboard">{{render_chart(barChartReviewScore)}}</canva>
-            <canva id="BarChartAgeDashboard">{{render_chart(barChartAge)}}</canva>
-        </section>
 
-        <section class="graph-container">
-            <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}"></img>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        </section>
-        <section class="graph-container">
-        <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}"></img>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        </section>
-
-    </div>
-
-</div>
 
 
 <script>

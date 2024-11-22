@@ -9,23 +9,23 @@
 <div class = 'sidebar'>
     <div class="test-slider">
         <div>
-        <a><b>1 range slider</b></a></br>
-        <p>min : <a id="min_1">----</a> ; max : <a id="max_1">----<a><p>
+        <a><b>Copies Sold (unite)</b></a></br>
+        <p class="min_max_slider_range">min : <a id="min_1">----</a> ; max : <a id="max_1">----<a><p>
         <div id="rangeWrapper1" class="double-slider-wrapper"></div>
         </div>
         <div>
-        <a><b>2 range slider</b></a></br>
-        <p>min : <a id="min_2">----</a> ; max : <a id="max_2">----<a><p>
+        <a><b>Revenue (unite)</b></a></br>
+        <p class="min_max_slider_range">min : <a id="min_2">----</a> ; max : <a id="max_2">----<a><p>
         <div id="rangeWrapper2" class="double-slider-wrapper"></div>
         </div>
         <div>
-        <a><b>3 range slider</b></a></br>
-        <p>min : <a id="min_3">----</a> ; max : <a id="max_3">----<a><p>
+        <a><b>Review Score (unite)</b></a></br>
+        <p class="min_max_slider_range">min : <a id="min_3">----</a> ; max : <a id="max_3">----<a><p>
         <div id="rangeWrapper3" class="double-slider-wrapper"></div>
         </div>
         <div>
-        <a><b>4 range slider</b></a></br>
-        <p>min : <a id="min_4">----</a> ; max : <a id="max_4">----<a><p>
+        <a><b>Recommandations (unite)</b></a></br>
+        <p class="min_max_slider_range">min : <a id="min_4">----</a> ; max : <a id="max_4">----<a><p>
         <div id="rangeWrapper4" class="double-slider-wrapper"></div>
         </div>
     </div>
@@ -34,10 +34,10 @@
 <script src="{{ asset('assets/DoubleRangeSlider.js') }}"></script>
 <script>
 window.addEventListener('load', () => {
-	const slider1 = new DoubleRangeSlider('#rangeWrapper1');
+	const slider1 = new DoubleRangeSlider('#rangeWrapper1', min="{{res[0] | json_encode}}", max="{{res[1] | json_encode}}");
 	const slider2 = new DoubleRangeSlider('#rangeWrapper2', min="{{res[2] | json_encode}}", max="{{res[3] | json_encode}}");
-	const slider3 = new DoubleRangeSlider('#rangeWrapper3');
-	const slider4 = new DoubleRangeSlider('#rangeWrapper4');
+	const slider3 = new DoubleRangeSlider('#rangeWrapper3', min="{{res[4] | json_encode}}", max="{{res[5] | json_encode}}");
+	const slider4 = new DoubleRangeSlider('#rangeWrapper4', min="{{res[6] | json_encode}}", max="{{res[7] | json_encode}}");
 
     const max_1 = document.getElementById('max_1');
     const min_1 = document.getElementById('min_1');
@@ -50,35 +50,39 @@ window.addEventListener('load', () => {
     
     max_1.innerHTML = slider1.getValues()[1]
     min_1.innerHTML = slider1.getValues()[0]
-    max_2.innerHTML = slider1.getValues()[1]
-    min_2.innerHTML = slider1.getValues()[0]
-    max_3.innerHTML = slider1.getValues()[1]
-    min_3.innerHTML = slider1.getValues()[0]
-    max_4.innerHTML = slider1.getValues()[1]
-    min_4.innerHTML = slider1.getValues()[0]
+    max_2.innerHTML = slider2.getValues()[1]
+    min_2.innerHTML = slider2.getValues()[0]
+    max_3.innerHTML = slider3.getValues()[1]
+    min_3.innerHTML = slider3.getValues()[0]
+    max_4.innerHTML = slider4.getValues()[1]
+    min_4.innerHTML = slider4.getValues()[0]
 
 	slider1.suscribe_change((values) => {
 		array_values = [values, slider2.getValues(), slider3.getValues(), slider4.getValues()]
 		console.log(array_values);
 		console.log("------------------");
+        // Rajouter appel AJAX
 	})
 
 	slider2.suscribe_change((values) => {
 		array_values = [slider1.getValues(), values, slider3.getValues(), slider4.getValues()]
 		console.log(array_values);
 		console.log("------------------");
+        // Rajouter appel AJAX
 	})
 
 	slider3.suscribe_change((values) => {
 		array_values = [slider1.getValues(), slider2.getValues(), values, slider4.getValues()]
 		console.log(array_values);
 		console.log("------------------");
+        // Rajouter appel AJAX
 	})
 
 	slider4.suscribe_change((values) => {
 		array_values = [slider1.getValues(), slider2.getValues(), slider3.getValues(), values]
 		console.log(array_values);
 		console.log("------------------");
+        // Rajouter appel AJAX
 	})
 
     slider1.suscribe_input((values) => {
@@ -100,13 +104,6 @@ window.addEventListener('load', () => {
         min_4.innerHTML = values[0]
         max_4.innerHTML = values[1]
 	})
-
-
-
-    console.log("{{res[2] | json_encode}}");
-    console.log("{{res[3] | json_encode}}");
-    console.log("{{res[4] | json_encode}}");
-    console.log("{{res[5] | json_encode}}");
 })
 </script>
 

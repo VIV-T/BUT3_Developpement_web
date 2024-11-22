@@ -106,7 +106,7 @@ class RecommandationsController extends AbstractController
 
 
 
-            // recommandation
+            // recommandations
             if ($game->getRecommandations()>$max_recommandations){
                 $max_recommandations = $game->getRecommandations();
             }
@@ -128,7 +128,7 @@ class RecommandationsController extends AbstractController
             $min_recommandations,
             $max_recommandations
         ];
-        dd($res);
+        //dd($res);
         
         // Truncation of the dashboard table data
         $dashboard_repository->truncateDashboardTable();

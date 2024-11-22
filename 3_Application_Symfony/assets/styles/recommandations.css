@@ -256,6 +256,10 @@
     margin-left: 1.5em;
 }
 
+.min_max_slider_range {
+    font-size: small;
+}
+
 .double-slider-wrapper {
     width: inherit;
     height: 1.2rem;

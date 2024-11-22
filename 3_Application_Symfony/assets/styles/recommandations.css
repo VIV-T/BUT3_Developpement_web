@@ -241,3 +241,80 @@
     margin-bottom: 5%;
     font-size: large;
 }
+
+
+
+
+
+
+/**/
+/*   Slider range   */
+/* Ne pas toucher !!!! (Surtout Mathis) */
+.test-slider {
+    margin-top: 100px;
+    width: 100%;
+    margin-left: 1.5em;
+}
+
+.double-slider-wrapper {
+    width: inherit;
+    height: 1.2rem;
+    display: block;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 10%;
+}
+
+input[type=range] {
+    box-sizing: border-box;
+    appearance: none;
+    width: inherit;
+    margin: 0;
+    padding: 0 2px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 1px;
+    outline: none;
+    pointer-events: none;
+    background: linear-gradient(#c5c3c0, #c5c3c0) no-repeat center;
+    background-size: 100% 2px;
+}
+
+input[type=range]:active,
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 10px;
+    background-color: #147aff;
+    position: relative;
+    margin: 5px 0;
+    cursor: pointer;
+    appearance: none;
+    pointer-events: all;
+    box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+}
+
+.multi-range {
+    position: relative;
+    height: 16px;
+}
+
+.multi-range input[type=range] {
+    position: absolute;
+}
+
+.multi-range input[type=range]:nth-child(1)::-webkit-slider-thumb::before {
+    background-color: #147aff;
+}
+
+.multi-range input[type=range]:nth-child(2) {
+    background: none;
+}
+
+.multi-range input[type=range]:nth-child(2)::-webkit-slider-thumb::before {
+    background-color: grey;
+}

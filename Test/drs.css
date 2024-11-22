@@ -22,35 +22,45 @@ input[type=range] {
     border-radius: 1px;
     outline: none;
     pointer-events: none;
+    background: linear-gradient(#c5c3c0, #c5c3c0) no-repeat center;
+    background-size: 100% 2px;
 }
-input[type=range]:active, input[type=range]:focus {
+
+input[type=range]:active,
+input[type=range]:focus {
     outline: none;
 }
+
 input[type=range]::-webkit-slider-thumb {
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
     border-radius: 10px;
-    background-color: rebeccapurple;
+    background-color: #147aff;
     position: relative;
     margin: 5px 0;
     cursor: pointer;
     appearance: none;
     pointer-events: all;
-    box-shadow: 0 1px 4px 0.5px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
 }
+
 .multi-range {
     position: relative;
     height: 16px;
 }
+
 .multi-range input[type=range] {
     position: absolute;
 }
+
 .multi-range input[type=range]:nth-child(1)::-webkit-slider-thumb::before {
-    background-color: purple;
+    background-color: #147aff;
 }
+
 .multi-range input[type=range]:nth-child(2) {
     background: none;
 }
+
 .multi-range input[type=range]:nth-child(2)::-webkit-slider-thumb::before {
     background-color: grey;
 }

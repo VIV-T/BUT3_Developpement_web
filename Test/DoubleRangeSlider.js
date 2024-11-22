@@ -61,11 +61,20 @@ class DoubleRangeSlider {
 		});
 	}
 
-	suscribe(callback) {
+	suscribe_input(callback) {
 		this.upperInput.addEventListener('input', () => {
 			callback(this.getValues());
 		});
 		this.lowerInput.addEventListener('input', () => {
+			callback(this.getValues());
+		});
+	}
+
+	suscribe_change(callback) {
+		this.upperInput.addEventListener('change', () => {
+			callback(this.getValues());
+		});
+		this.lowerInput.addEventListener('change', () => {
 			callback(this.getValues());
 		});
 	}

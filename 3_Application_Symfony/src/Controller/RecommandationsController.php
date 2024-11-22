@@ -55,8 +55,81 @@ class RecommandationsController extends AbstractController
         $games = array_merge($games1, $games2);
         
         //$games = $games_repository->findDataRecommandationPage();
-        //dd($games2);
+        //dd($games);
 
+        // recuperation des valeur min & max de chacune des 4 slider range.
+        // initialisation.
+        $min_copiesSold = 0;
+        $max_copiesSold = 0;
+        $min_revenue = 0;
+        $max_revenue = 0;
+        $min_reviewScore = 0;
+        $max_reviewScore = 0;
+        $min_recommandations = 0;
+        $max_recommandations = 0;
+        foreach ($games as $game) {
+            //dd($game);
+            // copiesSold
+            if ($game->getCopiesSold()>$max_copiesSold){
+                $max_copiesSold = $game->getCopiesSold();
+            }
+
+            if ($min_copiesSold === 0){
+                $min_copiesSold = $game->getCopiesSold();
+            }elseif ($game->getCopiesSold()<$min_copiesSold){
+                $min_copiesSold = $game->getCopiesSold();
+            }
+
+
+            // revenue
+            if ($game->getRevenue()>$max_revenue){
+                $max_revenue = $game->getRevenue();
+            }
+
+            if ($min_revenue === 0){
+                $min_revenue = $game->getRevenue();
+            }elseif ($game->getRevenue()<$min_revenue){
+                $min_revenue = $game->getRevenue();
+            }
+
+
+            // reviewScore
+            if ($game->getReviewScore()>$max_reviewScore){
+                $max_reviewScore = $game->getReviewScore();
+            }
+
+            if ($min_reviewScore === 0){
+                $min_reviewScore = $game->getReviewScore();
+            }elseif ($game->getReviewScore()<$min_reviewScore){
+                $min_reviewScore = $game->getReviewScore();
+            }
+
+
+
+            // recommandation
+            if ($game->getRecommandations()>$max_recommandations){
+                $max_recommandations = $game->getRecommandations();
+            }
+
+            if ($min_recommandations === 0){
+                $min_recommandations = $game->getRecommandations();
+            }elseif ($game->getRecommandations()<$min_recommandations){
+                $min_recommandations = $game->getRecommandations();
+            }
+        }
+        
+        $res = [
+            $min_copiesSold,
+            $max_copiesSold,
+            $min_revenue,
+            $max_revenue,
+            $min_reviewScore,
+            $max_reviewScore,
+            $min_recommandations,
+            $max_recommandations
+        ];
+        dd($res);
+        
         // Truncation of the dashboard table data
         $dashboard_repository->truncateDashboardTable();
 
@@ -64,7 +137,8 @@ class RecommandationsController extends AbstractController
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,
-            'slider_range_builder'=>$slider_range_builder
+            'slider_range_builder'=>$slider_range_builder, 
+            "res"=>$res
         ]);
     }
 

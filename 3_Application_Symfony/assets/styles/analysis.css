@@ -22,7 +22,7 @@
     gap: 5%;
 }
 
-#graphPeriodGenre {
+.graphPeriodGenre {
     width: 100%;
 }
 
@@ -30,7 +30,8 @@
     width: 120%;
 }
 
-.flex_container, .analysis-section-graph {
+.flex_container,
+.analysis-section-graph {
     margin-bottom: 50px;
 }
 

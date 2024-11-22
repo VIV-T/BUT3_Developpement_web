@@ -43,16 +43,14 @@ class AnalysisController extends AbstractController
         $chartFiveDim = $arrayGraphFiveDim[1];
 
 
-        ///// Second graphique - GraphYearGenre
+        ///// Second et Troisieme graphiques - Graph Year and Month
         /////
-        // creation du fromulaire 
-        $form = $this->createFormPeriod();
         
         // La recupération de la valeur du formulaire pour la contruction du graph
         // et la construction en querstion se font dans la requête Ajax.        
-
-
-      
+        $chart_month = $this->createGraphPeriod($repository, $chartBuilder, "month");
+        $chart_year = $this->createGraphPeriod($repository, $chartBuilder, "year");
+        //dd($chart_month);
 
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
 
@@ -105,8 +103,9 @@ class AnalysisController extends AbstractController
             'controller_name' => 'AnalysisController',
             'viewGraphFiveDim' => $queryGraphFiveDim,
             'chartFiveDim' => $chartFiveDim,
-            'form' => $form,
             'path_to_graphes_analyis'=> $path_to_graphes_analyis,
+            "chart_month" => $chart_month,
+            "chart_year" => $chart_year
         ]);
     }
 
@@ -154,39 +153,18 @@ class AnalysisController extends AbstractController
     ///// Second graphique - GraphYearGenre
     /////
 
-    //création du formulaire pour le choix des perido - radio button
-    // modifier ici. - rajouter les paramètre visuels (ex: id ou classe html ?)
-    public function createFormPeriod(){
-        $form = $this->createFormBuilder()->add('testForm', ChoiceType::class, [
-            'choices' => [
-                'Year' => 'year',
-                'Month' => 'month',
-            ],
-            'data' => 'year',
-            'expanded' => true, // Pour afficher les radio buttons
-        ])->getForm();
-        return $form;
-    }
-
-
-
-    #[Route('/analysis/ajaxGraphPeriod', name: 'app_analysis_ajax_graph_period')]
-    public function ajaxGraphPeriod(GamesRepository $repository, ChartBuilderInterface $chartBuilder, Request $request) : Response
+    // creation du graph a partir des données formatées dans le repository.
+    function createGraphPeriod(GamesRepository $repository, ChartBuilderInterface $chartBuilder, $period) : Chart
     {
-        // Récupération AJAX des données nécéssaires à la construction du graphique.
-        $period = $request->request->get('period');
-        
-        if (is_null($period)){
-            $period = 1;
-        }
-
         // Appel de la méthode qui renvoie les données et options relatives au graphique
-        // il est ensuite créé dans le JS à partir de ces données.
-        // note probleme de legende des axes + regler les couleurs (ici : valeurs aléatoires)
-        $dataGraphYearGenre = $repository->constructArray_DataGraphYearGenre($period);
+        // On met ensuite ici en forme les données pour pouvoir utiliser symfony UX dans la methode de creation de chart
+        $array_data_options = $repository->constructArray_DataGraphYearGenre($period);
         
-
-        $response = new Response(json_encode($dataGraphYearGenre));
-        return $response;
+        // Appel de symfony UX pour créer le chart
+        $LineChartPeriod = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $LineChartPeriod->setData($array_data_options["data"]);
+        $LineChartPeriod->setOptions($array_data_options["options"]);
+        
+        return $LineChartPeriod ;
     }
 }

@@ -124,8 +124,8 @@ class GamesRepository extends ServiceEntityRepository
             
             }elseif($period === 'month'){
                 $query = "SELECT DISTINCT release_month
-                        FROM games
-                        ORDER BY release_month";
+                        FROM games JOIN referenciel_month ON games.release_month = referenciel_month.name
+                        ORDER BY referenciel_month.number";
                 
                 }
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
@@ -172,7 +172,7 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
-    
+
     // Mise en forme des données pour chart js
     //
     public function constructArray_DataGraphYearGenre ($period)
@@ -231,7 +231,6 @@ class GamesRepository extends ServiceEntityRepository
                 'label'=> $genre["label"],
                 'data'=> $datasets_data,
                 'backgroundColor'=>"rgba(255,225,255,0)",
-                //'borderColor'=>"rgba(".rand(0, 255).",".rand(0, 255).",".rand(0, 255).",0.8)",
                 'borderColor'=> "rgba(".$border_red+$color_ratio*$border_red.",".$border_green+$color_ratio*$border_green.",".$border_blue+$color_ratio*$border_blue.", 0.8)"
             ]);
             $compteur_couleur = $compteur_couleur +1;
@@ -239,9 +238,25 @@ class GamesRepository extends ServiceEntityRepository
 
         $result = [
             "data"=>[
-                "label" => $labels, 
+                "labels" => $labels, 
                 "datasets" =>$datasets
             ], 
+            "options"=>[
+                "scales"=>[
+                    "x"=>[
+                        "title"=>[
+                            "display" => true, 
+                            "text" => $period
+                        ]
+                    ], 
+                    "y"=>[
+                        "title"=>[
+                            "display" => true, 
+                            "text" => 'Copies Sold (Millions)'
+                        ]
+                    ]
+                ]
+            ]
         ];
         return $result;
     }

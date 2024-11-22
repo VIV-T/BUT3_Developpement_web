@@ -25,13 +25,15 @@ library(fdm2id)
 
 # Obtenir les arguments de la commande
 args <- commandArgs(trailingOnly = FALSE)
+print(args)
 
 # Extraire le chemin du fichier
 script_path <- sub("--file=", "", args[grep("--file=", args)])
+print(script_path)
 
 # Convertir le chemin en absolu (si nécessaire)
 absolute_path <- normalizePath(script_path, mustWork = TRUE)
-
+print(absolute_path)
 
 if (Sys.getenv("R_BROWSER")=="/usr/bin/open"){
   absolute_path_dir = str_replace(absolute_path, "/[a-zA-Z_]+.R$", "")
@@ -146,6 +148,57 @@ ggsave("graphe_ACP_cercle_cor.png", plot=graphe_ACP_cercle_cor)
 graphe_ACP_projection_points = plot(data_games.pca)
 ggsave("graphe_ACP_projection_points.png", plot=graphe_ACP_projection_points)
 
+data_games_clust$cluster = as.character(data_games_clust$cluster)
+
+acp.cluster = ggplot(data_games_clust, aes(x = Dim.1, y = Dim.2)) +
+  geom_point(aes(color = cluster)) +
+  xlab("Axe 1 ACP") +
+  ylab("Axe 2 ACP") +
+  theme_classic() +
+  ggtitle("Visualisation deux premières axes AXP par clusters")+
+  scale_color_manual(
+    values = c("#1f78b4", "#9ecae1"),
+    name = "Clusters",
+    labels = c("Cluster 1", "Cluster 2") 
+  )
+
+ggsave("ACP_cluster_2_axes.png", plot=acp.cluster)
+
+
+df_acp_var_dim = data.frame(data_games.pca$var$coord)
+df_acp_var_dim['nom'] <- c('copies_sold','revenue','price','avg_play_time','review_score','recommandations')
+
+acp_indiv_var <- suppressWarnings(
+  print(
+    ggplot(data_games_clust, aes(x = Dim.1, y = Dim.2)) +
+      geom_point(aes(color = cluster)) +
+      xlab("Axe 1 ACP") +
+      ylab("Axe 2 ACP") +
+      theme_classic() +
+      ggtitle("Visualisation des deux premiers axes ACP par clusters") +
+      scale_color_manual(
+        values = c("#1f78b4", "#9ecae1"),
+        name = "Clusters",
+        labels = c("Cluster 1", "Cluster 2")
+      ) +
+      # Ajout des flèches (vecteurs des variables)
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[1, 'Dim.1'], yend = 30 * df_acp_var_dim[1,'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[2, 'Dim.1'], yend = 30 * df_acp_var_dim[2, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[3, 'Dim.1'], yend = 30 * df_acp_var_dim[3, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[4, 'Dim.1'], yend = 30 * df_acp_var_dim[4, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[5, 'Dim.1'], yend = 30 * df_acp_var_dim[5, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[6, 'Dim.1'], yend = 30 * df_acp_var_dim[6, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
+      # Ajout des étiquettes pour les vecteurs
+      geom_text(aes(x = 30 * df_acp_var_dim[1, 'Dim.1'],y = 30 * df_acp_var_dim[1, 'Dim.2'],label = "copie_sold"),hjust = 1, vjust = 1, size = 4) +
+      geom_text(aes(x = 30 * df_acp_var_dim[2, 'Dim.1'],y = 30 * df_acp_var_dim[2, 'Dim.2'],label = "revenue"),hjust = -0.2, vjust = -0.2, size = 4)+
+      geom_text(aes(x = 30 * df_acp_var_dim[3, 'Dim.1'],y = 30 * df_acp_var_dim[3, 'Dim.2'],label = "price"),hjust = -0.2, vjust = -0.2, size = 4)+
+      geom_text(aes(x = 30 * df_acp_var_dim[4, 'Dim.1'],y = 30 * df_acp_var_dim[4, 'Dim.2'],label = "avg_play_time"),hjust = -0.2, vjust = 0.2, size = 4)+
+      geom_text(aes(x = 30 * df_acp_var_dim[5, 'Dim.1'],y = 30 * df_acp_var_dim[5, 'Dim.2'],label = "review_score"),hjust = 0.2, vjust = -0.2, size = 4)+
+      geom_text(aes(x = 30 * df_acp_var_dim[6, 'Dim.1'],y = 30 * df_acp_var_dim[6, 'Dim.2'],label = "recommandations"),hjust = -0.2, vjust = -0.2, size = 4)
+  )
+)
+
+ggsave("ACP_indiv_var.png", plot=acp_indiv_var)
 
 # si possible, rajouter inertie du premier plan factoriel (var inertie_premier_plan_factoriel) et l'ajouter au graphe.
 

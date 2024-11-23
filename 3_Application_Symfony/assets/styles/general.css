@@ -51,6 +51,11 @@ hr {
     margin-bottom: 5%;
 }
 
+#presentation {
+    margin-inline: auto;
+    width: 100%;
+}
+
 /* gère la couleur des liens du footer */
 .footer_link_text {
     color: #c5c3c0;
@@ -160,8 +165,18 @@ footer {
     justify-content: space-around;
     margin-top: 5%;
     margin-bottom: -10%;
+    width: 100%;
 }
 
 #site_information_icon_pagetop{
     margin-left: 6%;
+}
+
+.body_center {
+    margin-left: 11%;
+}
+
+#padding_next_page {
+    
+    padding-bottom: 5%;
 }

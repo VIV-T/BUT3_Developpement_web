@@ -10,16 +10,18 @@
     <div class="ecart_navbar">
     </div>
     <div id="radio-button-form-container">
-        <div id="radio-button-genres-container">
-            {{form_start(formGenres)}}            
-            {{form_widget(formGenres.form_genres, {'attr': {'class': 'radio-btn-container'}})}}
-            {{form_end(formGenres)}} 
-        </div>
-        </br>
+        <h4>Publisher Class :</h4>
         <div id="radio-button-publisherClass-container">
             {{form_start(formPublisherClass)}}            
             {{form_widget(formPublisherClass.form_publisher_class, {'attr': {'class': 'radio-btn-container'}})}}
             {{form_end(formPublisherClass)}} 
+        </div>
+        </br>
+        <h4>Genres :</h4>
+        <div id="radio-button-genres-container">
+            {{form_start(formGenres)}}            
+            {{form_widget(formGenres.form_genres, {'attr': {'class': 'radio-btn-container'}})}}
+            {{form_end(formGenres)}} 
         </div>
     </div>
     <div class="test-slider">
@@ -77,8 +79,8 @@
             <h4>Subtitle</h4>
         </div>
         <div>
-            <h3>Order By :</h3>
             <div id="radio-button-OrderBy-container">
+                <h3>Order By :</h3>
                 {{form_start(formOrderBy)}}            
                 {{form_widget(formOrderBy.form_OrderBy, {'attr': {'class': 'radio-btn-container'}})}}
                 {{form_end(formOrderBy)}} 

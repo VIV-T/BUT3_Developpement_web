@@ -51,7 +51,13 @@
     margin-top: 2%;
 }
 
-
+#radio-button-OrderBy-container {
+    width: 30%;
+    height: 22%;
+    position: absolute;
+    right: 0;
+    margin-top: 2%;
+}
 
 /* body : games */
 .games-block-container {
@@ -324,4 +330,36 @@ input[type=range]::-webkit-slider-thumb {
 
 .multi-range input[type=range]:nth-child(2)::-webkit-slider-thumb::before {
     background-color: grey;
+}
+
+input[type="checkbox"] {
+    appearance: none; /* Enlève le style par défaut */
+    width: 20px;
+    height: 20px;
+    background-color: #ccc; /* Couleur par défaut */
+    border: 2px solid #333; /* Bordure */
+    border-radius: 25px; /* Coins arrondis (optionnel) */
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin: 3px 3px 3px 4px;
+  }
+
+input[type="checkbox"]:checked {
+    color: transparent;
+    background-color: blue;
+}
+
+input[type="checkbox"]:not(:checked) {
+    background-color: white;
+}
+
+#form_form_genres {
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: space-evenly;
+    gap: 15px;*/
+    /*padding-top: 5%;
+    padding-left: 25%;*/
+    padding-right: 60%;
+    /*padding-bottom: 5%;*/
 }

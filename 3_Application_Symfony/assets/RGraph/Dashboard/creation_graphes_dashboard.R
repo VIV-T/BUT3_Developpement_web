@@ -121,8 +121,9 @@ piechart_publishersclass = ggplot(tableau_pc, aes(x="", y=Freq, fill=Var1)) +
 ggsave("pie_chart_pc_dashboard.png", plot=piechart_publishersclass)
 
 
-scatterplot_dashboard = ggplot(data_games, aes(x = review_score, y = price)) +
-  geom_point(color = "#3774A5") +
+scatterplot_dashboard = ggplot(data_games, aes(x = review_score, y = price, label = game_name)) +
+  geom_point(color = "#3774A5", size = 3) +
+  geom_text(check_overlap = FALSE, size = 3, vjust = 0, nudge_y = 0.1, hjust = 0.1 )+
   xlab("Review Score") +
   ylab("Price") +
   theme_classic() +

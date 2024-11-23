@@ -85,6 +85,8 @@
 .container_dashboard {
     display: flex;
     margin-left: 28%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 #dashboard-to-recommandations-btn {
@@ -102,5 +104,23 @@
 }
 
 .graph-container {
-    margin-top: 3%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+
+#premier_graph {
+    flex: 1;
+}
+
+#deuxieme_graph {
+    flex: 1;
+}
+
+.container_graph_dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement si nécessaire */
+    height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
+    gap: 100px;
 }

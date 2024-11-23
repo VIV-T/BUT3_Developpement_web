@@ -10,6 +10,10 @@ div.container.ps-0 {
     margin-right: 0;
 }
 
+h1, h2, h3, h4, h5 {
+    text-transform: uppercase;
+}
+
 /* rajoute un espace à droite pour le logo steam */
 /*#img_navbar_steam {
     margin-left: -7%;

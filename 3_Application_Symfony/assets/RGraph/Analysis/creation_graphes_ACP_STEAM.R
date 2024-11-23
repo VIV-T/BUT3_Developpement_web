@@ -155,7 +155,6 @@ acp.cluster = ggplot(data_games_clust, aes(x = Dim.1, y = Dim.2)) +
   xlab("Axe 1 ACP") +
   ylab("Axe 2 ACP") +
   theme_classic() +
-  ggtitle("Visualisation deux premières axes AXP par clusters")+
   scale_color_manual(
     values = c("#1f78b4", "#9ecae1"),
     name = "Clusters",
@@ -175,26 +174,11 @@ acp_indiv_var <- suppressWarnings(
       xlab("Axe 1 ACP") +
       ylab("Axe 2 ACP") +
       theme_classic() +
-      ggtitle("Visualisation des deux premiers axes ACP par clusters") +
       scale_color_manual(
         values = c("#1f78b4", "#9ecae1"),
         name = "Clusters",
         labels = c("Cluster 1", "Cluster 2")
-      ) +
-      # Ajout des flèches (vecteurs des variables)
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[1, 'Dim.1'], yend = 30 * df_acp_var_dim[1,'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[2, 'Dim.1'], yend = 30 * df_acp_var_dim[2, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[3, 'Dim.1'], yend = 30 * df_acp_var_dim[3, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[4, 'Dim.1'], yend = 30 * df_acp_var_dim[4, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[5, 'Dim.1'], yend = 30 * df_acp_var_dim[5, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      geom_segment(aes(x = 0, y = 0, xend = 30 * df_acp_var_dim[6, 'Dim.1'], yend = 30 * df_acp_var_dim[6, 'Dim.2']),arrow = arrow(length = unit(0.2, "cm"))) +
-      # Ajout des étiquettes pour les vecteurs
-      geom_text(aes(x = 30 * df_acp_var_dim[1, 'Dim.1'],y = 30 * df_acp_var_dim[1, 'Dim.2'],label = "copie_sold"),hjust = 1, vjust = 1, size = 4) +
-      geom_text(aes(x = 30 * df_acp_var_dim[2, 'Dim.1'],y = 30 * df_acp_var_dim[2, 'Dim.2'],label = "revenue"),hjust = -0.2, vjust = -0.2, size = 4)+
-      geom_text(aes(x = 30 * df_acp_var_dim[3, 'Dim.1'],y = 30 * df_acp_var_dim[3, 'Dim.2'],label = "price"),hjust = -0.2, vjust = -0.2, size = 4)+
-      geom_text(aes(x = 30 * df_acp_var_dim[4, 'Dim.1'],y = 30 * df_acp_var_dim[4, 'Dim.2'],label = "avg_play_time"),hjust = -0.2, vjust = 0.2, size = 4)+
-      geom_text(aes(x = 30 * df_acp_var_dim[5, 'Dim.1'],y = 30 * df_acp_var_dim[5, 'Dim.2'],label = "review_score"),hjust = 0.2, vjust = -0.2, size = 4)+
-      geom_text(aes(x = 30 * df_acp_var_dim[6, 'Dim.1'],y = 30 * df_acp_var_dim[6, 'Dim.2'],label = "recommandations"),hjust = -0.2, vjust = -0.2, size = 4)
+      )
   )
 )
 

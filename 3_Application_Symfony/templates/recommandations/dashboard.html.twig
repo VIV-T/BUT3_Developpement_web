@@ -29,37 +29,43 @@
     </div>
 
 
-
-
-     <div>
-
-        <section class="graph-container">
-            <p>Cette page permet de rendre compte des choix de sélection de jeux qui ont été réalisé. Elles offrent une série de feedback visuel descriptif afin de confirmer ou non la liste des jeux vidéo sélectionnés pour la prochaine campagne. </p>
-            <h2>Histogramme review score des jeux selectionnés</h2>
-            <div class="graph-container" id="HistogramDashboard">
-                {{render_chart(barChartReviewScore)}}
+    <div>
+        <p>Cette page permet de rendre compte des choix de sélection de jeux qui ont été réalisé. Elles offrent une série de feedback visuel descriptif afin de confirmer ou non la liste des jeux vidéo sélectionnés pour la prochaine campagne. </p>
+        </br>
+        <section>
+            <h5>Diagramme en barre catégorie d'age</h5>
+            <div class="graph-container container_graph_dashboard" id="BarChartAgeDashboard">
+                <div id="premier_graph">
+                    {{render_chart(barChartAge)}}
+                </div>
+                <div id="deuxieme_graph">
+                    <p>Le diagramme en barre qui reprend les différentes catégories d’âge permet de s’assurer qu’il existe une cohérence entre le public ciblé par la campagne et l’ensemble des jeux choisis. Là aussi, des choix de sélections très précis ou généraux ont pu être réalisés : ce diagramme répond à cette interrogation et vous offre un retour d’information explicite. </p>
+                </div>
             </div>
-            <p>Cet histogramme construit avec la variable Review Score permet de rapidement savoir la dynamique des choix de sélection : sont-ils centrés vers des choix de jeux très populaires ou plutôt équilibré en cherchant à relancer des jeux qui n’ont pas eu la cote auprès de la communauté.</p>
-            <h2>Diagramme en barre catégorie d'age</h2>
-            <div class="graph-container" id="BarChartAgeDashboard">
-                {{render_chart(barChartAge)}}
-            </div>
-            <p>Le diagramme en barre qui reprend les différentes catégories d’âge permet de s’assurer qu’il existe une cohérence entre le public ciblé par la campagne et l’ensemble des jeux choisis. Là aussi, des choix de sélections très précis ou généraux ont pu être réalisés : ce diagramme répond à cette interrogation et vous offre un retour d’information explicite. </p>
         </section>
 
-        <section class="graph-container">
-            <h2>Diagramme circulaire niveaux des éditeurs</h2>
-            <div id="pie_chart_pc_dashboard">
-                <img class="graphe_R" id="pie_chart_pc_dashboard" src="{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}"></img>
+        <section>
+            <h5>Diagramme circulaire niveaux des éditeurs</h5>
+            <div class="graph-container container_graph_dashboard" id="pie_chart_pc_dashboard">
+                <div id="premier_graph">
+                    <img class="graphe_R" id="pie_chart_pc_dashboard" src="{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}"></img>
+                </div>
+                <div id="deuxieme_graph">
+                    <p>Le diagramme circulaire suivant permet d’observer l’équilibre des niveaux d’éditeurs au sein de l’ensemble de sélection des jeux. A l’image du diagramme des niveaux d’âge, est ce que la répartition des niveaux d’éditeurs au sein de l’ensemble des jeux est convenable pour la campagne ? </p>
+                </div>
             </div>
-            <p>Le diagramme circulaire suivant permet d’observer l’équilibre des niveaux d’éditeurs au sein de l’ensemble de sélection des jeux. A l’image du diagramme des niveaux d’âge, est ce que la répartition des niveaux d’éditeurs au sein de l’ensemble des jeux est convenable pour la campagne ? </p>
         </section>
-        <section class="graph-container">
-            <h2>Nuage de points en fonction du prix et des notes</h2>
-            <div id="scatter_plot_dashboard">
-                <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}"></img>
+
+        <section>
+            <h5>Nuage de points en fonction du prix et des notes</h5>
+            <div class="graph-container container_graph_dashboard" id="scatter_plot_dashboard">
+                <div id="premier_graph">
+                    <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}"></img>
+                </div>
+                <div id="deuxieme_graph">
+                    <p>Le nuage de point représente la position des jeux en fonction de leurs notes et prix. L’intérêt de ce graphique est de connaitre, s’il existe, les groupes de jeux au sein de l’ensemble. En fonction des décisions pris en amont, il permet de vérifier si la direction menée tend vers une sélection de jeu très précises (nuage de point compact) ou plutôt varié (nuage de point dispersé).</p>
+                </div>
             </div>
-            <p>Le nuage de point représente la position des jeux en fonction de leurs notes et prix. L’intérêt de ce graphique est de connaitre, s’il existe, les groupes de jeux au sein de l’ensemble. En fonction des décisions pris en amont, il permet de vérifier si la direction menée tend vers une sélection de jeu très précises (nuage de point compact) ou plutôt varié (nuage de point dispersé).</p>
         </section>
 
     </div>

@@ -49,19 +49,13 @@ canvas {
     width: 100%;
 }
 
-.ligne_graphique {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 100px;
-}
-
 .ligne_graphique_texte {
     display: flex;
     flex-wrap: wrap;
     align-items: center; /* Centre verticalement */
     justify-content: center; /* Centre horizontalement si nécessaire */
     height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
-    gap: 100px;
+    gap: 80px;
 }
 
 #premier_graph {
@@ -90,7 +84,7 @@ canvas {
     align-items: center; /* Centre verticalement */
     justify-content: center; /* Centre horizontalement si nécessaire */
     height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
-    gap: 100px;
+    gap: 80px;
 }
 
 .multi_graph {
@@ -98,6 +92,14 @@ canvas {
     width: 50%;
     text-align: center;
     padding: 10px;
+}
+
+#titre_multi_graph {
+    padding-left: 10px;
+}
+
+h5 {
+    padding-bottom: 10px;
 }
 
 #multi_graph_display {

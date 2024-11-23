@@ -98,7 +98,6 @@ graphe_diagramme_Jeu_Annee =ggplot(data_games[dataafter2004,], aes(x = release_y
   ylab("Number of New Games") +
   theme_classic() +
   theme(legend.position = "bottom") +
-  ggtitle("Evolution of the Number of New Games Per Year Since 2004") +
   scale_fill_manual(values = c("#1f78b4", "#c6dbef", "#9ecae1", "#6baed6"))
 
 
@@ -167,7 +166,6 @@ quatres.dimensions.copie.revenue = ggplot(data_test_graph05, aes(x = copies_sold
   geom_point(aes(color = review_score, shape = publisher_class)) +
   xlab("Number of copies sold") +
   ylab("Amount of income") +
-  ggtitle("Is selling games a source of significant income ?") +
   theme_classic() +
   theme(legend.position = "right") +
   labs(color = "Review Score levels", shape = "Publisher Class")+

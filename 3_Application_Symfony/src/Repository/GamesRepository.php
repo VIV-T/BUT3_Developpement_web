@@ -328,4 +328,17 @@ class GamesRepository extends ServiceEntityRepository
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
         return $result->fetchAll();
     }
+
+
+
+    /////////
+    ///////// Requête SQL : Filtrage AJAX
+    /////////
+        
+    public function get_subseted_data($parameters){
+
+
+
+
+    }
 }

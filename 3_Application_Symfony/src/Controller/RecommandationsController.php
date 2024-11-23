@@ -211,6 +211,8 @@ class RecommandationsController extends AbstractController
     }
 
 
+
+
     // Methode AJAX - requêtage BD pour obtenir les données pour remplir la modal.
     #[Route('/recommandations/ajaxModal', name: 'app_recommandations_ajax_modal')]
     public function ajaxGraphPeriod(GamesRepository $game_repository, Request $request) : Response
@@ -298,17 +300,18 @@ class RecommandationsController extends AbstractController
 
 
     // Methode AJAX - filtrage selon les paramétrage de l'utilisateur.
-    #[Route('/recommandations/ajaxSubseting', name: 'app_recommandations_ajax_subseting')]
-    public function ajaxSubseting(GameRepository $game_repository, Request $request) : Response
+    #[Route('/recommandations/ajaxSubset', name: 'app_recommandations_ajax_subset')]
+    public function ajaxSubset(GamesRepository $game_repository, Request $request) : Response
     {
         // Récupération des paramètres de la requête.
-        $parameters = $request->request->get("RAJOUTER LE BON PARAMETRE");
+        $parameters = json_decode($request->request->get('parameters'));
+       
 
 
         // Appel de la requete SQL de récupération des données filtrées
-        $data = $game_repository->get_subseted_data();
+        //$data = $game_repository->get_subseted_data();
     
-        $response = new Response(json_encode($account));
+        $response = new Response(json_encode($parameters));
         return $response;
     }
 

@@ -48,27 +48,6 @@
 
 
 
-<script>
-    // Requete AJAX filtrage : 
-    function filtrageAJAX(parametre1, tableau_value_slider_range) {
-                    $.ajax({
-                        url: "{{ path('app_recommandations_ajax_subseting') }}",
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            appID: var_appID
-                        },
-                        async: true,
-                        success: function (array_results) {
-                        
-                        },
-                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
-                            console.log("erreur filtrage");
-                        }
-                });
-            }
-</script>
-
     <!--Block title-->
     <div class = 'title_block'>
         <div>
@@ -314,13 +293,41 @@
 
 <script src="{{ asset('assets/DoubleRangeSlider.js') }}"></script>
 <script>
+// Requête AJAX : envoie des données des filtres pour la construction d'une requête et renvoie de l'HTML associé.
+function subset_data(array_param_ajax) {
+    // Conversion en json du tableau JS
+    var json_param_ajax = JSON.stringify(array_param_ajax); 
+    $.ajax({
+        url: "{{ path('app_recommandations_ajax_subset') }}",
+        type: "POST",
+        dataType: "json",
+        data: {
+            parameters:json_param_ajax,
+        },
+        async: true,
+        success: function (array_data) {
+            console.log("success !");
+            console.log(array_data);
+        },
+        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+            console.log("erreur subset");
+            console.log(jqXHR);
+        }
+    });
+}
+
+
+
+
+
+// EventListener pour recuperer interactivement les valeurs des filtres envoyées ensuite dans la requête AJAX associée.
 window.addEventListener('load', () => {
     
     //// Creation des formulaires et des sliders (ou plutot attribution des objets existant à un objet JS)
     const form_genres = document.querySelector('div[id="form_form_genres"]');
     const form_publisherClass = document.querySelector('div[id="form_form_publisher_class"]');
     const form_OrderBy = document.querySelector('select[id="form_form_OrderBy"]');
-    
+
 
     //// Récupération de la valeur sélectionnée dans les radioButton.
     function get_form_values(form_id){
@@ -343,7 +350,9 @@ window.addEventListener('load', () => {
     }
 
     function get_OrderBy_selected(){
-        var value_form_OrderBy = form_OrderBy.querySelector('option[selected="selected"]').value;
+        //var value_form_OrderBy = form_OrderBy.querySelector('option[selected="selected"]').value;
+        var selected_index = form_OrderBy.selectedIndex;
+        var value_form_OrderBy = form_OrderBy.options[selected_index].value
         return (value_form_OrderBy);
     }
 
@@ -421,44 +430,57 @@ window.addEventListener('load', () => {
             array_input_slider_range
         ]
 
-        console.log(param_ajax);
+        return param_ajax;
     }
     
 
     
     // A chaque fois qu'un formulaire est cliqué => appel de la methode pour AJAX
     form_genres.addEventListener("click", function() {
-        regroup_ajax_param();
+        var array_param_ajax = regroup_ajax_param();
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
     });
 
     form_publisherClass.addEventListener("click", function() {
-        regroup_ajax_param();
+        var array_param_ajax = regroup_ajax_param();
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
     });
 
+    form_OrderBy.addEventListener('change', function(){
+        var array_param_ajax = regroup_ajax_param();
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
+    })
 
     // A chaque fois que la valeur d'un slider change => appel de la methode pour AJAX
     slider1.suscribe_change((values) => {
 		array_values = [values, slider2.getValues(), slider3.getValues(), slider4.getValues()]
-		regroup_ajax_param(array_values);
-        // Rajouter appel AJAX
+		var array_param_ajax = regroup_ajax_param(array_values);
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
 	})
 
 	slider2.suscribe_change((values) => {
 		array_values = [slider1.getValues(), values, slider3.getValues(), slider4.getValues()]
-		regroup_ajax_param(array_values);
-        // Rajouter appel AJAX
+		var array_param_ajax = regroup_ajax_param(array_values);
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
 	})
 
 	slider3.suscribe_change((values) => {
 		array_values = [slider1.getValues(), slider2.getValues(), values, slider4.getValues()]
-		regroup_ajax_param(array_values);
-        // Rajouter appel AJAX
+		var array_param_ajax = regroup_ajax_param(array_values);
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
 	})
 
 	slider4.suscribe_change((values) => {
 		array_values = [slider1.getValues(), slider2.getValues(), slider3.getValues(), values]
-		regroup_ajax_param(array_values);
-        // Rajouter appel AJAX
+		var array_param_ajax = regroup_ajax_param(array_values);
+        // Appel de la fonction AJAX
+        subset_data(array_param_ajax);
 	})
 })
 </script>

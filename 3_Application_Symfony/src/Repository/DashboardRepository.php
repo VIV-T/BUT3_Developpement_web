@@ -260,4 +260,58 @@ class DashboardRepository extends ServiceEntityRepository
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
         return $result->fetchAll();
     }
+
+    public function findAvgPriceDashboard()
+    {
+        $query = "SELECT
+                    ROUND(AVG(price),2) AS AveragePriceSales
+                    FROM dashboard";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findAvgPlayTime()
+    {
+        $query = "SELECT
+                    ROUND(AVG(avg_play_time),2) AS AveragePlayTime
+                FROM dashboard";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findMedianCopiesSold()
+    {
+        $query = "SELECT
+                    MEDIAN(copies_sold) OVER() AS MedianCopiesSales
+                FROM dashboard";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findMedianRevenue()
+    {
+        $query = "SELECT
+                    MEDIAN(revenue) OVER() AS MedianRevenue
+                FROM dashboard";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+    public function findTop3GamesAlgoDashboard()
+    {
+        $query = "select 
+	                app_id,
+	                (1/5)*(copies_sold/max_copies_sold + revenue/max_revenue + avg_play_time/max_avg_play_time + review_score/max_review_score + recommandations/max_recommandations) as indice_for_top
+                from dashboard JOIN (select 
+                                max(copies_sold) as max_copies_sold,
+                                max(revenue) as max_revenue,
+                                max(avg_play_time) as max_avg_play_time,
+                                max(review_score) as max_review_score,
+                                max(recommandations) as max_recommandations
+                            from dashboard) 
+                            as tot_games_quanti
+                Order by indice_for_top desc limit 3";
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
 }

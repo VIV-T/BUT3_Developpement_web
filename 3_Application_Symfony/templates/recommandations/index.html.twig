@@ -29,8 +29,41 @@
         <div id="rangeWrapper4" class="double-slider-wrapper"></div>
         </div>
     </div>
+    <div id="radio-button-period-container">
+        {{form_start(formGenres)}}            
+        {{form_widget(formGenres.form_genres, {'attr': {'class': 'radio-btn-container'}})}}
+        {{form_end(formGenres)}} 
+    </div>
+    </br>
+    <div id="radio-button-period-container">
+        {{form_start(formPublisherClass)}}            
+        {{form_widget(formPublisherClass.form_publisher_class, {'attr': {'class': 'radio-btn-container'}})}}
+        {{form_end(formPublisherClass)}} 
+    </div>
 </div>
 
+
+
+<script>
+    // Requete AJAX filtrage : 
+    function filtrageAJAX(parametre1, tableau_value_slider_range) {
+                    $.ajax({
+                        url: "{{ path('app_recommandations_ajax_subseting') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            appID: var_appID
+                        },
+                        async: true,
+                        success: function (array_results) {
+                        
+                        },
+                        error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                            console.log("erreur filtrage");
+                        }
+                });
+            }
+</script>
 <script src="{{ asset('assets/DoubleRangeSlider.js') }}"></script>
 <script>
 window.addEventListener('load', () => {

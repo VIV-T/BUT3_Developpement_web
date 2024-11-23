@@ -18,9 +18,11 @@ use Symfony\UX\Chartjs\Model\Chart;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-// Filtres
+// Filtres & Formulaires
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class RecommandationsController extends AbstractController
@@ -133,13 +135,60 @@ class RecommandationsController extends AbstractController
         // Truncation of the dashboard table data
         $dashboard_repository->truncateDashboardTable();
 
+        $formGenres = $this->createFormGenres($games_repository);
         
+        $formPublisherClass = $this->createFormPublisherClass($games_repository);
+
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,
             'slider_range_builder'=>$slider_range_builder, 
-            "res"=>$res
+            "res"=>$res, 
+            'formGenres' => $formGenres, 
+            "formPublisherClass" => $formPublisherClass
         ]);
+    }
+
+
+    public function createFormGenres(GamesRepository $game_repository){
+
+        $query_results = $game_repository->get_genres_list();
+        $genres_list =  [];
+
+        foreach ($query_results as $result){
+            $genres_list[$result["label"]]=$result["label"];
+        }
+
+        $form = $this->createFormBuilder()->add('form_genres', ChoiceType::class, [
+            'choices' => $genres_list,
+            'data' => array_values($genres_list),
+            'multiple' => true,  // Permet de choisir plusieurs options
+            'expanded' => true, // Pour afficher les radio buttons
+
+        ])->getForm();
+        return $form;
+    }
+
+
+    public function createFormPublisherClass(GamesRepository $game_repository){
+
+        $query_results = $game_repository->get_publisherClass_list();
+        $publisherClass_list =  [];
+
+        foreach ($query_results as $result){
+            $publisherClass_list[$result["publisher_class"]]=$result["publisher_class"];
+        }
+
+        //dd($publisherClass_list);
+
+        $form = $this->createFormBuilder()->add('form_publisher_class', ChoiceType::class, [
+            'choices' => $publisherClass_list,
+            'data' => array_values($publisherClass_list),
+            'multiple' => true,  // Permet de choisir plusieurs options
+            'expanded' => true, // Pour afficher les radio buttons
+
+        ])->getForm();
+        return $form;
     }
 
 
@@ -223,6 +272,22 @@ class RecommandationsController extends AbstractController
 
         // On compte le nombre de jeux dans la table dashboard
         $account = $dashboard_repository->countSelectedGames()["0"]["account"];
+    
+        $response = new Response(json_encode($account));
+        return $response;
+    }
+
+
+    // Methode AJAX - filtrage selon les paramétrage de l'utilisateur.
+    #[Route('/recommandations/ajaxSubseting', name: 'app_recommandations_ajax_subseting')]
+    public function ajaxSubseting(GameRepository $game_repository, Request $request) : Response
+    {
+        // Récupération des paramètres de la requête.
+        $parameters = $request->request->get("RAJOUTER LE BON PARAMETRE");
+
+
+        // Appel de la requete SQL de récupération des données filtrées
+        $data = $game_repository->get_subseted_data();
     
         $response = new Response(json_encode($account));
         return $response;

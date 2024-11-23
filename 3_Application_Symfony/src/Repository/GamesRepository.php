@@ -309,4 +309,23 @@ class GamesRepository extends ServiceEntityRepository
         return $result->fetchAll();
     }
 
+
+    public function get_genres_list(){
+        $query = "SELECT label
+                    FROM genres 
+                    ORDER BY label";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
+    public function get_publisherClass_list(){
+        $query = "SELECT DISTINCT publisher_class
+                    FROM games 
+                    ORDER BY publisher_class";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
 }

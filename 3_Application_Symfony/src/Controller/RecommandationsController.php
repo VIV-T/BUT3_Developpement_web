@@ -136,8 +136,8 @@ class RecommandationsController extends AbstractController
         $dashboard_repository->truncateDashboardTable();
 
         $formGenres = $this->createFormGenres($games_repository);
-        
         $formPublisherClass = $this->createFormPublisherClass($games_repository);
+        $formOrderBy= $this->createFormOrderBy($games_repository);
 
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
@@ -145,7 +145,8 @@ class RecommandationsController extends AbstractController
             'slider_range_builder'=>$slider_range_builder, 
             "res"=>$res, 
             'formGenres' => $formGenres, 
-            "formPublisherClass" => $formPublisherClass
+            "formPublisherClass" => $formPublisherClass, 
+            "formOrderBy"=> $formOrderBy
         ]);
     }
 
@@ -186,6 +187,24 @@ class RecommandationsController extends AbstractController
             'data' => array_values($publisherClass_list),
             'multiple' => true,  // Permet de choisir plusieurs options
             'expanded' => true, // Pour afficher les radio buttons
+
+        ])->getForm();
+        return $form;
+    }
+
+
+    public function createFormOrderBy(GamesRepository $game_repository){
+
+
+        $form = $this->createFormBuilder()->add('form_OrderBy', ChoiceType::class, [
+            'choices' => [
+                "Copies sold"=>"copies_sold", 
+                "Revenue"=>"revenue", 
+                "Recommandations"=>"recommandations", 
+                "Review Score"=>"review_score"
+            ],
+            'data' => "copies_sold",
+            'expanded' => false, // Pour afficher les radio buttons
 
         ])->getForm();
         return $form;

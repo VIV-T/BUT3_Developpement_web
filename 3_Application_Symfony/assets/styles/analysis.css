@@ -30,9 +30,8 @@
     width: 120%;
 }
 
-.flex_container,
 .analysis-section-graph {
-    margin-bottom: 50px;
+    margin-bottom: 5%;
 }
 
 .graphe_R {
@@ -53,13 +52,16 @@ canvas {
 .ligne_graphique {
     display: flex;
     flex-wrap: wrap;
-    gap: 150px;
+    gap: 100px;
 }
 
 .ligne_graphique_texte {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement si nécessaire */
+    height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
+    gap: 100px;
 }
 
 #premier_graph {
@@ -67,7 +69,7 @@ canvas {
 }
 
 #deuxieme_graph {
-    flex: 1.57;
+    flex: 1;
 }
 
 #troisieme_graph {
@@ -85,7 +87,10 @@ canvas {
 
 .container_multi_graph_texte {
     display: flex;
-    gap: 30px;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement si nécessaire */
+    height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
+    gap: 100px;
 }
 
 .multi_graph {
@@ -101,4 +106,15 @@ canvas {
 
 #texte_multi_graph {
     flex: 1;
+}
+
+#cercle_correlation {
+    flex: 1;
+    width: 60%;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.flex_container_texte {
+    margin-top: 5%;
 }

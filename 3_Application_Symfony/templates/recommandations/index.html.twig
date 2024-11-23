@@ -137,7 +137,49 @@ window.addEventListener('load', () => {
         min_4.innerHTML = values[0]
         max_4.innerHTML = values[1]
 	})
+
+
+    //// Récupération de la valeur sélectionnée dans les radioButton.
+    // Form genres
+    const Nodelist_input_form_genre = document.querySelectorAll('input[name="form[form_genres][]"]:checked');
+    const array_input_genres = Array.from(Nodelist_input_form_genre)
+
+    list_input_selection_genres = [];
+
+    for (input in array_input_genres){
+        list_input_selection_genres.push(array_input_genres[input].value);
+    }
+    console.log(list_input_selection_genres);
+
+
+    // Form PublisherClass
+    const Nodelist_input_form_publisherClass = document.querySelectorAll('input[name="form[form_publisher_class][]"]:checked');
+    const array_input_publisherClass = Array.from(Nodelist_input_form_publisherClass)
+
+    list_input_selection_publisherClass = [];
+
+    for (input in array_input_publisherClass){
+        list_input_selection_publisherClass.push(array_input_publisherClass[input].value);
+    }
+    console.log(list_input_selection_publisherClass);
+
+
+    /// tentative de reactivite sur les clock des formulaires : CA MARCHE
+    // form genre
+    const form_genres = document.querySelector('div[id="form_form_genres"]');
+    form_genres.addEventListener("click", function() {
+        console.log("L'élément a été cliqué !");
+    });
+
+    // form publisherClass
+    const form_publisherClass = document.querySelector('div[id="form_form_publisher_class"]');
+    form_publisherClass.addEventListener("click", function() {
+        console.log("L'élément a été cliqué !");
+    });
 })
+
+
+
 </script>
 
 

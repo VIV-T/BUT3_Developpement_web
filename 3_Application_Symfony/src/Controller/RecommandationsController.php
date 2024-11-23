@@ -165,21 +165,18 @@ class RecommandationsController extends AbstractController
             'data' => array_values($genres_list),
             'multiple' => true,  // Permet de choisir plusieurs options
             'expanded' => true, // Pour afficher les radio buttons
-
         ])->getForm();
         return $form;
     }
 
 
     public function createFormPublisherClass(GamesRepository $game_repository){
-
         $query_results = $game_repository->get_publisherClass_list();
         $publisherClass_list =  [];
 
         foreach ($query_results as $result){
             $publisherClass_list[$result["publisher_class"]]=$result["publisher_class"];
         }
-
         //dd($publisherClass_list);
 
         $form = $this->createFormBuilder()->add('form_publisher_class', ChoiceType::class, [
@@ -187,9 +184,14 @@ class RecommandationsController extends AbstractController
             'data' => array_values($publisherClass_list),
             'multiple' => true,  // Permet de choisir plusieurs options
             'expanded' => true, // Pour afficher les radio buttons
-
         ])->getForm();
         return $form;
+    }
+
+
+    // Fonction de Rémy 
+    public function makeEqualLength_array_str_value(){
+        // compléter ici
     }
 
 

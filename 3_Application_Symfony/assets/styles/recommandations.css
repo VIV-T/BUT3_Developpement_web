@@ -12,6 +12,10 @@
     padding-top: 20px;
 }
 
+.ecart_navbar {
+    margin-top: 100px;
+}
+
 /* gère la position de Title, Subtitle et la search bar */
 .title_block {
     display: flex;
@@ -251,7 +255,6 @@
 /*   Slider range   */
 /* Ne pas toucher !!!! (Surtout Mathis) */
 .test-slider {
-    margin-top: 100px;
     width: 100%;
     margin-left: 1.5em;
 }

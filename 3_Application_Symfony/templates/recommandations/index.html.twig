@@ -72,7 +72,7 @@
 
     <!--Main-container-->
     <div class="recommandations-main-container">
-        <section class="games-block-container">
+        <section class="games-block-container" id="main_games_container">
         {% for game in games %}
             <div class="game-block">
                 <div class="game-img-container" id="game_img_container_{{game.appID}}">
@@ -105,11 +105,12 @@
                 </div>
                 <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.appID}}')"></img>
             </div>
-
-            
             {% else %}
-            <li>Aucun enregistrement dans la BD</li>
+            <div class="empty_data_container">
+                <h3>No data in DataBase<h3>
+            <div>
         {% endfor %}
+        </section>
         
 
         <!-- Ajax -->
@@ -299,6 +300,7 @@
 function subset_data(array_param_ajax) {
     // Conversion en json du tableau JS
     var json_param_ajax = JSON.stringify(array_param_ajax); 
+    
     $.ajax({
         url: "{{ path('app_recommandations_ajax_subset') }}",
         type: "POST",
@@ -307,15 +309,60 @@ function subset_data(array_param_ajax) {
             parameters:json_param_ajax,
         },
         async: true,
-        success: function (array_data) {
-            console.log("success !");
-            console.log(array_data);
+        success: function (array_data_games) {
+            //console.log(array_data_games);
+            array_chaineHTML_games = [];
+            array_data_games.forEach(function(game, index) {
+            var chaineHtml_game = "\
+                <div class='game-block'>\
+                    <div class='game-img-container' id='game_img_container_"+game.app_id+"'>\
+                        <div class='game-img-overlay'  onclick='selectGameDashboard("+game.app_id+")'>\
+                            <div class='overlay-content' id='overlay-left'>\
+                                <div class='overlay-content-top'>\
+                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/dollar_icon.png')}}'></img>\
+                                <p>"+game.revenue+"</br> dollars</p>\
+                                </div>\
+                                <div class='overlay-content-bottom'>\
+                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/time_icon.png')}}'></img>\
+                                <p>"+game.avg_play_time+"</br> hours</p>\
+                                </div>\
+                            </div>\
+                            <div class='overlay-content' id='overlay-right'>\
+                                <div class='overlay-content-top'>\
+                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/caddie_icon.png')}}'></img>\
+                                <p>"+game.copies_sold+"</br>unit sales</p>\
+                                </div>\
+                                <div class='overlay-content-bottom'>\
+                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/like_icon.png')}}'></img>\
+                                <p>"+game.recommandations+"</br>good reviews</p>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <img class='game-img' src="+game.header_img+"></img>\
+                    </div>\
+                    <img id='games_information_icon_recommandations' src='{{asset('icons/site_games_informations_icon.png')}}' type='button' onclick='afficherInfoGame('{{"+game.appID+"}}')'></img>\
+                </div>\
+            ";
+
+            array_chaineHTML_games.push(chaineHtml_game);
+            });
+            
+            chaineHtml_games = array_chaineHTML_games.join("\n");
+            //console.log(chaineHtml_games);
+            
+            // intégration du contenu Html dans le squelette
+            $('#main_games_container').html(chaineHtml_games);
         },
         error: function(jqXHR){         // Fonction à appeler si la requête échoue
             console.log("erreur subset");
-            console.log(jqXHR);
+            chaineHtml_erreur = "\
+            <div class='empty_data_container'>\
+                <h3>No data in DataBase corresponding to your selection<h3>\
+            <div>";
+            $('#main_games_container').html(chaineHtml_erreur);
         }
     });
+    
 }
 
 

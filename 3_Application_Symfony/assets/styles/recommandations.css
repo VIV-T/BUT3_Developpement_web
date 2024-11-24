@@ -252,7 +252,10 @@
     font-size: large;
 }
 
-
+/* S'il n'y a pas d'enregistrement dans la BD*/
+.empty_data_container {
+    height: 1000px;
+}
 
 
 
@@ -333,16 +336,20 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[type="checkbox"] {
-    appearance: none; /* Enlève le style par défaut */
+    appearance: none;
+    /* Enlève le style par défaut */
     width: 20px;
     height: 20px;
-    background-color: #ccc; /* Couleur par défaut */
-    border: 2px solid #333; /* Bordure */
-    border-radius: 25px; /* Coins arrondis (optionnel) */
+    background-color: #ccc;
+    /* Couleur par défaut */
+    border: 2px solid #333;
+    /* Bordure */
+    border-radius: 25px;
+    /* Coins arrondis (optionnel) */
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
     margin: 3px 3px 3px 4px;
-  }
+}
 
 input[type="checkbox"]:checked {
     color: transparent;

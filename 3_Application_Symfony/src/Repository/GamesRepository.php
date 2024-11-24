@@ -334,8 +334,24 @@ class GamesRepository extends ServiceEntityRepository
     /////////
     ///////// Requête SQL : Filtrage AJAX
     /////////
-        
+    
+    
     public function get_subseted_data($parameters){
+        $where_query = $this->construct_where_query($parameters);
+        
+        $query = "SELECT DISTINCT app_id, copies_sold, revenue, avg_play_time, recommandations, header_img
+                    FROM games
+	                    JOIN link_games_genres USING (app_id)
+	                    JOIN (SELECT genres_id, label FROM genres) AS genres USING(genres_id)
+                    ".$where_query;
+        
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
+    public function construct_where_query($parameters){
         $params_genres = $parameters[0];
         $params_publisherClass = $parameters[1];
         $param_orderBy = $parameters[2]; 
@@ -346,23 +362,23 @@ class GamesRepository extends ServiceEntityRepository
 
         // Genres
         foreach ($params_genres as $genre){
-            $query_genre = 'genres.label IS "'.$genre.'"';
+            $query_genre = 'genres.label LIKE "'.$genre.'"';
             $array_where_query_genre []= $query_genre;
         }
-        $where_query_genres = implode(" | ", $array_where_query_genre);
+        $where_query_genres = implode(" OR ", $array_where_query_genre);
         
         //PublisherClass
         foreach ($params_publisherClass as $publisherClass){
-            $query_publisherClass = 'games.publisher_class IS "'.$publisherClass.'"';
+            $query_publisherClass = 'games.publisher_class LIKE "'.$publisherClass.'"';
             $array_where_query_publisherClass []= $query_publisherClass;
         }
-        $where_query_publisherClass = implode(" | ", $array_where_query_publisherClass);
+        $where_query_publisherClass = implode(" OR ", $array_where_query_publisherClass);
         
-        $where_query_params_slider = $this->construct_where_query_parms_slider($array_params_slider);
-        
-        $tt_test= "(".$where_query_genres . ") & (" . $where_query_publisherClass.")";
+        $where_query_part1= "(".$where_query_genres . ") AND (" . $where_query_publisherClass.")";
 
-        return "WHERE ".$tt_test ." & ". $where_query_params_slider." ORDER BY games.".$param_orderBy;
+        $where_query_part2 = $this->construct_where_query_parms_slider($array_params_slider);
+
+        return "WHERE ".$where_query_part1 ." AND ". $where_query_part2." ORDER BY games.".$param_orderBy;
 
     }
 
@@ -373,13 +389,13 @@ class GamesRepository extends ServiceEntityRepository
         $params_review_score = $array_params_slider[2];
         $params_recommandations = $array_params_slider[3];
 
-        $tt = "games.copies_sold >".$params_copies_sold[0]." & games.copies_sold <".$params_copies_sold[1];
-        $tt2 = "games.revenue >".$params_revenue[0]." & games.revenue <".$params_revenue[1];
-        $tt3 = "games.review_score >".$params_review_score[0]." & games.review_score <".$params_review_score[1];
-        $tt4 = "games.recommandations >".$params_recommandations[0]." & games.recommandations <".$params_recommandations[1];
+        $query_copies_sold = "games.copies_sold>".$params_copies_sold[0]." AND games.copies_sold<".$params_copies_sold[1];
+        $query_revenue = "games.revenue>".$params_revenue[0]." AND games.revenue<".$params_revenue[1];
+        $query_review_score = "games.review_score>".$params_review_score[0]." AND games.review_score<".$params_review_score[1];
+        $query_recommandations = "games.recommandations>".$params_recommandations[0]." AND games.recommandations<".$params_recommandations[1];
 
-        $tt_fin = "(".$tt.") & (".$tt2.") & (".$tt3.") & (".$tt4.")";
+        $where_query_part2 = "(".$query_copies_sold.") AND (".$query_revenue.") AND (".$query_review_score.") AND (".$query_recommandations.")";
 
-        return $tt_fin;
+        return $where_query_part2;
     }
 }

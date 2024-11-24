@@ -30,40 +30,40 @@
 
 
     <div>
-        <p>Cette page permet de rendre compte des choix de sélection de jeux qui ont été réalisé. Elles offrent une série de feedback visuel descriptif afin de confirmer ou non la liste des jeux vidéo sélectionnés pour la prochaine campagne. </p>
+        <p>This page provides an overview of the game selection choices that have been made. It offers a series of descriptive visual feedback elements to confirm or revise the list of video games selected for the upcoming campaign.</p>
         </br>
         <section>
-            <h5>Diagramme en barre catégorie d'age</h5>
+            <h5>Bar Chart of age category</h5>
             <div class="graph-container container_graph_dashboard" id="BarChartAgeDashboard">
                 <div id="premier_graph">
                     {{render_chart(barChartAge)}}
                 </div>
                 <div id="deuxieme_graph">
-                    <p>Le diagramme en barre qui reprend les différentes catégories d’âge permet de s’assurer qu’il existe une cohérence entre le public ciblé par la campagne et l’ensemble des jeux choisis. Là aussi, des choix de sélections très précis ou généraux ont pu être réalisés : ce diagramme répond à cette interrogation et vous offre un retour d’information explicite. </p>
+                    <p>The bar chart representing the different age categories ensures consistency between the campaign's target audience and the selected games. Here too, the selections made could be very specific or more general: this chart addresses this concern and provides clear feedback.</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h5>Diagramme circulaire niveaux des éditeurs</h5>
+            <h5>Pie Chart by Publisher Level</h5>
             <div class="graph-container container_graph_dashboard" id="pie_chart_pc_dashboard">
                 <div id="premier_graph">
                     <img class="graphe_R" id="pie_chart_pc_dashboard" src="{{asset('RGraph/Dashboard/results/pie_chart_pc_dashboard.png')}}"></img>
                 </div>
                 <div id="deuxieme_graph">
-                    <p>Le diagramme circulaire suivant permet d’observer l’équilibre des niveaux d’éditeurs au sein de l’ensemble de sélection des jeux. A l’image du diagramme des niveaux d’âge, est ce que la répartition des niveaux d’éditeurs au sein de l’ensemble des jeux est convenable pour la campagne ? </p>
+                    <p>The following pie chart illustrates the balance of publisher levels within the selected set of games. Similar to the age-level chart, does the distribution of publisher levels across the games align appropriately with the campaign's objectives?</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h5>Nuage de points en fonction du prix et des notes</h5>
+            <h5>Scatter Plot by Price and Ratings</h5>
             <div class="graph-container container_graph_dashboard" id="scatter_plot_dashboard">
                 <div id="premier_graph">
                     <img class="graphe_R" src="{{asset('RGraph/Dashboard/results/scatter_plot_dashboard.png')}}"></img>
                 </div>
                 <div id="deuxieme_graph">
-                    <p>Le nuage de point représente la position des jeux en fonction de leurs notes et prix. L’intérêt de ce graphique est de connaitre, s’il existe, les groupes de jeux au sein de l’ensemble. En fonction des décisions pris en amont, il permet de vérifier si la direction menée tend vers une sélection de jeu très précises (nuage de point compact) ou plutôt varié (nuage de point dispersé).</p>
+                    <p>The scatter plot represents the position of the games based on their ratings and prices. The purpose of this chart is to identify, if any, groups of games within the selection. Depending on the prior decisions made, it helps to verify whether the selection strategy is leading towards a very specific set of games (compact scatter plot) or a more varied selection (dispersed scatter plot).</p>
                 </div>
             </div>
         </section>

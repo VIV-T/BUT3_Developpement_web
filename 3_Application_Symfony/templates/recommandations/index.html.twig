@@ -5,68 +5,68 @@
 
 
 {% block body %}
-<!--Sidebar-->
-<div class = 'sidebar'>
-    <div class="ecart_navbar">
+<div id="container_recommandations">
+    <!--Sidebar-->
+    <div class = 'sidebar'>
+        <div class="ecart_navbar">
+        </div>
+        <div id="radio-button-form-container">
+            <h4 class="titre_filtres">Publisher Class :</h4>
+            <div id="radio-button-publisherClass-container">
+                <form method="post">
+                    <div class="form-group" id="form_publisher_class">
+                        {% for choice in formPublisherClass.form_publisher_class %}
+                            <div>
+                                <input type="checkbox" id="{{ choice.vars.id }}"
+                                    name="{{ formPublisherClass.form_publisher_class.vars.full_name }}[]"
+                                    value="{{ choice.vars.value }}"
+                                    {% if choice.vars.value in formPublisherClass.form_publisher_class.vars.value %}checked{% endif %} />
+                                <label class="filtres" for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+            <h4 class="titre_filtres">Genres :</h4>
+            <div id="radio-button-genres-container">
+                <form method="post">
+                    <div class="form-group" id="form_genres">
+                        {% for choice in formGenres.form_genres %}
+                            <div>
+                                <input type="checkbox" id="{{ choice.vars.id }}"
+                                    name="{{ formGenres.form_genres.vars.full_name }}[]"
+                                    value="{{ choice.vars.value }}"
+                                    {% if choice.vars.value in formGenres.form_genres.vars.value %}checked{% endif %} />
+                                <label class="filtres" for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="test-slider">
+            <div>
+            <a><b>Copies Sold (unite)</b></a></br>
+            <p class="min_max_slider_range">min : <a id="min_1">----</a> ; max : <a id="max_1">----<a><p>
+            <div id="rangeWrapper1" class="double-slider-wrapper"></div>
+            </div>
+            <div>
+            <a><b>Revenue (unite)</b></a></br>
+            <p class="min_max_slider_range">min : <a id="min_2">----</a> ; max : <a id="max_2">----<a><p>
+            <div id="rangeWrapper2" class="double-slider-wrapper"></div>
+            </div>
+            <div>
+            <a><b>Review Score (unite)</b></a></br>
+            <p class="min_max_slider_range">min : <a id="min_3">----</a> ; max : <a id="max_3">----<a><p>
+            <div id="rangeWrapper3" class="double-slider-wrapper"></div>
+            </div>
+            <div>
+            <a><b>Recommandations (unite)</b></a></br>
+            <p class="min_max_slider_range">min : <a id="min_4">----</a> ; max : <a id="max_4">----<a><p>
+            <div id="rangeWrapper4" class="double-slider-wrapper"></div>
+            </div>
+        </div>
     </div>
-    <div id="radio-button-form-container">
-        <h4>Publisher Class :</h4>
-        <div id="radio-button-publisherClass-container">
-            <form method="post">
-                <div class="form-group" id="form_publisher_class">
-                    {% for choice in formPublisherClass.form_publisher_class %}
-                        <div>
-                            <input type="checkbox" id="{{ choice.vars.id }}"
-                                name="{{ formPublisherClass.form_publisher_class.vars.full_name }}[]"
-                                value="{{ choice.vars.value }}"
-                                {% if choice.vars.value in formPublisherClass.form_publisher_class.vars.value %}checked{% endif %} />
-                            <label for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </form>
-        </div>
-        </br>
-        <h4>Genres :</h4>
-        <div id="radio-button-genres-container">
-            <form method="post">
-                <div class="form-group" id="form_genres">
-                    {% for choice in formGenres.form_genres %}
-                        <div>
-                            <input type="checkbox" id="{{ choice.vars.id }}"
-                                name="{{ formGenres.form_genres.vars.full_name }}[]"
-                                value="{{ choice.vars.value }}"
-                                {% if choice.vars.value in formGenres.form_genres.vars.value %}checked{% endif %} />
-                            <label for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="test-slider">
-        <div>
-        <a><b>Copies Sold (unite)</b></a></br>
-        <p class="min_max_slider_range">min : <a id="min_1">----</a> ; max : <a id="max_1">----<a><p>
-        <div id="rangeWrapper1" class="double-slider-wrapper"></div>
-        </div>
-        <div>
-        <a><b>Revenue (unite)</b></a></br>
-        <p class="min_max_slider_range">min : <a id="min_2">----</a> ; max : <a id="max_2">----<a><p>
-        <div id="rangeWrapper2" class="double-slider-wrapper"></div>
-        </div>
-        <div>
-        <a><b>Review Score (unite)</b></a></br>
-        <p class="min_max_slider_range">min : <a id="min_3">----</a> ; max : <a id="max_3">----<a><p>
-        <div id="rangeWrapper3" class="double-slider-wrapper"></div>
-        </div>
-        <div>
-        <a><b>Recommandations (unite)</b></a></br>
-        <p class="min_max_slider_range">min : <a id="min_4">----</a> ; max : <a id="max_4">----<a><p>
-        <div id="rangeWrapper4" class="double-slider-wrapper"></div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -310,244 +310,244 @@
         <a type="button" id="index-continue-btn" class="btn btn-primary">0</a>
         </div>
     </div>
-
+</div>
 
 <script src="{{ asset('assets/DoubleRangeSlider.js') }}"></script>
 <script>
-// Requête AJAX : envoie des données des filtres pour la construction d'une requête et renvoie de l'HTML associé.
-function subset_data(array_param_ajax) {
-    // Conversion en json du tableau JS
-    var json_param_ajax = JSON.stringify(array_param_ajax); 
-    
-    $.ajax({
-        url: "{{ path('app_recommandations_ajax_subset') }}",
-        type: "POST",
-        dataType: "json",
-        data: {
-            parameters:json_param_ajax,
-        },
-        async: true,
-        success: function (array_data_games) {
-            array_chaineHTML_games = [];
-            array_data_games.forEach(function(game, index) {
-            var chaineHtml_game = "\
-                <div class='game-block'>\
-                    <div class='game-img-container' id='game_img_container_"+game.app_id+"'>\
-                        <div class='game-img-overlay'  onclick='selectGameDashboard("+game.app_id+")'>\
-                            <div class='overlay-content' id='overlay-left'>\
-                                <div class='overlay-content-top'>\
-                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/dollar_icon.png')}}'></img>\
-                                <p>"+game.revenue+"</br> dollars</p>\
-                                </div>\
-                                <div class='overlay-content-bottom'>\
-                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/time_icon.png')}}'></img>\
-                                <p>"+game.avg_play_time+"</br> hours</p>\
-                                </div>\
-                            </div>\
-                            <div class='overlay-content' id='overlay-right'>\
-                                <div class='overlay-content-top'>\
-                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/caddie_icon.png')}}'></img>\
-                                <p>"+game.copies_sold+"</br>unit sales</p>\
-                                </div>\
-                                <div class='overlay-content-bottom'>\
-                                <img class = 'icon_recommandations_KPI' src='{{asset('icons/like_icon.png')}}'></img>\
-                                <p>"+game.recommandations+"</br>good reviews</p>\
-                                </div>\
-                            </div>\
-                        </div>\
-                        <img class='game-img' src="+game.header_img+"></img>\
-                    </div>\
-                    <img id='games_information_icon_recommandations' src='{{asset('icons/site_games_informations_icon.png')}}' type='button' onclick='afficherInfoGame('{{"+game.appID+"}}')'></img>\
-                </div>\
-            ";
-
-            array_chaineHTML_games.push(chaineHtml_game);
-            });
-            
-            chaineHtml_games = array_chaineHTML_games.join("\n");
-            //console.log(chaineHtml_games);
-            
-            // intégration du contenu Html dans le squelette
-            $('#main_games_container').html(chaineHtml_games);
-        },
-        error: function(jqXHR){         // Fonction à appeler si la requête échoue
-            console.log("erreur subset");
-            chaineHtml_erreur = "\
-            <div class='empty_data_container'>\
-                <h3>No data in DataBase corresponding to your selection<h3>\
-            <div>";
-            $('#main_games_container').html(chaineHtml_erreur);
-        }
-    });
-    
-}
-
-
-
-
-
-// EventListener pour recuperer interactivement les valeurs des filtres envoyées ensuite dans la requête AJAX associée.
-window.addEventListener('load', () => {
-    
-    //// Creation des formulaires et des sliders (ou plutot attribution des objets existant à un objet JS)
-    const form_genres = document.querySelector('div[id="form_genres"]');
-    const form_publisherClass = document.querySelector('div[id="form_publisher_class"]');
-    const form_OrderBy = document.querySelector('select[id="form_form_OrderBy"]');
-
-
-    //// Récupération de la valeur sélectionnée dans les radioButton.
-    function get_form_values(form_id){
-        var attr_name =""
-        if (form_id == "form_genres"){
-            attr_name = "form[form_genres][]"; 
-        }else if (form_id == "form_publisher_class"){
-            attr_name = "form[form_publisher_class][]"; 
-        }
-
-        const Nodelist_input_form = document.querySelectorAll('input[name="'+attr_name+'"]:checked');
-        const array_input = Array.from(Nodelist_input_form)
-
-        list_input_selection = [];
-
-        for (input in array_input){
-            list_input_selection.push(array_input[input].value);
-        }
-        return (list_input_selection);
-    }
-
-    function get_OrderBy_selected(){
-        //var value_form_OrderBy = form_OrderBy.querySelector('option[selected="selected"]').value;
-        var selected_index = form_OrderBy.selectedIndex;
-        var value_form_OrderBy = form_OrderBy.options[selected_index].value
-        return (value_form_OrderBy);
-    }
-
-    
-
-
-
-	const slider1 = new DoubleRangeSlider('#rangeWrapper1', min="{{res[0] | json_encode}}", max="{{res[1] | json_encode}}");
-	const slider2 = new DoubleRangeSlider('#rangeWrapper2', min="{{res[2] | json_encode}}", max="{{res[3] | json_encode}}");
-	const slider3 = new DoubleRangeSlider('#rangeWrapper3', min="{{res[4] | json_encode}}", max="{{res[5] | json_encode}}");
-	const slider4 = new DoubleRangeSlider('#rangeWrapper4', min="{{res[6] | json_encode}}", max="{{res[7] | json_encode}}");
-
-    const max_1 = document.getElementById('max_1');
-    const min_1 = document.getElementById('min_1');
-    const max_2 = document.getElementById('max_2');
-    const min_2 = document.getElementById('min_2');
-    const max_3 = document.getElementById('max_3');
-    const min_3 = document.getElementById('min_3');
-    const max_4 = document.getElementById('max_4');
-    const min_4 = document.getElementById('min_4');
-    
-    max_1.innerHTML = slider1.getValues()[1]
-    min_1.innerHTML = slider1.getValues()[0]
-    max_2.innerHTML = slider2.getValues()[1]
-    min_2.innerHTML = slider2.getValues()[0]
-    max_3.innerHTML = slider3.getValues()[1]
-    min_3.innerHTML = slider3.getValues()[0]
-    max_4.innerHTML = slider4.getValues()[1]
-    min_4.innerHTML = slider4.getValues()[0]
-
-	/// Modification des valeur des output HTML pour l'utilisateur (min/max)
-    slider1.suscribe_input((values) => {
-        min_1.innerHTML = values[0]
-        max_1.innerHTML = values[1]
-	})
-
-    slider2.suscribe_input((values) => {
-        min_2.innerHTML = values[0]
-        max_2.innerHTML = values[1]
-	})
-
-    slider3.suscribe_input((values) => {
-        min_3.innerHTML = values[0]
-        max_3.innerHTML = values[1]
-	})
-
-    slider4.suscribe_input((values) => {
-        min_4.innerHTML = values[0]
-        max_4.innerHTML = values[1]
-	})
-
-
-
-    // regroupement de tous les inputs des différents formulaires et sliders pour la function de la requete AJAX
-    function regroup_ajax_param(array_input = 0){
-        var list_input_genres = get_form_values(form_genres.id);
-        var list_input_publisherClass = get_form_values(form_publisherClass.id);
-        var list_input_OrderBy = get_OrderBy_selected();
+    // Requête AJAX : envoie des données des filtres pour la construction d'une requête et renvoie de l'HTML associé.
+    function subset_data(array_param_ajax) {
+        // Conversion en json du tableau JS
+        var json_param_ajax = JSON.stringify(array_param_ajax); 
         
-        if (array_input === 0){
-            var array_input_slider_range = [
-                slider1.getValues(), 
-                slider2.getValues(), 
-                slider3.getValues(), 
-                slider4.getValues(), 
-            ]
-        }else{
-            array_input_slider_range = array_input;
+        $.ajax({
+            url: "{{ path('app_recommandations_ajax_subset') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                parameters:json_param_ajax,
+            },
+            async: true,
+            success: function (array_data_games) {
+                array_chaineHTML_games = [];
+                array_data_games.forEach(function(game, index) {
+                var chaineHtml_game = "\
+                    <div class='game-block'>\
+                        <div class='game-img-container' id='game_img_container_"+game.app_id+"'>\
+                            <div class='game-img-overlay'  onclick='selectGameDashboard("+game.app_id+")'>\
+                                <div class='overlay-content' id='overlay-left'>\
+                                    <div class='overlay-content-top'>\
+                                    <img class = 'icon_recommandations_KPI' src='{{asset('icons/dollar_icon.png')}}'></img>\
+                                    <p>"+game.revenue+"</br> dollars</p>\
+                                    </div>\
+                                    <div class='overlay-content-bottom'>\
+                                    <img class = 'icon_recommandations_KPI' src='{{asset('icons/time_icon.png')}}'></img>\
+                                    <p>"+game.avg_play_time+"</br> hours</p>\
+                                    </div>\
+                                </div>\
+                                <div class='overlay-content' id='overlay-right'>\
+                                    <div class='overlay-content-top'>\
+                                    <img class = 'icon_recommandations_KPI' src='{{asset('icons/caddie_icon.png')}}'></img>\
+                                    <p>"+game.copies_sold+"</br>unit sales</p>\
+                                    </div>\
+                                    <div class='overlay-content-bottom'>\
+                                    <img class = 'icon_recommandations_KPI' src='{{asset('icons/like_icon.png')}}'></img>\
+                                    <p>"+game.recommandations+"</br>good reviews</p>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <img class='game-img' src="+game.header_img+"></img>\
+                        </div>\
+                        <img id='games_information_icon_recommandations' src='{{asset('icons/site_games_informations_icon.png')}}' type='button' onclick='afficherInfoGame('{{"+game.appID+"}}')'></img>\
+                    </div>\
+                ";
+
+                array_chaineHTML_games.push(chaineHtml_game);
+                });
+                
+                chaineHtml_games = array_chaineHTML_games.join("\n");
+                //console.log(chaineHtml_games);
+                
+                // intégration du contenu Html dans le squelette
+                $('#main_games_container').html(chaineHtml_games);
+            },
+            error: function(jqXHR){         // Fonction à appeler si la requête échoue
+                console.log("erreur subset");
+                chaineHtml_erreur = "\
+                <div class='empty_data_container'>\
+                    <h3>No data in DataBase corresponding to your selection<h3>\
+                <div>";
+                $('#main_games_container').html(chaineHtml_erreur);
+            }
+        });
+        
+    }
+
+
+
+
+
+    // EventListener pour recuperer interactivement les valeurs des filtres envoyées ensuite dans la requête AJAX associée.
+    window.addEventListener('load', () => {
+        
+        //// Creation des formulaires et des sliders (ou plutot attribution des objets existant à un objet JS)
+        const form_genres = document.querySelector('div[id="form_genres"]');
+        const form_publisherClass = document.querySelector('div[id="form_publisher_class"]');
+        const form_OrderBy = document.querySelector('select[id="form_form_OrderBy"]');
+
+
+        //// Récupération de la valeur sélectionnée dans les radioButton.
+        function get_form_values(form_id){
+            var attr_name =""
+            if (form_id == "form_genres"){
+                attr_name = "form[form_genres][]"; 
+            }else if (form_id == "form_publisher_class"){
+                attr_name = "form[form_publisher_class][]"; 
+            }
+
+            const Nodelist_input_form = document.querySelectorAll('input[name="'+attr_name+'"]:checked');
+            const array_input = Array.from(Nodelist_input_form)
+
+            list_input_selection = [];
+
+            for (input in array_input){
+                list_input_selection.push(array_input[input].value);
+            }
+            return (list_input_selection);
         }
 
-        var param_ajax = [
-            list_input_genres, 
-            list_input_publisherClass,
-            list_input_OrderBy, 
-            array_input_slider_range
-        ]
+        function get_OrderBy_selected(){
+            //var value_form_OrderBy = form_OrderBy.querySelector('option[selected="selected"]').value;
+            var selected_index = form_OrderBy.selectedIndex;
+            var value_form_OrderBy = form_OrderBy.options[selected_index].value
+            return (value_form_OrderBy);
+        }
 
-        return param_ajax;
-    }
-    
+        
 
-    
-    // A chaque fois qu'un formulaire est cliqué => appel de la methode pour AJAX
-    form_genres.addEventListener("click", function() {
-        var array_param_ajax = regroup_ajax_param();
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-    });
 
-    form_publisherClass.addEventListener("click", function() {
-        var array_param_ajax = regroup_ajax_param();
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-    });
 
-    form_OrderBy.addEventListener('change', function(){
-        var array_param_ajax = regroup_ajax_param();
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
+        const slider1 = new DoubleRangeSlider('#rangeWrapper1', min="{{res[0] | json_encode}}", max="{{res[1] | json_encode}}");
+        const slider2 = new DoubleRangeSlider('#rangeWrapper2', min="{{res[2] | json_encode}}", max="{{res[3] | json_encode}}");
+        const slider3 = new DoubleRangeSlider('#rangeWrapper3', min="{{res[4] | json_encode}}", max="{{res[5] | json_encode}}");
+        const slider4 = new DoubleRangeSlider('#rangeWrapper4', min="{{res[6] | json_encode}}", max="{{res[7] | json_encode}}");
+
+        const max_1 = document.getElementById('max_1');
+        const min_1 = document.getElementById('min_1');
+        const max_2 = document.getElementById('max_2');
+        const min_2 = document.getElementById('min_2');
+        const max_3 = document.getElementById('max_3');
+        const min_3 = document.getElementById('min_3');
+        const max_4 = document.getElementById('max_4');
+        const min_4 = document.getElementById('min_4');
+        
+        max_1.innerHTML = slider1.getValues()[1]
+        min_1.innerHTML = slider1.getValues()[0]
+        max_2.innerHTML = slider2.getValues()[1]
+        min_2.innerHTML = slider2.getValues()[0]
+        max_3.innerHTML = slider3.getValues()[1]
+        min_3.innerHTML = slider3.getValues()[0]
+        max_4.innerHTML = slider4.getValues()[1]
+        min_4.innerHTML = slider4.getValues()[0]
+
+        /// Modification des valeur des output HTML pour l'utilisateur (min/max)
+        slider1.suscribe_input((values) => {
+            min_1.innerHTML = values[0]
+            max_1.innerHTML = values[1]
+        })
+
+        slider2.suscribe_input((values) => {
+            min_2.innerHTML = values[0]
+            max_2.innerHTML = values[1]
+        })
+
+        slider3.suscribe_input((values) => {
+            min_3.innerHTML = values[0]
+            max_3.innerHTML = values[1]
+        })
+
+        slider4.suscribe_input((values) => {
+            min_4.innerHTML = values[0]
+            max_4.innerHTML = values[1]
+        })
+
+
+
+        // regroupement de tous les inputs des différents formulaires et sliders pour la function de la requete AJAX
+        function regroup_ajax_param(array_input = 0){
+            var list_input_genres = get_form_values(form_genres.id);
+            var list_input_publisherClass = get_form_values(form_publisherClass.id);
+            var list_input_OrderBy = get_OrderBy_selected();
+            
+            if (array_input === 0){
+                var array_input_slider_range = [
+                    slider1.getValues(), 
+                    slider2.getValues(), 
+                    slider3.getValues(), 
+                    slider4.getValues(), 
+                ]
+            }else{
+                array_input_slider_range = array_input;
+            }
+
+            var param_ajax = [
+                list_input_genres, 
+                list_input_publisherClass,
+                list_input_OrderBy, 
+                array_input_slider_range
+            ]
+
+            return param_ajax;
+        }
+        
+
+        
+        // A chaque fois qu'un formulaire est cliqué => appel de la methode pour AJAX
+        form_genres.addEventListener("click", function() {
+            var array_param_ajax = regroup_ajax_param();
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        });
+
+        form_publisherClass.addEventListener("click", function() {
+            var array_param_ajax = regroup_ajax_param();
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        });
+
+        form_OrderBy.addEventListener('change', function(){
+            var array_param_ajax = regroup_ajax_param();
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        })
+
+        // A chaque fois que la valeur d'un slider change => appel de la methode pour AJAX
+        slider1.suscribe_change((values) => {
+            array_values = [values, slider2.getValues(), slider3.getValues(), slider4.getValues()]
+            var array_param_ajax = regroup_ajax_param(array_values);
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        })
+
+        slider2.suscribe_change((values) => {
+            array_values = [slider1.getValues(), values, slider3.getValues(), slider4.getValues()]
+            var array_param_ajax = regroup_ajax_param(array_values);
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        })
+
+        slider3.suscribe_change((values) => {
+            array_values = [slider1.getValues(), slider2.getValues(), values, slider4.getValues()]
+            var array_param_ajax = regroup_ajax_param(array_values);
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        })
+
+        slider4.suscribe_change((values) => {
+            array_values = [slider1.getValues(), slider2.getValues(), slider3.getValues(), values]
+            var array_param_ajax = regroup_ajax_param(array_values);
+            // Appel de la fonction AJAX
+            subset_data(array_param_ajax);
+        })
     })
-
-    // A chaque fois que la valeur d'un slider change => appel de la methode pour AJAX
-    slider1.suscribe_change((values) => {
-		array_values = [values, slider2.getValues(), slider3.getValues(), slider4.getValues()]
-		var array_param_ajax = regroup_ajax_param(array_values);
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-	})
-
-	slider2.suscribe_change((values) => {
-		array_values = [slider1.getValues(), values, slider3.getValues(), slider4.getValues()]
-		var array_param_ajax = regroup_ajax_param(array_values);
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-	})
-
-	slider3.suscribe_change((values) => {
-		array_values = [slider1.getValues(), slider2.getValues(), values, slider4.getValues()]
-		var array_param_ajax = regroup_ajax_param(array_values);
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-	})
-
-	slider4.suscribe_change((values) => {
-		array_values = [slider1.getValues(), slider2.getValues(), slider3.getValues(), values]
-		var array_param_ajax = regroup_ajax_param(array_values);
-        // Appel de la fonction AJAX
-        subset_data(array_param_ajax);
-	})
-})
 </script>
 {% endblock %}

@@ -267,6 +267,19 @@ class GamesRepository extends ServiceEntityRepository
     ///// Page Recommancations
     /////
 
+    /// Données non-filtrées
+    ///
+    public function get_all_recommandations_data($last_promotion_year){
+        $query = "SELECT DISTINCT app_id, copies_sold, revenue, avg_play_time, recommandations, header_img, review_score
+                    FROM games
+                    WHERE release_year >=".$last_promotion_year." AND price > 10";
+        
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
     /// Modal
     ///
 
@@ -292,24 +305,9 @@ class GamesRepository extends ServiceEntityRepository
     }
 
 
-    ////////// test
+    // Requêtes SQL
 
-    // Requête SQL
-    //
-    public function findDataRecommandationPage()
-    {
-
-        $query = "SELECT *
-                    FROM games
-                        JOIN link_games_genres USING (app_id)
-	                    JOIN genres USING(genres_id)
-                    WHERE pegi = 3 or pegi = 7";
-        
-        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
-        return $result->fetchAll();
-    }
-
-
+    
     public function get_genres_list(){
         $query = "SELECT label
                     FROM genres 
@@ -378,7 +376,7 @@ class GamesRepository extends ServiceEntityRepository
 
         $where_query_part2 = $this->construct_where_query_parms_slider($array_params_slider);
 
-        return "WHERE ".$where_query_part1 ." AND ". $where_query_part2." ORDER BY games.".$param_orderBy;
+        return "WHERE games.release_year >= 2022 AND games.price > 10 AND ".$where_query_part1 ." AND ". $where_query_part2." ORDER BY games.".$param_orderBy;
 
     }
 

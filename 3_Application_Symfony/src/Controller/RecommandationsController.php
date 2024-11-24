@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\GamesRepository;
 use App\Repository\DashboardRepository;
 
+
 // To make chart with symfony UX - chartjs
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -30,95 +31,31 @@ class RecommandationsController extends AbstractController
     #[Route('/recommandations', name: 'app_recommandations')]
     public function index(GamesRepository $games_repository, DashboardRepository $dashboard_repository): Response
     {
-        # Test slider range
         
-        $slider_range_builder = $this->createFormBuilder()->add('name', RangeType::class, [
-            'attr' => [
-                'min' => 5,
-                'max' => 50
-            ],
-        ])->add('name2', RangeType::class, [
-            'attr' => [
-                'min' => 50,
-                'max' => 100
-            ],
-        ])->getForm();
-
-
-
-
-        $games1 = $games_repository->findBy(
-            ['PEGI'=>3]
-        );
-        $games2 = $games_repository->findBy(
-            ['PEGI'=>7]
-        );
-
-        $games = array_merge($games1, $games2);
         
-        //$games = $games_repository->findDataRecommandationPage();
-        //dd($games);
+        // Recuperation des données pré-filtrées
+        //$last_promotion_year = date('Y')-2;
+        // pour les tests on utilisera :
+        $last_promotion_year = date('Y');
+        $games = $games_repository->get_all_recommandations_data($last_promotion_year);
+    
+        // essais de code -> extraction des valeur min et max 
+        // Extraire les valeurs de revenue
+        $array_copies_sold = array_column($games, 'copies_sold');
+        $array_revenue = array_column($games, 'revenue');
+        $array_review_score = array_column($games, 'review_score');
+        $array_recommandations = array_column($games, 'recommandations');
 
         // recuperation des valeur min & max de chacune des 4 slider range.
         // initialisation.
-        $min_copiesSold = 0;
-        $max_copiesSold = 0;
-        $min_revenue = 0;
-        $max_revenue = 0;
-        $min_reviewScore = 0;
-        $max_reviewScore = 0;
-        $min_recommandations = 0;
-        $max_recommandations = 0;
-        foreach ($games as $game) {
-            //dd($game);
-            // copiesSold
-            if ($game->getCopiesSold()>$max_copiesSold){
-                $max_copiesSold = $game->getCopiesSold();
-            }
-
-            if ($min_copiesSold === 0){
-                $min_copiesSold = $game->getCopiesSold();
-            }elseif ($game->getCopiesSold()<$min_copiesSold){
-                $min_copiesSold = $game->getCopiesSold();
-            }
-
-
-            // revenue
-            if ($game->getRevenue()>$max_revenue){
-                $max_revenue = $game->getRevenue();
-            }
-
-            if ($min_revenue === 0){
-                $min_revenue = $game->getRevenue();
-            }elseif ($game->getRevenue()<$min_revenue){
-                $min_revenue = $game->getRevenue();
-            }
-
-
-            // reviewScore
-            if ($game->getReviewScore()>$max_reviewScore){
-                $max_reviewScore = $game->getReviewScore();
-            }
-
-            if ($min_reviewScore === 0){
-                $min_reviewScore = $game->getReviewScore();
-            }elseif ($game->getReviewScore()<$min_reviewScore){
-                $min_reviewScore = $game->getReviewScore();
-            }
-
-
-
-            // recommandations
-            if ($game->getRecommandations()>$max_recommandations){
-                $max_recommandations = $game->getRecommandations();
-            }
-
-            if ($min_recommandations === 0){
-                $min_recommandations = $game->getRecommandations();
-            }elseif ($game->getRecommandations()<$min_recommandations){
-                $min_recommandations = $game->getRecommandations();
-            }
-        }
+        $min_copiesSold = min($array_copies_sold);
+        $max_copiesSold = max($array_copies_sold);
+        $min_revenue = min($array_revenue);
+        $max_revenue = max($array_revenue);
+        $min_reviewScore = min($array_review_score);
+        $max_reviewScore = max($array_review_score);
+        $min_recommandations = min($array_recommandations);
+        $max_recommandations = max($array_recommandations);
         
         $res = [
             $min_copiesSold,
@@ -130,7 +67,6 @@ class RecommandationsController extends AbstractController
             $min_recommandations,
             $max_recommandations
         ];
-        //dd($res);
         
         // Truncation of the dashboard table data
         $dashboard_repository->truncateDashboardTable();
@@ -142,7 +78,6 @@ class RecommandationsController extends AbstractController
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,
-            'slider_range_builder'=>$slider_range_builder, 
             "res"=>$res, 
             'formGenres' => $formGenres, 
             "formPublisherClass" => $formPublisherClass, 

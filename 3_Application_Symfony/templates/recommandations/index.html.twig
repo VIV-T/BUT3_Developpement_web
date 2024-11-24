@@ -75,10 +75,8 @@
         <section class="games-block-container" id="main_games_container">
         {% for game in games %}
             <div class="game-block">
-                <div class="game-img-container" id="game_img_container_{{game.appID}}">
-                    <div class='game-img-overlay'  onclick="selectGameDashboard('{{game.appID}}')">
-                    {# Rajouter icones Figma + 
-                    adapter font-size pour éviter d'avoir des surprises lorsque la taille d'écran change #}
+                <div class="game-img-container" id="game_img_container_{{game.app_id}}">
+                    <div class='game-img-overlay'  onclick="selectGameDashboard('{{game.app_id}}')">
                     <div class="overlay-content" id="overlay-left">
                         <div class="overlay-content-top">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/dollar_icon.png")}}"></img>
@@ -86,13 +84,13 @@
                         </div>
                         <div class="overlay-content-bottom">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/time_icon.png")}}"></img>
-                        <p>{{game.AvgPlayTime}}</br> hours</p>
+                        <p>{{game.avg_play_time}}</br> hours</p>
                         </div>
                     </div>
                     <div class="overlay-content" id="overlay-right">
                         <div class="overlay-content-top">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/caddie_icon.png")}}"></img>
-                        <p>{{game.copiesSold}}</br>unit sales</p>
+                        <p>{{game.copies_sold}}</br>unit sales</p>
                         </div>
                         <div class="overlay-content-bottom">
                         <img class = "icon_recommandations_KPI" src="{{asset("icons/like_icon.png")}}"></img>
@@ -101,9 +99,9 @@
                     </div>
                     </div>
                     
-                    <img class="game-img" src={{game.headerImg}}></img>
+                    <img class="game-img" src={{game.header_img}}></img>
                 </div>
-                <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.appID}}')"></img>
+                <img id="games_information_icon_recommandations" src="{{asset("icons/site_games_informations_icon.png")}}" type="button" onclick="afficherInfoGame('{{game.app_id}}')"></img>
             </div>
             {% else %}
             <div class="empty_data_container">

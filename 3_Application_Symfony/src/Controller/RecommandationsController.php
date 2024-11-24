@@ -190,8 +190,19 @@ class RecommandationsController extends AbstractController
 
 
     // Fonction de Rémy 
-    public function makeEqualLength_array_str_value(){
-        // compléter ici
+    public function makeEqualLength_array_str_value(array $tableau_chaine): array 
+    {
+        $longueur_max = max(array_map('strlen', $tableau_chaine)); // fonction map qui applique
+        //la fonction strlen à chaque element du tableau, je recupere que la + grande
+
+        $tableau_chaine_nettoye = []; // initialise tableau
+
+        foreach ($tableau_chaine as $element) {
+            $tableau_chaine_nettoye[] = str_pad($element, $longueur_max, ' ');
+            // str_pad -> complete par la droite une string par un caractere mentionné (ici ' ')
+        }
+
+        return $tableau_chaine_nettoye;
     }
 
 

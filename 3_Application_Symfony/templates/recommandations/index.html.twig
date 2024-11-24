@@ -12,16 +12,36 @@
     <div id="radio-button-form-container">
         <h4>Publisher Class :</h4>
         <div id="radio-button-publisherClass-container">
-            {{form_start(formPublisherClass)}}            
-            {{form_widget(formPublisherClass.form_publisher_class, {'attr': {'class': 'radio-btn-container'}})}}
-            {{form_end(formPublisherClass)}} 
+            <form method="post">
+                <div class="form-group" id="form_publisher_class">
+                    {% for choice in formPublisherClass.form_publisher_class %}
+                        <div>
+                            <input type="checkbox" id="{{ choice.vars.id }}"
+                                name="{{ formPublisherClass.form_publisher_class.vars.full_name }}[]"
+                                value="{{ choice.vars.value }}"
+                                {% if choice.vars.value in formPublisherClass.form_publisher_class.vars.value %}checked{% endif %} />
+                            <label for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
         </div>
         </br>
         <h4>Genres :</h4>
         <div id="radio-button-genres-container">
-            {{form_start(formGenres)}}            
-            {{form_widget(formGenres.form_genres, {'attr': {'class': 'radio-btn-container'}})}}
-            {{form_end(formGenres)}} 
+            <form method="post">
+                <div class="form-group" id="form_genres">
+                    {% for choice in formGenres.form_genres %}
+                        <div>
+                            <input type="checkbox" id="{{ choice.vars.id }}"
+                                name="{{ formGenres.form_genres.vars.full_name }}[]"
+                                value="{{ choice.vars.value }}"
+                                {% if choice.vars.value in formGenres.form_genres.vars.value %}checked{% endif %} />
+                            <label for="{{ choice.vars.id }}">{{ choice.vars.label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
         </div>
     </div>
     <div class="test-slider">
@@ -308,7 +328,6 @@ function subset_data(array_param_ajax) {
         },
         async: true,
         success: function (array_data_games) {
-            //console.log(array_data_games);
             array_chaineHTML_games = [];
             array_data_games.forEach(function(game, index) {
             var chaineHtml_game = "\
@@ -371,17 +390,17 @@ function subset_data(array_param_ajax) {
 window.addEventListener('load', () => {
     
     //// Creation des formulaires et des sliders (ou plutot attribution des objets existant à un objet JS)
-    const form_genres = document.querySelector('div[id="form_form_genres"]');
-    const form_publisherClass = document.querySelector('div[id="form_form_publisher_class"]');
+    const form_genres = document.querySelector('div[id="form_genres"]');
+    const form_publisherClass = document.querySelector('div[id="form_publisher_class"]');
     const form_OrderBy = document.querySelector('select[id="form_form_OrderBy"]');
 
 
     //// Récupération de la valeur sélectionnée dans les radioButton.
     function get_form_values(form_id){
         var attr_name =""
-        if (form_id == "form_form_genres"){
+        if (form_id == "form_genres"){
             attr_name = "form[form_genres][]"; 
-        }else if (form_id == "form_form_publisher_class"){
+        }else if (form_id == "form_publisher_class"){
             attr_name = "form[form_publisher_class][]"; 
         }
 

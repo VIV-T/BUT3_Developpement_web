@@ -31,8 +31,6 @@ class RecommandationsController extends AbstractController
     #[Route('/recommandations', name: 'app_recommandations')]
     public function index(GamesRepository $games_repository, DashboardRepository $dashboard_repository): Response
     {
-        
-        
         // Recuperation des données pré-filtrées
         //$last_promotion_year = date('Y')-2;
         // pour les tests on utilisera :
@@ -89,15 +87,24 @@ class RecommandationsController extends AbstractController
     public function createFormGenres(GamesRepository $game_repository){
 
         $query_results = $game_repository->get_genres_list();
-        $genres_list =  [];
+        
+        $array_label = array_column($query_results, 'label');
+        $array_label_same_length = $this->makeEqualLength_array_str_value($array_label);
 
-        foreach ($query_results as $result){
-            $genres_list[$result["label"]]=$result["label"];
+        $genres_list=[];
+        foreach ($array_label_same_length as $genre){
+            // l'utilisation de la fonction trim est nécessaire uniquement ici ! 
+            // (pas pour les publisherClass, les données sont écrite différemment dans la BD entre les deux attributs)
+            $genres_list[$genre]=trim($genre);
         }
-
+        //dd($genres_list);
+        
         $form = $this->createFormBuilder()->add('form_genres', ChoiceType::class, [
             'choices' => $genres_list,
             'data' => array_values($genres_list),
+            'choice_label' => function ($choice) {
+                return (string) $choice;  // Les labels conservent les espaces tels quels
+            },
             'multiple' => true,  // Permet de choisir plusieurs options
             'expanded' => true, // Pour afficher les radio buttons
         ])->getForm();
@@ -107,16 +114,25 @@ class RecommandationsController extends AbstractController
 
     public function createFormPublisherClass(GamesRepository $game_repository){
         $query_results = $game_repository->get_publisherClass_list();
-        $publisherClass_list =  [];
 
-        foreach ($query_results as $result){
-            $publisherClass_list[$result["publisher_class"]]=$result["publisher_class"];
+        $array_publisher_class = array_column($query_results, 'publisher_class');
+        $array_publisher_class_same_length = $this->makeEqualLength_array_str_value($array_publisher_class);
+
+        
+        $publisherClass_list =  [];
+        foreach ($array_publisher_class_same_length as $publisher_class){
+            // l'utilisation de la fonction trim est nécessaire uniquement ici ! 
+            // (pas pour les publisherClass, les données sont écrite différemment dans la BD entre les deux attributs)
+            $publisherClass_list[$publisher_class]=$publisher_class;
         }
-        //dd($publisherClass_list);
+
 
         $form = $this->createFormBuilder()->add('form_publisher_class', ChoiceType::class, [
             'choices' => $publisherClass_list,
             'data' => array_values($publisherClass_list),
+            'choice_label' => function ($choice) {
+                return (string) $choice;  // Les labels conservent les espaces tels quels
+            },
             'multiple' => true,  // Permet de choisir plusieurs options
             'expanded' => true, // Pour afficher les radio buttons
         ])->getForm();
@@ -124,7 +140,7 @@ class RecommandationsController extends AbstractController
     }
 
 
-    // Fonction de Rémy 
+    // Fonction d'égalisation des length des str d'un tableau
     public function makeEqualLength_array_str_value(array $tableau_chaine): array 
     {
         $longueur_max = max(array_map('strlen', $tableau_chaine)); // fonction map qui applique

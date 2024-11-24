@@ -319,12 +319,12 @@ class RecommandationsController extends AbstractController
         // Récupération des paramètres de la requête.
         $parameters = json_decode($request->request->get('parameters'));
        
-
+        //dd($parameters);
 
         // Appel de la requete SQL de récupération des données filtrées
-        //$data = $game_repository->get_subseted_data();
+        $data = $game_repository->get_subseted_data($parameters);
     
-        $response = new Response(json_encode($parameters));
+        $response = new Response(json_encode($data));
         return $response;
     }
 

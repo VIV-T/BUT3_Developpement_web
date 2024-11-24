@@ -336,9 +336,50 @@ class GamesRepository extends ServiceEntityRepository
     /////////
         
     public function get_subseted_data($parameters){
+        $params_genres = $parameters[0];
+        $params_publisherClass = $parameters[1];
+        $param_orderBy = $parameters[2]; 
+        $array_params_slider = $parameters[3];
+
+        $array_where_query_genre = [];
+        $array_where_query_publisherClass = [];
+
+        // Genres
+        foreach ($params_genres as $genre){
+            $query_genre = 'genres.label IS "'.$genre.'"';
+            $array_where_query_genre []= $query_genre;
+        }
+        $where_query_genres = implode(" | ", $array_where_query_genre);
+        
+        //PublisherClass
+        foreach ($params_publisherClass as $publisherClass){
+            $query_publisherClass = 'games.publisher_class IS "'.$publisherClass.'"';
+            $array_where_query_publisherClass []= $query_publisherClass;
+        }
+        $where_query_publisherClass = implode(" | ", $array_where_query_publisherClass);
+        
+        $where_query_params_slider = $this->construct_where_query_parms_slider($array_params_slider);
+        
+        $tt_test= "(".$where_query_genres . ") & (" . $where_query_publisherClass.")";
+
+        return "WHERE ".$tt_test ." & ". $where_query_params_slider." ORDER BY games.".$param_orderBy;
+
+    }
 
 
+    function construct_where_query_parms_slider($array_params_slider){
+        $params_copies_sold = $array_params_slider[0];
+        $params_revenue = $array_params_slider[1];
+        $params_review_score = $array_params_slider[2];
+        $params_recommandations = $array_params_slider[3];
 
+        $tt = "games.copies_sold >".$params_copies_sold[0]." & games.copies_sold <".$params_copies_sold[1];
+        $tt2 = "games.revenue >".$params_revenue[0]." & games.revenue <".$params_revenue[1];
+        $tt3 = "games.review_score >".$params_review_score[0]." & games.review_score <".$params_review_score[1];
+        $tt4 = "games.recommandations >".$params_recommandations[0]." & games.recommandations <".$params_recommandations[1];
 
+        $tt_fin = "(".$tt.") & (".$tt2.") & (".$tt3.") & (".$tt4.")";
+
+        return $tt_fin;
     }
 }

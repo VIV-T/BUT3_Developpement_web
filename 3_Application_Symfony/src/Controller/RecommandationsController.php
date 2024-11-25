@@ -32,9 +32,9 @@ class RecommandationsController extends AbstractController
     public function index(GamesRepository $games_repository, DashboardRepository $dashboard_repository): Response
     {
         // Recuperation des données pré-filtrées
-        //$last_promotion_year = date('Y')-2;
+        $last_promotion_year = date('Y')-2;
         // pour les tests on utilisera :
-        $last_promotion_year = date('Y');
+        //$last_promotion_year = date('Y');
         $games = $games_repository->get_all_recommandations_data($last_promotion_year);
     
         // essais de code -> extraction des valeur min et max 
@@ -265,12 +265,12 @@ class RecommandationsController extends AbstractController
 
     // Methode AJAX - filtrage selon les paramétrage de l'utilisateur.
     #[Route('/recommandations/ajaxSubset', name: 'app_recommandations_ajax_subset')]
-    public function ajaxSubset(GamesRepository $game_repository, Request $request) : Response
+    public function ajaxSubset(GamesRepository $game_repository, DashboardRepository $dashboard_repository, Request $request) : Response
     {
         // Récupération des paramètres de la requête.
         $parameters = json_decode($request->request->get('parameters'));
        
-        //dd($parameters);
+        $dashboard_repository->truncateDashboardTable();
 
         // Appel de la requete SQL de récupération des données filtrées
         $data = $game_repository->get_subseted_data($parameters);

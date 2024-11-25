@@ -135,6 +135,7 @@
         <script>
             // Modal
             function afficherInfoGame(var_appID) {
+                    console.log(var_appID);
                     $.ajax({
                         url: "{{ path('app_recommandations_ajax_modal') }}",
                         type: "POST",
@@ -357,7 +358,7 @@
                             </div>\
                             <img class='game-img' src="+game.header_img+"></img>\
                         </div>\
-                        <img id='games_information_icon_recommandations' src='{{asset('icons/site_games_informations_icon.png')}}' type='button' onclick='afficherInfoGame('{{"+game.appID+"}}')'></img>\
+                        <img id='games_information_icon_recommandations' src='{{asset('icons/site_games_informations_icon.png')}}' type='button' onclick='afficherInfoGame("+game.app_id+")'></img>\
                     </div>\
                 ";
 
@@ -369,6 +370,7 @@
                 
                 // intégration du contenu Html dans le squelette
                 $('#main_games_container').html(chaineHtml_games);
+                countSelectedGame();
             },
             error: function(jqXHR){         // Fonction à appeler si la requête échoue
                 console.log("erreur subset");
@@ -423,9 +425,6 @@
         }
 
         
-
-
-
         const slider1 = new DoubleRangeSlider('#rangeWrapper1', min="{{res[0] | json_encode}}", max="{{res[1] | json_encode}}");
         const slider2 = new DoubleRangeSlider('#rangeWrapper2', min="{{res[2] | json_encode}}", max="{{res[3] | json_encode}}");
         const slider3 = new DoubleRangeSlider('#rangeWrapper3', min="{{res[4] | json_encode}}", max="{{res[5] | json_encode}}");

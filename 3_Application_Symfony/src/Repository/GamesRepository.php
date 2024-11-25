@@ -272,7 +272,8 @@ class GamesRepository extends ServiceEntityRepository
     public function get_all_recommandations_data($last_promotion_year){
         $query = "SELECT DISTINCT app_id, copies_sold, revenue, avg_play_time, recommandations, header_img, review_score
                     FROM games
-                    WHERE release_year >=".$last_promotion_year." AND price > 10";
+                    WHERE release_year >=".$last_promotion_year." AND price > 10
+                    ORDER BY copies_sold DESC";
         
         
         $result = $this->getEntityManager()->getConnection()->executeQuery($query);
@@ -376,7 +377,7 @@ class GamesRepository extends ServiceEntityRepository
 
         $where_query_part2 = $this->construct_where_query_parms_slider($array_params_slider);
 
-        return "WHERE games.release_year >= 2022 AND games.price > 10 AND ".$where_query_part1 ." AND ". $where_query_part2." ORDER BY games.".$param_orderBy;
+        return "WHERE games.release_year >= 2022 AND games.price > 10 AND ".$where_query_part1 ." AND ". $where_query_part2." ORDER BY games.".$param_orderBy." DESC";
 
     }
 

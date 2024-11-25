@@ -73,6 +73,7 @@ class RecommandationsController extends AbstractController
         $formPublisherClass = $this->createFormPublisherClass($games_repository);
         $formOrderBy= $this->createFormOrderBy($games_repository);
 
+
         return $this->render('recommandations/index.html.twig', [
             'controller_name' => 'RecommandationsController',
             'games' => $games,
@@ -297,11 +298,12 @@ class RecommandationsController extends AbstractController
 
         // Barchart - ReviewScore
         $barChartReviewScore= $this->createBarchartReviewScoreDashboard($dashboard_repository, $chartBuilder);
-        //dd($barChartReviewScore);
-
-        //Top 3 games in the data selection
-        $dataTop3 = $dashboard_repository->findDataTopGamesInSelection(); 
-        //dd($dataTop3);
+       
+        
+        
+        // get KPI data & Top3 games of dashboard table
+        $array_kpi = $this->regroup_kpi_data($dashboard_repository);
+        //dd($array_kpi);
 
         
         //// execution du script R appliquant des méthodes de DM aux données + création de graphes ggplot2.
@@ -336,7 +338,7 @@ class RecommandationsController extends AbstractController
             'dashboard_games' => $dashboard_games,
             'barChartAge' => $barChartAge,
             'barChartReviewScore'=> $barChartReviewScore,
-            'dataTop3'=>$dataTop3
+            'array_kpi'=>$array_kpi
         ]);
     }
 
@@ -450,5 +452,27 @@ class RecommandationsController extends AbstractController
         
         
         return $BarChartReviewScoreDashboard;
+    }
+
+
+    function regroup_kpi_data(DashboardRepository $dashboard_repository){
+        
+        $avg_age = $dashboard_repository->findAvgPriceDashboard();
+        $avg_play_time = $dashboard_repository->findAvgPlayTime();
+        $median_copies_sold = $dashboard_repository->findMedianCopiesSold();
+        $median_revenue = $dashboard_repository->findMedianRevenue();
+        $data_top3 = $dashboard_repository->findTop3GamesAlgoDashboard();
+
+        
+        
+        $array_kpi = [
+            "avg_age" => $avg_age[0]["AveragePriceSales"], 
+            "avg_play_time" => $avg_play_time[0]["AveragePlayTime"], 
+            "median_copies_sold" => $median_copies_sold[0]["MedianCopiesSales"], 
+            "median_revenue" => $median_revenue[0]["MedianRevenue"], 
+            "data_top3" => $data_top3
+        ];
+
+        return $array_kpi;
     }
 }

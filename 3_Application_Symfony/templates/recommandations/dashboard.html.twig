@@ -32,6 +32,17 @@
     <div>
         <p>This page provides an overview of the game selection choices that have been made. It offers a series of descriptive visual feedback elements to confirm or revise the list of video games selected for the upcoming campaign.</p>
         </br>
+
+        <section>
+            <h5>Key Performance Indicators</h5>
+            <p>Rajouter un texte pour les KPI et mettre les unités</p>
+            <p>{{array_kpi.avg_age}}</p>
+            <p>{{array_kpi.avg_play_time}}</p>
+            <p>{{array_kpi.median_copies_sold}}</p>
+            <p>{{array_kpi.median_revenue}}</p>
+        </section>
+
+
         <section>
             <h5>Bar Chart of age category</h5>
             <div class="graph-container container_graph_dashboard" id="BarChartAgeDashboard">
@@ -66,6 +77,15 @@
                     <p>The scatter plot represents the position of the games based on their ratings and prices. The purpose of this chart is to identify, if any, groups of games within the selection. Depending on the prior decisions made, it helps to verify whether the selection strategy is leading towards a very specific set of games (compact scatter plot) or a more varied selection (dispersed scatter plot).</p>
                 </div>
             </div>
+        </section>
+
+        <section>
+            <h5>Top {{array_kpi.data_top3|length}} games in this selection</h5>
+            {% for game in array_kpi.data_top3 %}
+                <div class="game-block-dashboard" id="game_img_container_dashboard_{{game.app_id}}">
+                    <img class='game-img' id='game-img-dashboard' src={{game.header_img}}></img>
+                </div>
+            {% endfor %}
         </section>
 
     </div>

@@ -397,4 +397,48 @@ class GamesRepository extends ServiceEntityRepository
 
         return $where_query_part2;
     }
+
+
+
+    //// KPI
+    // Requêtes SQL
+    public function get_perc_games_revenue_lt_1000(){
+        $query = "SELECT ROUND(games_revenue_lt_1000/tot_games, 4) AS perc_games_revenue_lt_1000
+                    FROM (SELECT count(*) AS games_revenue_lt_1000
+                            FROM games 
+                            WHERE revenue < 1000) AS temp1 
+                    CROSS JOIN (SELECT count(*) AS tot_games
+                                FROM games ) AS temp2";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
+    public function get_perc_top1000_games_revenue(){
+        $query = "SELECT ROUND(sum(revenue) / cumul_revenue_tot, 4) AS part_revenue_top1000
+                    FROM (
+                        SELECT *
+                        FROM e1735u_Projet_Steam_Doctrine.games
+                        ORDER BY revenue DESC LIMIT 1000
+                    ) AS temp 
+                    CROSS JOIN (
+                        SELECT sum(revenue) AS cumul_revenue_tot
+                        FROM e1735u_Projet_Steam_Doctrine.games
+                    ) AS temp_tot";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
+
+    public function get_sum_tot_revenue_2024(){
+        $query = "SELECT SUM(revenue) AS somme_tot_revenue
+                    FROM games
+                    WHERE release_year=2024";
+        
+        $result = $this->getEntityManager()->getConnection()->executeQuery($query);
+        return $result->fetchAll();
+    }
+
 }

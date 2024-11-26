@@ -78,7 +78,8 @@ class AnalysisController extends AbstractController
         $path_to_graphes_analyis = $cwd.$sep."assets".$sep."RGraph".$sep."Analysis".$sep."results";
         
         
-        // Execution de tous les scripts R
+        // Execution de tous les scripts R 
+        ///// Dé-commenter pour les screenshot
         /*foreach($liste_scripts as $r_script){
             $process = new Process([$R_cmd, $r_script]);
             if ($os === "Windows"){
@@ -97,6 +98,8 @@ class AnalysisController extends AbstractController
         //});
 
 
+        // KPI
+        $array_kpi = $this->construct_array_KPI($repository);
         
         ///// Renvoie tous les objets dans le template twig associé.
         return $this->render('analysis/index.html.twig', [
@@ -105,7 +108,8 @@ class AnalysisController extends AbstractController
             'chartFiveDim' => $chartFiveDim,
             'path_to_graphes_analyis'=> $path_to_graphes_analyis,
             "chart_month" => $chart_month,
-            "chart_year" => $chart_year
+            "chart_year" => $chart_year, 
+            "array_kpi" => $array_kpi
         ]);
     }
 
@@ -166,5 +170,23 @@ class AnalysisController extends AbstractController
         $LineChartPeriod->setOptions($array_data_options["options"]);
         
         return $LineChartPeriod ;
+    }
+
+
+    /// KPI
+    function construct_array_KPI(GamesRepository $repository){
+        $perc_top1000_revenue = $repository->get_perc_top1000_games_revenue();
+        $revenue_lt_1000 = $repository->get_perc_games_revenue_lt_1000();
+        $sum_tot_revenue_2024 = $repository->get_sum_tot_revenue_2024();
+
+
+        $array_kpi = [
+            "perc_top1000_revenue"=>$perc_top1000_revenue[0]["part_revenue_top1000"]*100, 
+            "revenue_lt_1000"=>$revenue_lt_1000[0]["perc_games_revenue_lt_1000"]*100, 
+            "sum_tot_revenue_2024"=>round($sum_tot_revenue_2024[0]["somme_tot_revenue"]/10**9, 2)
+        ];
+        
+
+        return $array_kpi;
     }
 }

@@ -72,27 +72,30 @@ Order by indice_for_top desc limit 3;
 
 # idem à celle du dessus sauf 1000 à la place de 100 ????
 
-#select 
-#	sum(revenue) as cumul_revenue_top1000, 
-#	sum(copies_sold) as cumul_copiesSold_top1000
-#from (
-#select *
-#FROM e1735u_Projet_Steam_Doctrine.games
-#order by revenue DESC LIMIT 1000
-#) as temp ;
+# Part des revenues des 1000 Jeux avec le plus de revenue dans le total
+select 
+	ROUND(sum(revenue) / cumul_revenue_tot, 2) AS part_revenue_top1000
+from (
+select *
+FROM e1735u_Projet_Steam_Doctrine.games
+order by revenue DESC LIMIT 1000
+) as temp CROSS JOIN (select 
+	sum(revenue) as cumul_revenue_tot
+from e1735u_Projet_Steam_Doctrine.games) as temp_tot ;
 
 
 
-#select count(*)
-#from games
-#where release_year = 2024 and publisher_class = "Hobbyist";
+# perc_games_revenue_lt_1000
+SELECT (games_revenue_lt_1000/tot_games) AS perc_games_revenue_lt_1000
+FROM (select count(*) as games_revenue_lt_1000
+from games 
+where revenue < 1000) as temp1 CROSS JOIN (select count(*) as tot_games
+from games ) AS temp2
+;
 
+# sum revenue of 2024 games
+SELECT SUM(revenue) AS somme_tot_revenue
+FROM games
+WHERE release_year=2024
+;
 
-#select 
-#	sum(copies_sold) as tot_copies_sold,
-#    sum(revenue) as tot_revenue,
-#    sum(avg_play_time) as tot_avg_play_time,
-#    sum(review_score) as tot_review_score,
-#    sum(recommandations) as tot_recommandations
-#from games
-#;

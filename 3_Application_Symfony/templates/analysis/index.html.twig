@@ -26,12 +26,31 @@
     </div>
 
     {# KPI #}
-    <section>
+    <section class="kpi">
         <h5>Key Performance Indicators</h5>
-        <p>Rajouter un texte pour les KPI et mettre les unités</p>
-        <p>{{array_kpi.perc_top1000_revenue}} %</p>
-        <p>{{array_kpi.revenue_lt_1000}} %</p>
-        <p>{{array_kpi.sum_tot_revenue_2024}} milliards</p>
+        </br>
+        <div class="container_kpi">
+            <div class="progress-container">
+                <div class="progress-item">
+                    <h5 class="progress-title">revenue from the 1000 best-selling games (%)</h5>
+                    <div class="progress-ring">
+                        <div class="progress-circle" id ="kpi_top1000_revenue"></div>
+                        <div class="progress-text">{{array_kpi.perc_top1000_revenue}} %</div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <h5 class="progress-title">games with less than $1000 in revenue (%)</h5>
+                    <div class="progress-ring">
+                        <div class="progress-circle" id="kpi_lt_1000"></div>
+                        <div class="progress-text">{{array_kpi.revenue_lt_1000}} %</div>
+                    </div>
+                </div>
+                <div>
+                    <h2>{{array_kpi.sum_tot_revenue_2024}} billion $</h2>
+                    <p>income in 2024</p>
+                </div>
+            </div>
+        </div>
     </section>
 
 

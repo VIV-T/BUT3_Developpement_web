@@ -126,3 +126,57 @@
     height: 100%; /* Assurez-vous que le conteneur a une hauteur définie */
     gap: 100px;
 }
+
+.podium {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-left: 5%;
+    gap: 2%;
+    margin-bottom: 5%;
+}
+
+#podium_class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.podium-image {
+    width: 100%;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    justify-items: center;
+}
+
+.podium-image:hover {
+    transform: scale(1.1);
+}
+
+.podium-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Modifier la taille des images pour chaque position */
+.podium_class:nth-child(1) .podium-image {
+    width: 120%;  /* 1er place: plus grand */
+}
+
+.podium_class:nth-child(2) .podium-image {
+    width: 110%;  /* 2e place: moyen */
+}
+
+.podium_class:nth-child(3) .podium-image {
+    width: 100%;  /* 3e place: plus petit */
+}
+
+.podium-medal {
+    justify-items: center;
+    width: 35%;
+    height: 35%;
+}

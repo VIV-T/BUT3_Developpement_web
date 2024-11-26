@@ -457,7 +457,7 @@ class RecommandationsController extends AbstractController
 
     function regroup_kpi_data(DashboardRepository $dashboard_repository){
         
-        $avg_age = $dashboard_repository->findAvgPriceDashboard();
+        $avg_price = $dashboard_repository->findAvgPriceDashboard();
         $avg_play_time = $dashboard_repository->findAvgPlayTime();
         $median_copies_sold = $dashboard_repository->findMedianCopiesSold();
         $median_revenue = $dashboard_repository->findMedianRevenue();
@@ -466,7 +466,7 @@ class RecommandationsController extends AbstractController
         
         
         $array_kpi = [
-            "avg_age" => $avg_age[0]["AveragePriceSales"], 
+            "avg_price" => $avg_price[0]["AveragePriceSales"], 
             "avg_play_time" => $avg_play_time[0]["AveragePlayTime"], 
             "median_copies_sold" => $median_copies_sold[0]["MedianCopiesSales"], 
             "median_revenue" => $median_revenue[0]["MedianRevenue"], 

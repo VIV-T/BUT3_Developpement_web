@@ -120,3 +120,71 @@ h5 {
 .flex_container_texte {
     margin-top: 5%;
 }
+
+.kpi {
+    margin-bottom: 5%;
+}
+
+.container_kpi {
+    text-align: center;
+}
+
+.progress-container {
+    display: flex; /* Active le mode flexbox pour centrer et espacer */
+    gap: 8%; /* Espace horizontal entre les cercles */
+    justify-content: center; /* Centre les cercles horizontalement */
+    align-items: center; /* Aligne verticalement les cercles */
+}
+
+.progress-item {
+    display: flex; /* Utilise flexbox pour disposer le titre et le cercle côte à côte */
+    align-items: center; /* Centre verticalement le titre et le cercle */
+    gap: 10px; /* Espace entre le titre et le cercle */
+}
+
+.progress-title {
+    text-align: left; /* Le titre est aligné à gauche du cercle */
+    max-width: 300px; /* Limite la largeur du titre */
+    word-wrap: break-word; /* Permet au texte de revenir à la ligne si nécessaire */
+    white-space: normal; /* Permet au texte de s'afficher sur plusieurs lignes */
+}
+
+.progress-ring {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    mask: radial-gradient(circle, transparent 58%, black 56%);
+    -webkit-mask: radial-gradient(circle, transparent 58%, black 56%);
+}
+
+#kpi_top1000_revenue {
+    background: conic-gradient(
+        #147aff 77.37%, /* Proportion de la progression */
+        #d3d3d3 77.37%
+    );
+}
+
+#kpi_lt_1000 {
+    background: conic-gradient(
+        #147aff 53.8%, /* Proportion de la progression */
+        #d3d3d3 53.8%
+    );
+}
+
+.progress-text {
+    position: absolute;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 1;
+    text-align: center;
+}

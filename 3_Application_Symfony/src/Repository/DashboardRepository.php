@@ -292,6 +292,7 @@ class DashboardRepository extends ServiceEntityRepository
         $query = "SELECT 
 	                app_id,
                     header_img,
+                    game_name,
 	                (1/5)*(copies_sold/max_copies_sold + revenue/max_revenue + avg_play_time/max_avg_play_time + review_score/max_review_score + recommandations/max_recommandations) AS indice_for_top
                 FROM dashboard JOIN (select 
                                 max(copies_sold) AS max_copies_sold,

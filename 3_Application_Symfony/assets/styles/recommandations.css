@@ -33,10 +33,10 @@
 
 /* gère la position des jeux */
 .recommandations-main-container {
-    margin-top: 10%;
+    margin-top: 8%;
     /*17-5% pour compenser le body width à 80% + les 17% lié à la taille de la colonne de filtes*/
-    margin-left: 12%;
-    margin-right: -7%;
+    margin-left: 8%;
+    margin-right: -3%;
 }
 
 .searchBar {

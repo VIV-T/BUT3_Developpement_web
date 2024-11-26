@@ -33,15 +33,48 @@
         <p>This page provides an overview of the game selection choices that have been made. It offers a series of descriptive visual feedback elements to confirm or revise the list of video games selected for the upcoming campaign.</p>
         </br>
 
-        <section>
+        {# KPI #}
+        <section class="kpi">
             <h5>Key Performance Indicators</h5>
-            <p>Rajouter un texte pour les KPI et mettre les unités</p>
-            <p>{{array_kpi.avg_age}}</p>
-            <p>{{array_kpi.avg_play_time}}</p>
-            <p>{{array_kpi.median_copies_sold}}</p>
-            <p>{{array_kpi.median_revenue}}</p>
+            </br>
+            <div class="container_kpi">
+                <div class="progress-container">
+                    <div>
+                        <h2>{{array_kpi.avg_price}} $</h2>
+                        <p>average price</p>
+                    </div>
+                    <div>
+                        <h2>{{array_kpi.avg_play_time}} h</h2>
+                        <p>average play time</p>
+                    </div>
+                    <div>
+                        <h2>{{array_kpi.median_copies_sold}}</h2>
+                        <p>median of copies sold</p>
+                    </div>
+                    <div>
+                        <h2>{{array_kpi.median_revenue}} $</h2>
+                        <p>median of revenue</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <h5>Top {{array_kpi.data_top3|length}} games in this selection</h5>
+        </br>
+        <section class="podium">
+            {% for game in array_kpi.data_top3 %}
+                <div id="podium_class">
+                    {% if loop.index == 1 %}
+                        <img src="{{ asset('icons/gold_medal.png') }}" alt="Gold Medal" class="podium-medal">
+                    {% elseif loop.index == 2 %}
+                        <img src="{{ asset('icons/silver_medal.png') }}" alt="Silver Medal" class="podium-medal">
+                    {% elseif loop.index == 3 %}
+                        <img src="{{ asset('icons/bronze_medal.png') }}" alt="Bronze Medal" class="podium-medal">
+                    {% endif %}
+                    <img class='game-img podium-image' id='game-img-dashboard' src={{game.header_img}}></img>
+                </div>
+            {% endfor %}
+        </section>
 
         <section>
             <h5>Bar Chart of age category</h5>
@@ -78,16 +111,6 @@
                 </div>
             </div>
         </section>
-
-        <section>
-            <h5>Top {{array_kpi.data_top3|length}} games in this selection</h5>
-            {% for game in array_kpi.data_top3 %}
-                <div class="game-block-dashboard" id="game_img_container_dashboard_{{game.app_id}}">
-                    <img class='game-img' id='game-img-dashboard' src={{game.header_img}}></img>
-                </div>
-            {% endfor %}
-        </section>
-
     </div>
 </div>
 

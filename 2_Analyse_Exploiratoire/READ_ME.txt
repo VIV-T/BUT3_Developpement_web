@@ -1,5 +1,5 @@
-L'objectif de cette partie Analyse Exploratoire est de faire de al fouille exploratoire dans les données afin d'identifier les variables d'intérêts 
-pour la construction de graphique mais aussi de s'intérresser à la façon dont nous allons valoriser notre jeu de données.
+L'objectif de cette partie Analyse Exploratoire est de faire de la fouille exploratoire dans les données afin d'identifier les variables d'intérêts 
+pour la construction de graphiques mais aussi de s'intérresser à la façon dont nous allons valoriser notre jeu de données.
 
 Pour cette partie, nous avons principalement utilisé R avec l'IDE RStudio.
 Nous avons importer les fichier csv avant faire des analyses simple dessus. Nous avons très vite identifier la nécessité de filtrer 
@@ -15,5 +15,5 @@ décisionnaire marketing de l'entreprise en vue d'une future campagne promotionn
 Après cette segmentation des données, nous avons expérimenté quelques graphe afin d'avoir un meilleur aperçu de nos possibilité de valorisation de nos données.
 De plus nous avons aussi pu créer des "View" en SQL adaptées au graphe que nous avions imaginés avant des les importer dans R Studio pour tester leur bonne réalisation.
 
-
+Nous avons aussi mis en place des requêtes SQL pour pouvoir mettre en place des aggrégats, des statistiques et des potentiels KPI ensuite utilisables dans l'application.
 Dernière modification : 15/10/2024

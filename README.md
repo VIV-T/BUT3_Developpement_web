@@ -1,6 +1,6 @@
-ProjetSteam
+# ProjetSteam
 
-Ce projet de développement s'inscrit dans un contexte universitaire.
+Ce projet de développement s'inscrit dans un contexte universitaire (3e année de BUT).
 Le but de ce projet fut de nous initier au développement d'une application web avec un apprentissage autodidacte.
 
 Dans le cadre de ce projet universitaire, nous avons pu découvrir les outils de développement web :

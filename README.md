@@ -1,4 +1,4 @@
-# ProjetSteam
+# Projet Développement Web : Application Steam
 
 Ce projet de développement s'inscrit dans un contexte universitaire (3e année de BUT).
 Le but de ce projet fut de nous initier au développement d'une application web avec un apprentissage autodidacte.
@@ -27,4 +27,3 @@ Si nos étapes de préparation et de fouille des données sont bien documenté, 
 	- Des liens vers nos profils LinkedIn respectifs
 	- Une page de sitographie, rescensant nos différentes sources, ressources utilisées et références en matière de développement, de solution technique mais ausside la documentation sur STEAM.
 	
-Découvrez maintenant notre application et notre code !

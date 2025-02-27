@@ -16,7 +16,7 @@ Dans le cadre de ce projet universitaire, nous avons pu découvrir les outils de
 Il nous a fallu apprendre à maîtriser ces différents outils afin de pouvoir se lancer dans le développement de façon optimale.
 
 
-## Objectif et mise en oeuvre technique 
+## Objectifs et mise en oeuvre technique 
 
 Dans le cadre de ce projet, nous avons du :
 Nous avons du chercher un jeu de données à valoriser (nous avons choisi un dataset contenant des informations sur les jeux de STEAM)

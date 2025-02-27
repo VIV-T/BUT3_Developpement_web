@@ -1,5 +1,7 @@
 # Projet Développement Web : Application Steam
 
+## Présentation 
+
 Ce projet de développement s'inscrit dans un contexte universitaire (3e année de BUT).
 Le but de ce projet fut de nous initier au développement d'une application web avec un apprentissage autodidacte.
 
@@ -12,6 +14,9 @@ Dans le cadre de ce projet universitaire, nous avons pu découvrir les outils de
 	- Figma (création de maquettes)
 
 Il nous a fallu apprendre à maîtriser ces différents outils afin de pouvoir se lancer dans le développement de façon optimale.
+
+
+## Objectif et mise en oeuvre technique 
 
 Dans le cadre de ce projet, nous avons du :
 Nous avons du chercher un jeu de données à valoriser (nous avons choisi un dataset contenant des informations sur les jeux de STEAM)
